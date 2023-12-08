@@ -1,0 +1,227 @@
+/*Login Page*/
+.login-body{
+    background: linear-gradient(to bottom,
+    rgb(255 255 255 / 90%),
+    rgb(156 220 177 / 90%));
+    height: 100vh;
+  }
+  
+  .login-image{
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    position: fixed;
+  }
+  
+  .login-form{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  
+  .login-card{
+    background-color: #FFFFFF;
+    color: #1b733a;
+    box-shadow: 0 0 2px 0 rgba(145, 158, 171, 0.08), 0 12px 24px -4px rgba(145, 158, 171, 0.08);
+    border-radius: 16px;
+    padding: 40px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    max-width: 340px;
+  }
+  
+  .login-card .title{
+   font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .notice {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 24px;
+    padding: 8px 22px;
+    border-radius: 8px;
+    width: 100%;
+    color: #FFFFFF;
+    background-color: #1b733a;
+    box-sizing: border-box;
+  }
+  
+  .login-inputs{
+    width: 100%;
+  }
+  
+  .floating-label-form-group {
+    position: relative;
+    height: 56px;
+  }
+  
+  .floating-label-form-group input{
+    width: 100%;
+    padding: 16px 14px;
+    border: 1px solid #ced4da;
+    box-sizing: border-box;
+    border-radius: 4px;
+    transition: border-color 0.3s;
+    height: 100%;
+  }
+  
+  .input-group{
+    height: 100%;
+  }
+  
+  .floating-label-form-group:last-child {
+    margin-top: 24px;
+  }
+  
+  .floating-label {
+    position: absolute;
+    top: 50%;
+    left: 14px;
+    transform: translateY(-50%);
+    transition: all 0.3s;
+    background-color: #fff;
+    padding: 0 4px;
+    color: #495057;
+    pointer-events: none;
+  }
+  
+  .floating-label-form-group.focused .floating-input,
+  .floating-input:focus {
+    border-color: #1b733a;
+  }
+  
+  .floating-label-form-group.active .floating-label,
+  .floating-input:focus ~ .floating-label {
+    top: 0;
+    font-size: 12px;
+    color: #1b733a;
+  }
+  
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .remember-me{
+    margin-top: 10px;
+  }
+  
+  .forgot-link{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 24px;
+    margin-bottom: 24px;
+  }
+  
+  .forgot-link a{
+    margin: 0;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    color: #8dbb4f;
+  }
+  
+  .password-button{
+    border: none;
+    background: transparent;
+    z-index: 3;
+    position: absolute;
+    right: 16px;
+    top: 17px;
+    padding: 0;
+  }
+  
+  .login-button{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+    outline: 0;
+    border: 0;
+    margin: 0;
+    cursor: pointer;
+    user-select: none;
+    vertical-align: middle;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 18px;
+    text-transform: unset;
+    min-width: 64px;
+    padding: 8px 22px;
+    border-radius: 8px;
+    box-shadow: 0px 3px 1px -2px rgba(145, 158, 171, 0.2), 0px 2px 2px 0px rgba(145, 158, 171, 0.14), 0px 1px 5px 0px
+    rgba(145, 158, 171, 0.12);
+    width: 100%;
+    color: #FFFFFF;
+    background-color: #1b733a;
+    min-height: 48px;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1)
+    0ms,border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+   }
+  
+  /*Laptop/PC*/
+  @media (min-width: 900px) {
+    /*Login page*/
+    .login-image{
+      top: 24px;
+      left: 24px;
+    }
+  }
+  /*Tablets*/
+  @media (max-width: 900px) {
+    /*Login page*/
+    .login-image{
+      top: 16px;
+      left: 16px;
+    }
+  
+    .login-card .title{
+      font-size: 20px
+    }
+  }
+  
+  @media (max-width: 768px) {
+    /*Login Page*/
+    .login-card {
+      max-width: 300px;
+      padding: 20px;
+    }
+  
+    .login-card .title {
+      font-size: 20px;
+    }
+  
+    .floating-label-form-group input {
+      padding: 12px 10px;
+    }
+  
+    .floating-label {
+      font-size: 10px;
+    }
+  
+    label{
+      font-size: 10px;
+    }
+  
+    .login-button {
+      padding: 6px 18px;
+      font-size: 16px;
+    }
+  
+    .forgot-link a {
+      font-size: 12px;
+    }
+  }
