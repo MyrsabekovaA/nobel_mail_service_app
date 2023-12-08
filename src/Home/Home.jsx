@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, NavLink } from 'react-router-dom';
 import '/@/Home/Home.css'
 
 function Home() {
@@ -7,6 +7,7 @@ function Home() {
         <div>
             <div className='w-24'>
                 <h1>Welcome to the Home Page</h1>
+                <NavLink to="/home/emailTemplates">Email Templates</NavLink>
             </div>
             
             <Outlet/>

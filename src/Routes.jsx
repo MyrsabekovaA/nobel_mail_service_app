@@ -1,15 +1,22 @@
 import * as react from "react"
+import { createBrowserRouter, redirect, createHashRouter} from "react-router-dom";
+
+//importing components
 import LoginForm from "/@/LoginForm/LoginForm";
 import Home from "/@/Home/Home";
 import ContactList from "/@/Home/ContactList/ContactList";
-import { createBrowserRouter, redirect, createHashRouter} from "react-router-dom";
+import EmailTemplates from "/@/Home/EmailTemplates/EmailTemplates";
+
+//importing loaders
+import {emailTemplatesLoader} from "/@/routesControll/loaders"
+//importing actions
 
 export const router = createBrowserRouter([
     {
         "path": "/",
         "exact" : true,
         "loader": ()=>{
-            return redirect("/logInForm")
+            return redirect("/home/emailTemplates")
         }
     },
     {
@@ -29,6 +36,11 @@ export const router = createBrowserRouter([
             {
                 "path": "contactList",
                 "element": <ContactList/>
+            },
+            {
+                "path": "emailTemplates",
+                "element": <EmailTemplates/>,
+                "loader": emailTemplatesLoader
             }
         ]
     }
