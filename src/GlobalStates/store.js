@@ -1,7 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
+import isLoggedInReducer from "/@/GlobalStates/LoggedIn";
 
 const store = configureStore({
-    reducer: {},
-})
+    reducer: {
+        isLoggedIn: isLoggedInReducer,
+    },
+});
 
-export default store
+export default store;

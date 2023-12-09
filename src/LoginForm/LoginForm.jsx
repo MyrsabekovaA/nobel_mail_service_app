@@ -1,10 +1,13 @@
 import React, {useState} from "react";
-import {Card, Form, Button, Container, Image, InputGroup, Row, Col, CardBody} from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
+import {login} from '/@/actions/authActions';
+import {Card, Form, Button, Container, Image, InputGroup, Row, Col} from 'react-bootstrap';
 import {Icon} from '@iconify/react';
-import eyeOffFill from '@iconify-icons/eva/eye-off-fill';
+import eyeOffFill from '@iconify-icons/eva/eye-off-fill'
 import eyeFill from '@iconify-icons/eva/eye-fill';
 import Logo from '/Nobel_logo.png';
 import '/@/LoginForm/LoginForm.css';
+import {useDispatch} from "react-redux";
 
 
 function FloatingLabelInput({label, type, value, onChange, children, id}) {
@@ -28,21 +31,27 @@ function FloatingLabelInput({label, type, value, onChange, children, id}) {
     );
 }
 
-function LoginForm({onLoginSuccess}) {
+function LoginForm() {
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
+    const [loading, setLoading] = useState(false);
 
-    const handleSubmit = (event) => {
+    const dispatch = useDispatch();
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const hardcodedEmail = "11@11.11";
-        const hardcodedPassword = "1111";
+        setLoading(true);
 
-        if (email === hardcodedEmail && password === hardcodedPassword) {
-            onLoginSuccess();
-        } else {
-            alert("Invalid credentials");
+        try {
+            await dispatch(login(email, password));
+            navigate("/home");
+        } catch (error) {
+            alert(error.message);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -92,7 +101,6 @@ function LoginForm({onLoginSuccess}) {
                     <a href="#" className="text-decoration-underline">Forgot password?</a>
                 </Col>
             </Row>
-
             <Button variant="primary" type="submit" className="w-100 login-button" onClick={handleSubmit}>
                 Login
             </Button>
