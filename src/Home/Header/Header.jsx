@@ -1,8 +1,8 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import { sidebarActions } from '/@/GlobalStates/Sidebar';
-import English from '../../../dist/lang/Flag_of_the_U.S..svg';
-import Ukrainian from '../../../dist/lang/Flag_of_Ukraine.svg';
+import English from '/Flag_of_the_U.S..svg';
+import Ukrainian from '/Flag_of_Ukraine.svg';
 import './Header.css';
 import {Icon} from '@iconify/react';
 import {Image, Dropdown} from "react-bootstrap";
@@ -43,19 +43,13 @@ const Header = (props) => {
         setDarkMode(!darkMode);
     };
 
-    const headerStyle = {
-        width: sidebarOpenned ? 'calc(100vw - 280px)' : 'calc(100vw - 100px)'
-    };
-
     return (
-        <header className={`flex fixed top-0 z-10 bg-white shadow-md p-1 lg:h-20 h-16 ${sidebarOpenned ? 'justify-end' : 'justify-between'}`}
-                style={headerStyle}>
-            {!sidebarOpenned && (
+        <header className={`flex w-full bg-white shadow-md p-1 lg:h-20 h-16 justify-between`}>
+            
                 <button onClick={()=>dispatch(toggleSidebar())}
-                        className={`menu-button transition-opacity duration-300 ${sidebarOpenned ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+                        className={`menu-button transition-opacity justify-self-start duration-300 ${sidebarOpenned ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
                     <Icon icon="material-symbols:menu" />
                 </button>
-            )}
             <div className="flex items-center space-x-4">
                 <button onClick={toggleDarkMode} className="p-2">
                     <Icon icon={darkMode ? "ph:moon" : "ph:sun"} className="text-lg"/>

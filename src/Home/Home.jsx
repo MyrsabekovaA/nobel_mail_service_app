@@ -8,16 +8,14 @@ import { useSelector } from 'react-redux';
 function Home() {
     let sidebarOpenned = useSelector((state)=>state.sidebar.openned)
     return (
-        <div className="flex flex-col h-screen">
-            <div className={`grid ${sidebarOpenned ? 'grid-cols-[280px,1fr]' : 'grid-cols-[100px,1fr]'}`}>
-                <Sidebar/>
-                <div className="flex flex-col">
+        <div className="flex justify-between fixed t-0 w-full">
+                <Sidebar className={`basis-${sidebarOpenned ? "280":"100"}px`}/>
+                <div className="flex flex-col flex-grow">
                     <Header/>
                     <main className="flex-grow lg:pt-20 pt-16">
                         <Outlet/>
                     </main>
                 </div>
-            </div>
         </div>
     );
 }
