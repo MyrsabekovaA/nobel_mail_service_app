@@ -17,7 +17,7 @@ const Sidebar = (props) => {
                 <div className="flex items-center w-full justify-between" style={{ paddingTop: '20px', paddingLeft: '30px' }}>
                     <Image src={Logo} style={{ height: '40px', width: '40px' }} />
                     {sidebarOpenned && <button onClick={()=>dispatch(toggleSidebar())} className=" text-xl text-white">
-                        <Icon icon={sidebarOpenned?"material-symbols:close":"material-symbols:menu"} color="black" />
+                        <Icon icon="material-symbols:close" color="black" />
                     </button>}
                 </div>
                 
