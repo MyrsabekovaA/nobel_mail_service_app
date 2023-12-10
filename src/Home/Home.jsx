@@ -1,12 +1,13 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import '/@/Home/Home.css'
+import MyComponent from '/@/example';
 
 function Home() {
     return (
         <div>
             <div className='w-24'>
-                <h1>Welcome to the Home Page</h1>
+                <MyComponent/>
             </div>
             
             <Outlet/>
