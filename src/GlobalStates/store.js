@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import isLoggedInReducer from "/@/GlobalStates/LoggedIn";
+import  isLoggedInReducer  from "/@/GlobalStates/LoggedIn"
+import sidebarReducer from "/@/GlobalStates/Sidebar"
 
 const store = configureStore({
     reducer: {
-        isLoggedIn: isLoggedInReducer,
+        loggedIn: isLoggedInReducer,
+        sidebar: sidebarReducer,
     },
-});
+})
 
-export default store;
+export default store

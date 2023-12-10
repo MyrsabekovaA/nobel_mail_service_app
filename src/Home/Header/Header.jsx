@@ -1,5 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import { sidebarActions } from '/@/GlobalStates/Sidebar';
 import English from '../../../dist/lang/Flag_of_the_U.S..svg';
 import Ukrainian from '../../../dist/lang/Flag_of_Ukraine.svg';
 import './Header.css';
@@ -8,11 +9,14 @@ import {Image, Dropdown} from "react-bootstrap";
 
 const Header = ({ isSidebarOpen, onToggleSidebar }) => {
     const [darkMode, setDarkMode] = useState(false);
-    const isUserLoggedIn = useSelector(state => state.isLoggedIn);
     const [selectedLanguage, setSelectedLanguage] = useState(English);
     const [showDropdown, setShowDropdown] = useState(false);
     const dropdownRef = useRef(null);
 
+    const dispatch = useDispatch()
+
+    const sidebarOpenned = useSelector((state)=>state.sidebar.openned)
+    const toggleSidebar = sidebarActions.toggleSidebarOpenned
     const handleSelectLanguage = (languageFlag) => {
         setSelectedLanguage(languageFlag);
         setShowDropdown(false);
@@ -39,20 +43,16 @@ const Header = ({ isSidebarOpen, onToggleSidebar }) => {
         setDarkMode(!darkMode);
     };
 
-    if (!useSelector(state => state.isLoggedIn)) {
-        return null;
-    }
-
     const headerStyle = {
         width: isSidebarOpen ? 'calc(100vw - 280px)' : 'calc(100vw - 100px)'
     };
 
     return (
-        <header className={`flex fixed top-0 z-10 bg-white shadow-md p-1 lg:h-20 h-16 ${isSidebarOpen ? 'justify-end' : 'justify-between'}`}
+        <header className={`flex fixed top-0 z-10 bg-white shadow-md p-1 lg:h-20 h-16 ${sidebarOpenned ? 'justify-end' : 'justify-between'}`}
                 style={headerStyle}>
-            {!isSidebarOpen && (
-                <button onClick={onToggleSidebar}
-                        className={`menu-button transition-opacity duration-300 ${isSidebarOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+            {!sidebarOpenned && (
+                <button onClick={()=>dispatch(toggleSidebar())}
+                        className={`menu-button transition-opacity duration-300 ${sidebarOpenned ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
                     <Icon icon="material-symbols:menu" />
                 </button>
             )}
