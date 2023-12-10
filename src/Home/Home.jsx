@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Header from '/@/Home/Header/Header';
+import Sidebar from '/@/Home/SideBar/SideBar';
 import { Outlet } from 'react-router-dom';
 import '/@/Home/Home.css'
-import MyComponent from '/@/example';
+import { useSelector } from 'react-redux';
 
 function Home() {
+    let sidebarOpenned = useSelector((state)=>state.sidebar.openned)
     return (
-        <div>
-            <div className='w-24'>
-                <MyComponent/>
-            </div>
-            
-            <Outlet/>
+        <div className="flex justify-between fixed t-0 w-full">
+                <Sidebar className={`basis-${sidebarOpenned ? "280":"100"}px`}/>
+                <div className="flex flex-col flex-grow">
+                    <Header/>
+                    <main className="flex-grow lg:pt-20 pt-16">
+                        <Outlet/>
+                    </main>
+                </div>
         </div>
     );
 }
