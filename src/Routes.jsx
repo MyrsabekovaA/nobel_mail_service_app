@@ -9,13 +9,18 @@ export const router = createBrowserRouter([
     {
         "path": "/",
         "exact" : true,
-        // "loader": Loader,
-        "element": <LoginForm/>
+        "loader": ()=>{
+            return redirect("/logInForm")
+        }
+    },
+    {
+        "path": "logInForm",
+        //action
+        "element": (<LoginForm/>)
     },
     {
         "path": "home",
-        // "loader": Loader,
-        "element": <Home />,
+        "element": (<Home/>),
         "children": [
             {
                 "path": "",
@@ -29,6 +34,5 @@ export const router = createBrowserRouter([
         ]
     }
 ], {"basename": '/'})
-
 
 export default router
