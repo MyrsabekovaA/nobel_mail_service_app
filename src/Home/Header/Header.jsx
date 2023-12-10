@@ -7,7 +7,7 @@ import './Header.css';
 import {Icon} from '@iconify/react';
 import {Image, Dropdown} from "react-bootstrap";
 
-const Header = ({ isSidebarOpen, onToggleSidebar }) => {
+const Header = (props) => {
     const [darkMode, setDarkMode] = useState(false);
     const [selectedLanguage, setSelectedLanguage] = useState(English);
     const [showDropdown, setShowDropdown] = useState(false);
@@ -44,7 +44,7 @@ const Header = ({ isSidebarOpen, onToggleSidebar }) => {
     };
 
     const headerStyle = {
-        width: isSidebarOpen ? 'calc(100vw - 280px)' : 'calc(100vw - 100px)'
+        width: sidebarOpenned ? 'calc(100vw - 280px)' : 'calc(100vw - 100px)'
     };
 
     return (

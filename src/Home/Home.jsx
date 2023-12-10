@@ -6,17 +6,13 @@ import '/@/Home/Home.css'
 import { useSelector } from 'react-redux';
 
 function Home() {
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     let sidebarOpenned = useSelector((state)=>state.sidebar.openned)
-    const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen);
-    };
     return (
         <div className="flex flex-col h-screen">
             <div className={`grid ${sidebarOpenned ? 'grid-cols-[280px,1fr]' : 'grid-cols-[100px,1fr]'}`}>
                 <Sidebar/>
                 <div className="flex flex-col">
-                    <Header isSidebarOpen={sidebarOpenned} onToggleSidebar={sidebarOpenned} />
+                    <Header/>
                     <main className="flex-grow lg:pt-20 pt-16">
                         <Outlet/>
                     </main>
