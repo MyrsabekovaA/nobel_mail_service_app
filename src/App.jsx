@@ -1,7 +1,6 @@
 import React, { Component} from 'react';
 import { RouterProvider } from 'react-router-dom';
 import { Provider, useSelector } from 'react-redux';
-import Header from '/@/components/Header/Header';
 import router from '/@/Routes';
 import store from '/@/GlobalStates/store';
 import { logIn, logOut} from '/@/GlobalStates/LoggedIn';
@@ -23,7 +22,6 @@ class App extends Component {
         return (
             <Provider store={store}>
                 <RouterProvider router={router}>
-                    <Header />
                 </RouterProvider>
             </Provider>
         );
