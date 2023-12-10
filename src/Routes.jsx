@@ -1,8 +1,9 @@
 import * as react from "react"
 import LoginForm from "/@/LoginForm/LoginForm";
+// import Loader from "/@/routesControll/loaders";
 import Home from "/@/Home/Home";
 import ContactList from "/@/Home/ContactList/ContactList";
-import { createBrowserRouter, redirect, createHashRouter} from "react-router-dom";
+import { createBrowserRouter, redirect, createHashRouter} from "react-router-dom"
 
 export const router = createBrowserRouter([
     {
@@ -33,6 +34,5 @@ export const router = createBrowserRouter([
         ]
     }
 ], {"basename": '/'})
-
 
 export default router
