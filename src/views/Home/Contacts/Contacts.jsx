@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-import '/@/Contacts/Contacts.css'
+import './Contacts.css'
 
 import ContactsTable from './ContactsTable/ContactsTable';
 import Pagination from './Pagination/Pagination';
@@ -167,8 +167,8 @@ function Contacts() {
     };
 
     return (
-        <div>
-            <div className='min-h-full h-screen bg-slate-100 dark:bg-gray-900  mt-10'>
+        <div className='min-h-full min-w-full'>
+            <div className='min-h-full min-w-full bg-slate-100 dark:bg-gray-900 pt-10'>
                 <div className='container mx-auto px-4'>
                     {/* top */}
                     <div className='flex gap-4 flex-wrap justify-between'>

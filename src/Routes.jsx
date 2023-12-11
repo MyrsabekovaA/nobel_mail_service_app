@@ -1,9 +1,9 @@
 import * as react from "react"
-import LoginForm from "/@/LoginForm/LoginForm";
-import Home from "/@/Home/Home";
-import Contacts from "/@/Contacts/Contacts";
-import ContactList from "/@/Home/ContactList/ContactList";
+import LoginForm from "/@views/LoginForm/LoginForm";
+import Home from "/@views/Home/Home";
+import Contacts from "/@views/Home/Contacts/Contacts";
 import { createBrowserRouter, redirect, createHashRouter} from "react-router-dom";
+import ContactsTable from "./views/Home/Contacts/ContactsTable/ContactsTable";
 
 export const router = createBrowserRouter([
     {
@@ -28,8 +28,8 @@ export const router = createBrowserRouter([
                 "element": <div></div>
             },
             {
-                "path": "contactList",
-                "element": <ContactList/>
+                "path": "contacts",
+                "element": <Contacts/>
             }
         ]
     },

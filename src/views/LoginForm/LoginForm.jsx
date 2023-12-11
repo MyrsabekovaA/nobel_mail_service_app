@@ -6,7 +6,7 @@ import {Icon} from '@iconify/react';
 import eyeOffFill from '@iconify-icons/eva/eye-off-fill'
 import eyeFill from '@iconify-icons/eva/eye-fill';
 import Logo from '/Nobel_logo.png';
-import '/@/LoginForm/LoginForm.css';
+import '/@views/LoginForm/LoginForm.css';
 import {useDispatch} from "react-redux";
 
 
