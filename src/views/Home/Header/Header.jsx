@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import { sidebarActions } from '/@/GlobalStates/Sidebar';
 import { languageActions, LANGUAGE_IMG } from '/@/GlobalStates/Language';
+import { themeActions, THEME_NAMES } from '/@/GlobalStates/Theme';
 import English from '/Flag_of_the_U.S..svg';
 import Ukrainian from '/Flag_of_Ukraine.svg';
 import './Header.css';
@@ -10,8 +11,6 @@ import {Image} from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown"
 
 const Header = (props) => {
-    const [darkMode, setDarkMode] = useState(false);
-    const [showDropdown, setShowDropdown] = useState(false);
 
     const dispatch = useDispatch()
 
@@ -21,19 +20,13 @@ const Header = (props) => {
     const language = useSelector((state)=>state.language.value)
     const languageImg = LANGUAGE_IMG[language]
     const changeLanguage = (languageName)=>{
-        setShowDropdown(false)
         return dispatch(
             languageActions.setLanguage({language: languageName})
             )
     }
 
-    const handleToggleDropdown = () => {
-        setShowDropdown(!showDropdown);
-    };
-
-    const toggleDarkMode = () => {
-        setDarkMode(!darkMode);
-    };
+    const theme = useSelector((state)=>state.theme.value)
+    const themeForward = () => dispatch(themeActions.nextTheme())
 
     return (
         <header className={`flex w-full bg-white shadow-md p-1 lg:h-20 h-16 justify-between`}>
@@ -43,8 +36,8 @@ const Header = (props) => {
                 <Icon icon="material-symbols:menu" />
             </button>
             <div className="flex items-center space-x-4">
-                <button onClick={toggleDarkMode} className="p-2">
-                    <Icon icon={darkMode ? "ph:moon" : "ph:sun"} className="text-lg"/>
+                <button onClick={themeForward} className="p-2">
+                    <Icon icon={["ph:moon", "ph:sun"][THEME_NAMES.indexOf(theme)]} className="text-lg"/>
                 </button>
                 <Dropdown align="end" id="lang_dropdown">
                     <Dropdown.Toggle variant="transparent" className="p-2">
