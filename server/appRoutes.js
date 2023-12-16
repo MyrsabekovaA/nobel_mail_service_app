@@ -18,17 +18,11 @@ app.post('/api/auth/login', (req,res)=>{
     if(req.body.password==="admin"
     && req.body.email==="admin") {
         res.send(JSON.stringify({
-            "token":"xui",
-            "user": {
-              "name": "jfk",
-              "email": "klusha@gmail"
-            }
+           token: "300bucks", user: { email: "luntik@p", name: "benedykt"}
         }))
     }
     else {
-        res.send(JSON.stringify({
-            valid: false
-        }))
+        throw Error("bebra")
     }
 })
 

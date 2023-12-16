@@ -1,26 +1,28 @@
-import React, { Component } from 'react';
+import React, { Component} from 'react';
 import { RouterProvider } from 'react-router-dom';
+import { Provider, useSelector } from 'react-redux';
 import router from '/@/Routes';
-import { Provider } from 'react-redux';
 import store from '/@/GlobalStates/store';
+import { isLoggedInActions } from '/@/GlobalStates/LoggedIn';
 import '/@/App.css';
 
 class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isUserLoggedIn: false,
-        };
+    componentDidMount() {
+        store.dispatch(isLoggedInActions.setTrueLogIn());
     }
 
-    handleLoginSuccess = () => {
-        this.setState({ isUserLoggedIn: true });
-    }
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //         isUserLoggedIn: false,
+    //     };
+    // }
 
     render() {
         return (
             <Provider store={store}>
-                <RouterProvider router={router}/>
+                <RouterProvider router={router}>
+                </RouterProvider>
             </Provider>
         );
     }

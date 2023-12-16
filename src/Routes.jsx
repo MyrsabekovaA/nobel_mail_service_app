@@ -2,15 +2,16 @@ import * as react from "react"
 import { createBrowserRouter, redirect, createHashRouter} from "react-router-dom";
 
 //importing components
-import LoginForm from "/@/LoginForm/LoginForm";
-import Home from "/@/Home/Home";
-import ContactList from "/@/Home/ContactList/ContactList";
+import LoginForm from "/@views/LoginForm/LoginForm";
+import Home from "/@views/Home/Home";
+import Contacts from "/@views/Home/Contacts/Contacts";
 import EmailTemplates from "/@/Home/EmailTemplates/EmailTemplates";
 
 //importing loaders
 import {emailTemplatesLoader} from "/@/routesControll/loaders"
 //importing actions
-
+import {loginAction} from "/@/actions/LogInForm"
+import ContactsTable from "./views/Home/Contacts/ContactsTable/ContactsTable";
 export const router = createBrowserRouter([
     {
         "path": "/",
@@ -21,7 +22,7 @@ export const router = createBrowserRouter([
     },
     {
         "path": "logInForm",
-        //action
+        "action" : loginAction,
         "element": (<LoginForm/>)
     },
     {
@@ -34,8 +35,8 @@ export const router = createBrowserRouter([
                 "element": <div></div>
             },
             {
-                "path": "contactList",
-                "element": <ContactList/>
+                "path": "contacts",
+                "element": <Contacts/>
             },
             {
                 "path": "emailTemplates",
@@ -43,7 +44,18 @@ export const router = createBrowserRouter([
                 "loader": emailTemplatesLoader
             }
         ]
-    }
+    },
+    {
+        "path": "contacts",
+        "element": (<Contacts/>),
+        // "children": [
+        //     {
+        //         "path": "",
+        //         "index": true,
+        //         "element": <div></div>
+        //     },
+        // ]
+    },
 ], {"basename": '/'})
 
 
