@@ -12,17 +12,15 @@ app.get('/api/mail-templates', (req, res)=>{
     }))
 })
 
-app.get('/api/autorize', (req,res)=>{
-    if(req.query.password==="admin"
-    && req.query.email==="admin") {
+app.post('/auth/login', (req,res)=>{
+    if(req.body.password==="admin"
+    && req.body.email==="admin") {
         res.send(JSON.stringify({
-            valid: true
+           token: "300bucks", user: { email: "luntik@p", name: "benedykt"}
         }))
     }
     else {
-        res.send(JSON.stringify({
-            valid: false
-        }))
+        throw Error("bebra")
     }
 })
 

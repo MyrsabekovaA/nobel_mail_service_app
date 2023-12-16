@@ -4,8 +4,18 @@ const loginAction = async ({params, request}) => {
     const response = await request.formData()
     const email = response.get("email")
     const password = response.get("password")
-    // const data = fetch()
-    return redirect("/logInForm")
+    try {
+        const data = await fetch("http://localhost:3000/", {
+            method: "POST",
+            data: {
+                email,
+                password
+            }
+        });
+        return redirect("/Home")
+    } catch(err) {
+        redirect("/LogInForm")
+    }
 }
 
 export { loginAction };
