@@ -6,18 +6,13 @@ import store from "/@/GlobalStates/store";
 import { isLoggedInActions } from "/@/GlobalStates/LoggedIn";
 import "/@/App.css";
 
-class App extends Component {
-  componentDidMount() {
-    store.dispatch(isLoggedInActions.setTrueLogIn());
-  }
-
-  render() {
-    return (
-      <Provider store={store}>
-        <RouterProvider router={router}></RouterProvider>
-      </Provider>
-    );
-  }
+const App = ()=>{
+          return (
+            <Provider store={store}>
+                <RouterProvider router={router}>
+                </RouterProvider>
+            </Provider>
+        );
 }
 
 export default App;

@@ -5,6 +5,7 @@ import "./NavMenu.css";
 const NavMenu = (props)=>{
     return <div>
         <NavLink to="/home/contacts">Contacts</NavLink>
+        <NavLink to="/home/emailTemplates">Email templates</NavLink>
     </div>
 }
 

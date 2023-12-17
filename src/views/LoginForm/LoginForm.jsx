@@ -1,12 +1,12 @@
 import React, {useState} from "react";
-import { useNavigate, useSubmit } from "react-router-dom";
+import { Navigate, useNavigate, useSubmit } from "react-router-dom";
 import {Card, Form, Button, Container, Image, InputGroup, Row, Col} from 'react-bootstrap';
 import {Icon} from '@iconify/react';
 import eyeOffFill from '@iconify-icons/eva/eye-off-fill'
 import eyeFill from '@iconify-icons/eva/eye-fill';
 import Logo from '/Nobel_logo.png';
 import '/@views/LoginForm/LoginForm.css';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 
 function FloatingLabelInput({label, type, value, onChange, children, id}) {
@@ -42,6 +42,11 @@ function LoginForm() {
             action: "/LogInForm"
         })
     };
+    let isLoggedIn = useSelector(state=>state.loggedIn.value)
+    if (isLoggedIn) {
+        return <Navigate to = {localStorage.getItem("lastRoute") || "/Home"}/>
+    }
+    console.log(isLoggedIn)
 
     const renderForm = (
         <Container>

@@ -1,14 +1,15 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { sidebarActions } from "/@/GlobalStates/Sidebar";
-import { languageActions, LANGUAGE_IMG } from "/@/GlobalStates/Language";
-import { themeActions, THEME_NAMES } from "/@/GlobalStates/Theme";
-import English from "/Flag_of_the_U.S..svg";
-import Ukrainian from "/Flag_of_Ukraine.svg";
-import "./Header.css";
-import { Icon } from "@iconify/react";
-import { Image } from "react-bootstrap";
-import Dropdown from "react-bootstrap/Dropdown";
+import React, {useState} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import { sidebarActions } from '/@/GlobalStates/Sidebar';
+import { languageActions, LANGUAGE_IMG } from '/@/GlobalStates/Language';
+import { themeActions, THEME_NAMES } from '/@/GlobalStates/Theme';
+import { logOut, checkToken} from '/@/GlobalStates/LoggedIn';
+import English from '/Flag_of_the_U.S..svg';
+import Ukrainian from '/Flag_of_Ukraine.svg';
+import './Header.css';
+import {Icon} from '@iconify/react';
+import {Image} from "react-bootstrap";
+import Dropdown from "react-bootstrap/Dropdown"
 
 const Header = (props) => {
   const dispatch = useDispatch();
@@ -76,14 +77,14 @@ const Header = (props) => {
             <Icon icon="ph:user" className="text-lg" />
           </Dropdown.Toggle>
 
-          <Dropdown.Menu>
-            <Dropdown.Item href="#/profile">Profile</Dropdown.Item>
-            <Dropdown.Item href="#/settings">Settings</Dropdown.Item>
-            <Dropdown.Item href="#/logout">Logout</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-      </div>
-    </header>
-  );
+                    <Dropdown.Menu>
+                        <Dropdown.Item href="#/profile">Profile</Dropdown.Item>
+                        <Dropdown.Item >Settings</Dropdown.Item>
+                        <Dropdown.Item onClick={()=>dispatch(logOut({token:"g", user:{email:"as", name:"f"}}))}>Logout</Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
+            </div>
+        </header>
+    );
 };
 export default Header;

@@ -1,15 +1,34 @@
-import React, { useState, useEffect } from "react";
-import Header from "./Header/Header";
-import Sidebar from "./SideBar/SideBar";
-import { Outlet } from "react-router-dom";
-import "./Home.css";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import Header from './Header/Header';
+import Sidebar from './SideBar/SideBar';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import './Home.css'
+import { useDispatch, useSelector } from 'react-redux';
+import { checkToken, isLoggedInActions } from '/@/GlobalStates/LoggedIn';
+import  store  from '/@/GlobalStates/store';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Home() {
+    
+
+    const location = useLocation();
+    useEffect(() => {
+        let {dispatch} = store
+        const token = localStorage.getItem("token")
+        const name = localStorage.getItem("name")
+        const email = localStorage.getItem("email")
+        dispatch(checkToken({token, user:{name, email}}))
+        dispatch(isLoggedInActions.setLastRoute({route:location.pathname}))
+    }, [location]);
   let sidebarOpenned = useSelector((state) => state.sidebar.openned);
 
+    let isLoggedIn = useSelector(state=>state.loggedIn.value)
+    if (!isLoggedIn) {
+        return <Navigate to = "/LogInForm"/>
+    }
+    
+    console.log(isLoggedIn)
   return (
     <div className="relative flex justify-between  t-0 w-full h-full">
       <Sidebar />
