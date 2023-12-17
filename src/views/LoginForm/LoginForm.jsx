@@ -1,6 +1,5 @@
 import React, {useState} from "react";
-import { useNavigate } from "react-router-dom";
-import {login} from '/@/actions/authActions';
+import { useNavigate, useSubmit } from "react-router-dom";
 import {Card, Form, Button, Container, Image, InputGroup, Row, Col} from 'react-bootstrap';
 import {Icon} from '@iconify/react';
 import eyeOffFill from '@iconify-icons/eva/eye-off-fill'
@@ -32,27 +31,16 @@ function FloatingLabelInput({label, type, value, onChange, children, id}) {
 }
 
 function LoginForm() {
-    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
-    const [loading, setLoading] = useState(false);
-
-    const dispatch = useDispatch();
-
+    let submit = useSubmit()
     const handleSubmit = async (event) => {
-        event.preventDefault();
-        setLoading(true);
-
-        try {
-            await dispatch(login(email, password));
-            navigate("/home");
-        } catch (error) {
-            alert(error.message);
-        } finally {
-            setLoading(false);
-        }
+        submit({password, email}, {
+            method: "post",
+            action: "/LogInForm"
+        })
     };
 
     const renderForm = (

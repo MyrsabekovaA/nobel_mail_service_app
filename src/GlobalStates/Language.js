@@ -8,7 +8,7 @@ const LANGUAGE_IMG = {
 }
 
 const languageSlice = createSlice({
-    name: "language",
+    name: "Language",
     initialState: {
         value: "English",
         img: English
