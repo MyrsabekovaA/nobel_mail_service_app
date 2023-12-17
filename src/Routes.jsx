@@ -5,57 +5,60 @@ import { createBrowserRouter, redirect, createHashRouter} from "react-router-dom
 import LoginForm from "/@views/LoginForm/LoginForm";
 import Home from "/@views/Home/Home";
 import Contacts from "/@views/Home/Contacts/Contacts";
-import EmailTemplates from "/@/Home/EmailTemplates/EmailTemplates";
+import EmailTemplates from "/@views/Home/EmailTemplates/EmailTemplates";
 
 //importing loaders
-import {emailTemplatesLoader} from "/@/routesControll/loaders"
+import {emailTemplatesLoader} from "/@/loaders/EmailTemplates";
+import LoginFormLoader from "./loaders/LogInForm";
 //importing actions
-import {loginAction} from "/@/actions/LogInForm"
+import {loginAction} from "/@/actions/LogInForm";
+
 import ContactsTable from "./views/Home/Contacts/ContactsTable/ContactsTable";
 export const router = createBrowserRouter([
-    {
-        "path": "/",
-        "exact" : true,
-        "loader": ()=>{
-            return redirect("/home/emailTemplates")
+        {"path": "/",
+        "exact": true,
+        loader: ()=>{
+            return redirect("/loginForm")
         }
-    },
-    {
-        "path": "logInForm",
-        "action" : loginAction,
-        "element": (<LoginForm/>)
-    },
-    {
-        "path": "home",
-        "element": (<Home/>),
-        "children": [
+        },
+        {
+            "path": "logInForm",
+            "action" : loginAction,
+            "loader": LoginFormLoader,
+            "element": (<LoginForm/>)
+            },
             {
-                "path": "",
-                "index": true,
-                "element": <div></div>
+                "path": "home",
+                "element": (<Home/>),
+                "children": [
+                    {
+                        "path": "",
+                        "index": true,
+                        "element": <div></div>
+                    },
+                    {
+                        "path": "contacts",
+                        "element": <Contacts/>
+                    },
+                    {
+                        "path": "emailTemplates",
+                        "element": <EmailTemplates/>,
+                        "loader": emailTemplatesLoader
+                    }
+                ]
             },
             {
                 "path": "contacts",
-                "element": <Contacts/>
+                "element": (<Contacts/>),
+                // "children": [
+                //     {
+                //         "path": "",
+                //         "index": true,
+                //         "element": <div></div>
+                //     },
+                // ]
             },
-            {
-                "path": "emailTemplates",
-                "element": <EmailTemplates/>,
-                "loader": emailTemplatesLoader
-            }
-        ]
-    },
-    {
-        "path": "contacts",
-        "element": (<Contacts/>),
-        // "children": [
-        //     {
-        //         "path": "",
-        //         "index": true,
-        //         "element": <div></div>
-        //     },
-        // ]
-    },
+    
 ], {"basename": '/'})
 
 

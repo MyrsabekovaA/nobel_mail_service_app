@@ -13,8 +13,22 @@ app.get('/api/mail-templates', (req, res)=>{
         "googleDriveId": "Qwwkjr54-fdkjg"
     }]}))
 })
-
+app.get('/api/auth/current', (req, res)=>{
+  let token = req.headers.token
+  if(token==="300bucks") {
+    res.status(200).send(JSON.stringify({
+      token: "300buks",
+      user: {
+        email: "skjfhs",
+        name: "sjfdhks"
+      }
+    }))
+  } else {
+    res.status(400).send(Error("Token expired"))
+  }
+})
 app.post('/api/auth/login', (req,res)=>{
+  
     if(req.body.password==="admin"
     && req.body.email==="admin") {
         res.send(JSON.stringify({
@@ -22,10 +36,19 @@ app.post('/api/auth/login', (req,res)=>{
         }))
     }
     else {
-        throw Error("bebra")
+        res.status(400)
+        res.send("Invalid email or password")
     }
 })
-
+app.post('/api/auth/logout', (req, res)=>{
+  res.status(200).send(JSON.stringify({
+    token: "sf",
+    user: {
+      email: "dsf",
+      name: "sf"
+    }
+  }))
+})
 app.get("/api/contacts", (req,res)=>{
     res.send(JSON.stringify([{
         "id": 1,
