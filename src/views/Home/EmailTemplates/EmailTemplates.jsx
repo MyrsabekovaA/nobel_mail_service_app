@@ -3,7 +3,7 @@ import { useLoaderData } from "react-router-dom";
 import EmailTemplate from "./EmailTemplate/EmailTemplate";
 import "./EmailTemplates.css"
 function EmailTemplates(props) {
-    let templates = useLoaderData().data
+    let templates = useLoaderData()
     let [allInputsValue, setAllInputsValue] = useState(false)
     function changeAllInputsValues(e) {
         setAllInputsValue(e.target.checked)

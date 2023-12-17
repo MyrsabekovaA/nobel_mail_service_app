@@ -7,10 +7,9 @@ const loginAction = async ({params, request}) => {
     const email = response.get("email")
     const password = response.get("password")
     try {
-        const auth = await fetch("http://localhost:3000/api/auth/login", {
+        const auth = await fetch("http://52.59.202.2:3000/api/auth/login", {
             method: "POST",
             headers: {
-                Accept: 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
