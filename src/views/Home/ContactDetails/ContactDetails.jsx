@@ -1,183 +1,368 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import Datepicker from "tailwind-datepicker-react";
 
 import "./ContactDetails.css";
 import ContactActivityList from "./ContactsActivityList/ContactsActivityList";
+import LoadingOverlay from "../../../components/LoadingOverlay/LoadingOverlay";
+import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 
 function ContactDetails() {
-  let { contactId } = useParams();
-  // const [isLoading, setIsLoading] = useState(true);
-  const [contact, setContact] = useState({
-    id: 1,
-    firstName: "Alice",
-    lastName: "Johnson",
-    email: "alice@example.com",
-    age: 30,
-    country: "Canada",
-    timezone: "GMT-04:00",
-    sourceOfReferral: "Website",
-    eduQuestSelectedDateTime: "2023-10-03T15:45:00Z",
-    eduQuestDecision: "Pending",
-    activities: [
-      {
-        typeOfActivity: "Email",
-        activityDescription: "User opened an email",
-        createdAt: "10/20/23 22:00",
-      },
-      {
-        typeOfActivity: "Unsubscibed",
-        activityDescription: "User opened an email",
-        createdAt: "10/20/23 22:00",
-      },
-      {
-        typeOfActivity: "Subscribed",
-        activityDescription: "User opened an email",
-        createdAt: "10/20/23 22:00",
-      },
-    ],
-  });
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODA1MGRlNzkyMDc2YmUzY2I1ZTE3OSIsImlhdCI6MTcwMzA3Nzk4OSwiZXhwIjoxNzAzMTQ5OTg5fQ.6GuR9Ry1UIk5IPQyk6f8HQlOSl6rC9bhM7XAe-d_KW8";
+
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  const options = {
+    title: "Select Birth Date",
+    autoHide: true,
+    todayBtn: false,
+    clearBtn: true,
+    clearBtnText: "Clear",
+    maxDate: new Date("2030-01-01"),
+    minDate: new Date("1950-01-01"),
+    theme: {
+      todayBtn: "",
+      clearBtn: "",
+      background: "bg-white dark:bg-slate-800 shadow",
+      text: "text-slate-600 dark:text-slate-200 ",
+      disabledText: "text-gray-400",
+      input: "border-gray-300 focus:border-green-500",
+      inputIcon: "text-green-500",
+      selected: "bg-green-500 text-white hover:bg-green-500",
+    },
+    icons: {
+      // () => ReactElement | JSX.Element
+      prev: () => (
+        <span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
+            />
+          </svg>
+        </span>
+      ),
+      next: () => (
+        <span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+            />
+          </svg>
+        </span>
+      ),
+    },
+    datepickerClassNames: "top-15",
+    defaultDate: "",
+    language: "en",
+    disabledDates: [],
+    weekDays: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+    inputNameProp: "date",
+    inputIdProp: "date",
+    inputPlaceholderProp: "Select Date",
+    inputDateFormatProp: {
+      day: "numeric",
+      month: "numeric",
+      year: "numeric",
+    },
+  };
+
+  const [show, setShow] = useState(false);
+  let { contactid } = useParams();
+  const [isOverlayLoading, setIsOverlayLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [contact, setContact] = useState({});
+  // useEffect(() => {
+  //   console.log(contact);
+  // }, [contact]);
+
+  const handleClose = (state) => {
+    setShow(state);
+  };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { id, value } = e.target;
+    // console.log(e);
     setContact((prevContact) => ({
       ...prevContact,
-      [name]: value,
+      [id]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`/api/contacts/${contactId}`, contact);
+      setIsOverlayLoading(true);
+      const response = await axios.put(
+        `http://52.59.202.2:3000/api/contacts/${contactid}`,
+        contact,
+        { headers: headers }
+      );
+      if (response.status === 200) {
+        fetchContactData();
+      }
     } catch (error) {
       console.error("Error updating contact", error);
+    } finally {
+      setIsOverlayLoading(false);
     }
-    // setIsLoading(false);
   };
-  // useEffect(() => {
-  //   const fetchContactData = async () => {
-  //     try {
-  //       setIsLoading(true);
-  //       const response = await axios.get(`/api/contacts/${contactId}`);
-  //       setContact(response.data);
-  //       setIsLoading(false);
-  //     } catch (error) {
-  //       console.error('Error fetching contact', error);
-  //       setIsLoading(false);
-  //     }
-  //   };
 
-  //   fetchContactData();
-  // }, [contactId]);
+  const fetchContactData = async () => {
+    try {
+      setIsOverlayLoading(true);
+      const response = await axios.get(
+        `http://52.59.202.2:3000/api/contacts/${contactid}`,
+        { headers: headers }
+      );
+      const data = response.data;
 
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
+      setContact({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        timezone: data.timezone,
+        age: data.age,
+        birthDate: new Date(data.birthDate),
+        country: data.country,
+        city: data.city,
+        occupation: data.occupation.toLowerCase(),
+        gender: data.gender.toLowerCase(),
+        eduQuestSelectedDateTime: new Date(data.eduQuestSelectedDateTime),
+      });
+    } catch (error) {
+      console.error("Error fetching contact", error);
+    } finally {
+      setIsOverlayLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchContactData();
+  }, [contactid]);
 
   return (
-    <div className="bg-slate-100 dark:bg-gray-900 min-h-full h-screen">
+    <div className="bg-slate-100 dark:bg-gray-900  flex-1 py-8">
       <div className="container mx-auto px-4">
         {contact ? (
           <div className="flex flex-col md:flex-row gap-10">
-            <div className="flex-1 bg-slate-800 ">
-              <form
-                className="flex flex-col gap-4 p-6 rounded-md"
-                onSubmit={handleSubmit}
+            <div className="flex-1 bg-slate-200 ">
+              <form className="flex flex-col px-4 py-2">
+                <p className="dark:text-slate-200 mb-6">General Information</p>
+                <div className="flex flex-col gap-4">
+                  <div className="form-item">
+                    <label className="create-label" htmlFor="firstName">
+                      First Name
+                    </label>
+                    <input
+                      onChange={handleChange}
+                      value={contact.firstName}
+                      className="create-input"
+                      type="text"
+                      id="firstName"
+                    />
+                  </div>
+                  <div className="form-item">
+                    <label className="create-label" htmlFor="lastName">
+                      Second Name
+                    </label>
+                    <input
+                      onChange={handleChange}
+                      value={contact.lastName}
+                      className="create-input"
+                      type="text"
+                      id="lastName"
+                    />
+                  </div>
+                  <div className="form-item">
+                    <label className="create-label" htmlFor="email">
+                      Email
+                    </label>
+                    <input
+                      onChange={handleChange}
+                      value={contact.email}
+                      className="create-input"
+                      type="email"
+                      id="email"
+                    />
+                  </div>
+                  <div className="form-item">
+                    <label className="create-label" htmlFor="timezone">
+                      Timezone
+                    </label>
+                    <input
+                      onChange={handleChange}
+                      value={contact.timezone}
+                      className="create-input"
+                      type="text"
+                      id="timezone"
+                    />
+                  </div>
+                </div>
+                <p className="dark:text-slate-200 mt-4 mb-4">
+                  Personal Information
+                </p>
+                <div className="flex flex-col gap-4">
+                  <div className="form-item relative">
+                    <label className="create-label" htmlFor="birthDate">
+                      Birth Date
+                    </label>
+                    <Datepicker
+                      options={options}
+                      onChange={(date) =>
+                        setContact((prevContact) => ({
+                          ...prevContact,
+                          birthDate: date,
+                        }))
+                      }
+                      show={show}
+                      setShow={handleClose}
+                      value={contact.birthDate}
+                      className="form-date"
+                      type="text"
+                      id="birthDate"
+                    />
+                  </div>
+                  <div className="form-item">
+                    <label className="create-label" htmlFor="age">
+                      Age
+                    </label>
+                    <input
+                      onChange={(e) =>
+                        setContact((prevContact) => ({
+                          ...prevContact,
+                          age: +e.target.value,
+                        }))
+                      }
+                      value={contact.age}
+                      className="create-input"
+                      type="number"
+                      id="age"
+                    />
+                  </div>
+                  <div className="form-item">
+                    <label className="create-label" htmlFor="country">
+                      Country
+                    </label>
+                    <input
+                      onChange={handleChange}
+                      value={contact.country}
+                      className="create-input"
+                      type="text"
+                      id="country"
+                    />
+                  </div>
+                  <div className="form-item">
+                    <label className="create-label" htmlFor="city">
+                      City
+                    </label>
+                    <input
+                      onChange={handleChange}
+                      value={contact.city}
+                      className="create-input"
+                      type="text"
+                      id="city"
+                    />
+                  </div>
+                  <div className="form-item">
+                    <label className="create-label" htmlFor="occupation">
+                      Occupation
+                    </label>
+                    <select
+                      onChange={handleChange}
+                      value={contact.occupation}
+                      className="create-input"
+                      type="text"
+                      id="occupation"
+                    >
+                      <option value="Student">Student</option>
+                      <option value="Employed">Employed</option>
+                      <option value="Unemployed">Unemployed</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                  <div className="form-item">
+                    <label className="create-label" htmlFor="gender">
+                      Gender
+                    </label>
+                    <select
+                      onChange={handleChange}
+                      value={contact.gender}
+                      className="create-input"
+                      type="text"
+                      id="gender"
+                    >
+                      <option value="other">Other</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select>
+                  </div>
+                </div>
+                <p className="dark:text-slate-200 mt-4 mb-4">
+                  EduQuest Information
+                </p>
+                <div className="flex flex-col gap-4">
+                  {/* <div className="form-item">
+              <label className="create-label" htmlFor="eqList">
+                Assign to EQ
+              </label>
+              <select
+                onChange={handleListAdd}
+                value={contact.listIds}
+                className="create-input"
+                type="text"
+                id="eqList"
               >
-                <h2 className=" font-medium text-lg dark:text-white text-slate-900 ">
-                  Contact Info
-                </h2>
-                <label className="form-item">
-                  First Name:
-                  <input
-                    type="text"
-                    name="firstName"
-                    value={contact.firstName}
-                    onChange={handleChange}
-                  />
-                </label>
-                <label className="form-item">
-                  Last Name:
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={contact.lastName}
-                    onChange={handleChange}
-                  />
-                </label>
-                <label className="form-item">
-                  Email:
-                  <input
-                    type="email"
-                    name="email"
-                    value={contact.email}
-                    onChange={handleChange}
-                  />
-                </label>
-                <label className="form-item">
-                  Age:
-                  <input
-                    type="number"
-                    name="age"
-                    value={contact.age}
-                    onChange={handleChange}
-                  />
-                </label>
-                <label className="form-item">
-                  Country:
-                  <input
-                    type="text"
-                    name="country"
-                    value={contact.country}
-                    onChange={handleChange}
-                  />
-                </label>
-                <label className="form-item">
-                  Timezone:
-                  <input
-                    type="text"
-                    name="timezone"
-                    value={contact.timezone}
-                    onChange={handleChange}
-                  />
-                </label>
-                <label className="form-item">
-                  Source of Referral:
-                  <input
-                    type="text"
-                    name="sourceOfReferral"
-                    value={contact.sourceOfReferral}
-                    onChange={handleChange}
-                  />
-                </label>
-                <label className="form-item">
-                  Selected Date/Time:
-                  <input
-                    type=""
-                    name="eduQuestSelectedDateTime"
-                    value={contact.eduQuestSelectedDateTime}
-                    onChange={handleChange}
-                  />
-                </label>
-                <label className="form-item">
-                  Decision:
-                  <select
-                    name="eduQuestDecision"
-                    value={contact.eduQuestDecision}
-                    onChange={handleChange}
+                <option value="">None</option>
+                {eqLists.map((eq) => (
+                  <option key={eq.id} value={eq.id}>
+                    {eq.eqDate}
+                  </option>
+                ))}
+              </select>
+            </div> */}
+                  <div className="form-item">
+                    <label
+                      className="create-label"
+                      htmlFor="eduQuestSelectedDateTime"
+                    >
+                      EQ selected date time
+                    </label>
+                    <input
+                      onChange={handleChange}
+                      value={contact.eduQuestSelectedDateTime}
+                      className="create-input"
+                      type="text"
+                      id="eduQuestSelectedDateTime"
+                    />
+                  </div>
+                  <button
+                    onClick={handleSubmit}
+                    className=" inline-flex self-end bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg hover:bg-green-400 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
                   >
-                    <option value="Pending">Pending</option>
-                    <option value="Selected">Selected</option>
-                    <option value="Rejected">Rejected</option>
-                  </select>
-                </label>
-                <button
-                  type="submit"
-                  className="flex mt-3 self-end bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg hover:bg-green-400 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                >
-                  Update Contact
-                </button>
+                    Save
+                  </button>
+                </div>
               </form>
             </div>
             <div className="flex-1">
@@ -195,13 +380,14 @@ function ContactDetails() {
                   <option value="something">Something</option>
                 </select>
               </div>
-              <ContactActivityList activities={contact.activities} />
+              {/* <ContactActivityList activities={contact.activities} /> */}
             </div>
           </div>
         ) : (
           <div>No contact found.</div>
         )}
       </div>
+      {isOverlayLoading && <LoadingOverlay />}
     </div>
   );
 }

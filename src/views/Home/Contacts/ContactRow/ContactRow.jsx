@@ -72,7 +72,7 @@ function ContactRow({ contact, onSelectContact, selectAll }) {
               : contact.eduQuestDecision === "Pending"
               ? "bg-orange-300"
               : "bg-red-300"
-          } w-4 h-4 rounded-full`}
+          } flex w-4 h-4 rounded-full`}
         ></div>
         {displayValueOrDash(contact.eduQuestDecision)}
       </td>

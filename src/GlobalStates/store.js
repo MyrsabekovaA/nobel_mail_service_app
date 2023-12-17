@@ -4,6 +4,7 @@ import sidebarReducer from "/@/GlobalStates/Sidebar"
 import contactsReducer from "/@/GlobalStates/Contacts"
 import languageSlice from "/@/GlobalStates/Language"
 import themeSlice from "/@/GlobalStates/Theme";
+import toastsSlice from "/@/GlobalStates/Toasts";
 
 const store = configureStore({
     reducer: {
@@ -11,7 +12,9 @@ const store = configureStore({
         sidebar: sidebarReducer,
         contacts: contactsReducer,
         language: languageSlice,
-        theme: themeSlice
+        theme: themeSlice,
+        toasts: toastsSlice,
+
     },
 })
 
