@@ -3,8 +3,8 @@ import LoginForm from "/@views/LoginForm/LoginForm";
 import Home from "/@views/Home/Home";
 import Contacts from "/@views/Home/Contacts/Contacts";
 
-import { createBrowserRouter, redirect} from "react-router-dom";
-import {loginAction} from "/@/actions/LogInForm"
+import { createBrowserRouter, redirect } from "react-router-dom";
+import { loginAction } from "/@/actions/LogInForm";
 
 import ContactsTable from "./views/Home/Contacts/ContactsTable/ContactsTable";
 import ContactDetails from "./views/Home/ContactDetails/ContactDetails";
@@ -18,10 +18,9 @@ export const router = createBrowserRouter(
       },
     },
     {
-
-        "path": "logInForm",
-        "action" : loginAction,
-        "element": (<LoginForm/>)
+      path: "logInForm",
+      action: loginAction,
+      element: <LoginForm />,
     },
     {
       path: "home",
