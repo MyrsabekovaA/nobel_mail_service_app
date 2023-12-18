@@ -106,7 +106,7 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
         </div>
         <div className="flex justify-end mt-6">
           <button
-            // onClick={handleSubmit}
+            onClick={onEdit}
             className="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg hover:bg-green-400 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             type="button"
           >
