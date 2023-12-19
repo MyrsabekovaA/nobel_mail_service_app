@@ -5,7 +5,7 @@ import Datepicker from "tailwind-datepicker-react";
 function CreateModal({ onClose, onCreate }) {
   const options = {
     title: "Select Birth Date",
-    autoHide: false,
+    autoHide: true,
     todayBtn: false,
     clearBtn: true,
     clearBtnText: "Clear",

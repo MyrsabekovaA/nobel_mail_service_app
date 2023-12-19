@@ -15,6 +15,12 @@ import LoadingOverlay from "../../../components/LoadingOverlay/LoadingOverlay";
 import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 
 function Contacts() {
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODA1MGRlNzkyMDc2YmUzY2I1ZTE3OSIsImlhdCI6MTcwMjk5NjcwMywiZXhwIjoxNzAzMDY4NzAzfQ.nEMNr5rwEOoeaHSf1SruYrQZhmyjJ572fY-017JpbQk";
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
   const [isLoading, setIsLoading] = useState(false);
   const [isOverlayLoading, setIsOverlayLoading] = useState(false);
   const [contacts, setContacts] = useState([]); // fetched contacts
@@ -31,11 +37,6 @@ function Contacts() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const fetchData = async (page, search = "") => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODA1MGRlNzkyMDc2YmUzY2I1ZTE3OSIsImlhdCI6MTcwMjkwODE1OCwiZXhwIjoxNzAyOTgwMTU4fQ.LAmKBEarJx60X5oocBmkhd8QFyb_Jlk7amYW6HQx7yQ";
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
     try {
       setIsLoading(true);
       const response = await axios.get(`http://52.59.202.2:3000/api/contacts`, {
@@ -97,14 +98,9 @@ function Contacts() {
   const handleEditModalDisplay = () => {
     setIsEditModalOpen(!isEditModalOpen);
   };
-
+  // cruds
   const handleContactCreate = async (contactData) => {
     try {
-      const token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODA1MGRlNzkyMDc2YmUzY2I1ZTE3OSIsImlhdCI6MTcwMjkwODE1OCwiZXhwIjoxNzAyOTgwMTU4fQ.LAmKBEarJx60X5oocBmkhd8QFyb_Jlk7amYW6HQx7yQ";
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
       const response = await axios.post(
         `http://52.59.202.2:3000/api/contacts/`,
         {
@@ -140,14 +136,8 @@ function Contacts() {
     }
   };
 
-  const handleContactsEdit = async () => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODA1MGRlNzkyMDc2YmUzY2I1ZTE3OSIsImlhdCI6MTcwMjkwODE1OCwiZXhwIjoxNzAyOTgwMTU4fQ.LAmKBEarJx60X5oocBmkhd8QFyb_Jlk7amYW6HQx7yQ";
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    };
-    const editData = { firstName: "BABITA" };
+  const handleContactsEdit = async (updatedData) => {
+    // const editData = { firstName: "BABITA" };
 
     if (selectedContacts.length > 1) {
       try {
@@ -157,7 +147,7 @@ function Contacts() {
           `http://52.59.202.2:3000/api/contacts`,
           {
             contactIds: selectedIds,
-            updates: editData,
+            updates: updatedData,
           },
           { headers: headers }
         );
@@ -176,7 +166,7 @@ function Contacts() {
         setIsOverlayLoading(true);
         const response = await axios.put(
           `http://52.59.202.2:3000/api/contacts/${selectedContacts[0].id}`,
-          editData,
+          updatedData,
           { headers: headers }
         );
         if (response.status === 200) {
@@ -193,13 +183,6 @@ function Contacts() {
   };
 
   const handleContactsDelete = async () => {
-    // bulk delete
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODA1MGRlNzkyMDc2YmUzY2I1ZTE3OSIsImlhdCI6MTcwMjkwODE1OCwiZXhwIjoxNzAyOTgwMTU4fQ.LAmKBEarJx60X5oocBmkhd8QFyb_Jlk7amYW6HQx7yQ";
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    };
     if (selectedContacts.length > 1) {
       try {
         setIsOverlayLoading(true);
@@ -315,18 +298,19 @@ function Contacts() {
               </form>
             </div>
           </div>
-          {contacts.length > 0 ? (
-            <ContactsTable
-              contacts={contacts}
-              onSelectContact={handleSelectContact}
-              selectAll={selectAll}
-              onCheckAllChange={handleSelectAllChange}
-            />
-          ) : (
-            <div className="text-xl text-center text-slate-700 dark:text-slate-200">
-              No contacts yet
-            </div>
-          )}
+          {/* {contacts.length > 0 ? ( */}
+          <ContactsTable
+            contacts={contacts}
+            onSelectContact={handleSelectContact}
+            selectAll={selectAll}
+            onCheckAllChange={handleSelectAllChange}
+          />
+          {/* ) : ( */}
+
+          {/* <div className="text-xl text-center text-slate-700 dark:text-slate-200">
+            No contacts yet
+          </div> */}
+          {/* )} */}
           {isLoading && <LoadingSpinner />}
           {contacts.length > contactsPerPage && (
             <Pagination
@@ -348,7 +332,7 @@ function Contacts() {
               <select
                 id="contacts-per-page"
                 onChange={(e) => setContactsPerPage(Number(e.target.value))}
-                className=" bg-gray-50 border border-gray-300 text-slate-800 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-slate-200 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="bg-gray-50 border border-gray-300 text-slate-800 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-slate-200 dark:focus:ring-blue-500 dark:focus:border-blue-500"
               >
                 <option value="50">50</option>
                 <option value="100">100</option>
