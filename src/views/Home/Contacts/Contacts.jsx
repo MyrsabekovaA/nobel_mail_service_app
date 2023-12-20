@@ -16,11 +16,11 @@ import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 
 function Contacts() {
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODA1MGRlNzkyMDc2YmUzY2I1ZTE3OSIsImlhdCI6MTcwMjk5NjcwMywiZXhwIjoxNzAzMDY4NzAzfQ.nEMNr5rwEOoeaHSf1SruYrQZhmyjJ572fY-017JpbQk";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODA1MGRlNzkyMDc2YmUzY2I1ZTE3OSIsImlhdCI6MTcwMzA3Nzk4OSwiZXhwIjoxNzAzMTQ5OTg5fQ.6GuR9Ry1UIk5IPQyk6f8HQlOSl6rC9bhM7XAe-d_KW8";
+
   const headers = {
     Authorization: `Bearer ${token}`,
   };
-
   const [isLoading, setIsLoading] = useState(false);
   const [isOverlayLoading, setIsOverlayLoading] = useState(false);
   const [contacts, setContacts] = useState([]); // fetched contacts
@@ -55,7 +55,6 @@ function Contacts() {
       setIsLoading(false);
     }
   };
-
   useEffect(() => {
     fetchData(currentPage, searchQuery);
   }, [currentPage, searchQuery]);
