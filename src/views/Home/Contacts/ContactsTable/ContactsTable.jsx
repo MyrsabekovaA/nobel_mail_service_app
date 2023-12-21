@@ -4,10 +4,10 @@ import ContactRow from '../ContactRow/ContactRow';
 
 function ContactsTable({contacts, onSelectContact, selectAll, onCheckAllChange}) {
    return (
-      <div className='overflow-x-auto relative rounded-lg mt-8'>
-         <table className='w-full text-sm text-left text-gray-500 dark:text-gray-400'>
-            <thead className='text-xs text-gray-700 uppercase whitespace-nowrap bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
-               <tr>
+      <div className='table-wrapper overflow-x-auto relative rounded-lg mt-8 dark:bg-compdark'>
+         <table className='w-full text-sm text-left text-gray-500 dark:text-gray-400 dark:bg-compdark'>
+            <thead className='text-xs text-gray-700 uppercase whitespace-nowrap bg-gray-50 dark:bg-compdark dark:text-gray-400'>
+               <tr className="dark:bg-compdark">
                      <th scope='col' className='p-4'>
                      <input 
                         id='check-all'

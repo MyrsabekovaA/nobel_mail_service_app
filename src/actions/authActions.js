@@ -1,4 +1,7 @@
+import { loginStart, loginSuccess, loginFailure } from "/@/GlobalStates/LoggedIn";
+
 const login = (email, password) => async (dispatch) => {
+    dispatch(loginStart());
     try {
         const response = await fetch('/api/login', {
             method: 'POST',
@@ -10,13 +13,14 @@ const login = (email, password) => async (dispatch) => {
 
         if (!response.ok) {
             const errorData = await response.json();
+            dispatch(loginFailure());
             throw new Error(errorData.message || 'Login failed');
         }
 
         const data = await response.json();
-        dispatch({ type: 'LOGIN_SUCCESS', payload: data });
+        dispatch(loginSuccess());
     } catch (error) {
-        dispatch({ type: 'LOGIN_FAILURE', error: error.message });
+        dispatch(loginFailure());
         throw error;
     }
 };

@@ -1,0 +1,7 @@
+.linegraph{
+    @apply bg-white text-black
+}
+
+.linegraph-button{
+    @apply text-black
+}

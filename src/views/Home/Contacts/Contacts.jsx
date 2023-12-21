@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import './Contacts.css'
+import {Icon} from '@iconify/react';
 
 import ContactsTable from './ContactsTable/ContactsTable';
 import Pagination from './Pagination/Pagination';
@@ -166,23 +167,28 @@ function Contacts() {
         }
     };
 
+    const actionbuttonstyle ="dark:text-white dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 " +
+        "dark:hover:bg-gray-600"
+
+    const detletebuttonstyle = "hover:bg-red-500/90 text-white"
+
     return (
-        <div className='min-h-full min-w-full'>
-            <div className='min-h-full min-w-full bg-slate-100 dark:bg-gray-900 pt-10'>
-                <div className='container mx-auto px-4'>
+        <div className='mt-10 min-h-full min-w-full'>
+            <div className='contacts-wrapper min-h-full min-w-full bg-slate-100 dark:bg-compdark'>
+                <div className='container mx-auto p-4'>
                     {/* top */}
                     <div className='flex gap-4 flex-wrap justify-between'>
                         <div className='flex gap-2'>
                             <button
-                                onClick={handleEditModalDisplay} 
-                                className='action-btn'
+                                onClick={handleEditModalDisplay}
+                                className={`action-btn ${actionbuttonstyle}`}
                             >
                                 Edit
                             </button>
                             {selectedContacts.length === 0 && (
                                 <button
                                     onClick={handleCreateModalDisplay} 
-                                    className='action-btn'
+                                    className={`action-btn ${actionbuttonstyle}`}
                                 >
                                     Add
                                 </button>
@@ -190,7 +196,7 @@ function Contacts() {
                             {selectedContacts.length > 0 && (
                                 <button
                                     onClick={handleDeleteModalDisplay} 
-                                    className='action-btn delete-btn'
+                                    className={`action-btn delete-btn ${detletebuttonstyle}`}
                                 >
                                     Delete
                                 </button>
@@ -204,29 +210,30 @@ function Contacts() {
                             <form className='flex items-center'>   
                                 <label htmlFor='simple-search' className='sr-only'>Search</label>
                                 <div className='relative w-full'>
-                                    <div className='absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none'>
-                                        <svg className='w-4 h-4' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'>
-                                            <path stroke='currentColor' strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z'/>
-                                        </svg>
+                                    <div className='absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none dark:text-white'>
+                                        {/*<svg className='w-4 h-4' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'>*/}
+                                        {/*    <path stroke='currentColor' strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z'/>*/}
+                                        {/*</svg>*/}
+                                        <Icon icon="clarity:search-line" width="18" />
                                     </div>
                                     <input
                                         onChange={handleSearch} 
                                         type='text' 
                                         placeholder='Search...' 
-                                        className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' 
+                                        className='border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-graydark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                                     />
                                 </div>
                             </form>
                         </div>
                     </div>
-                    <ContactsTable 
-                        contacts={contacts} 
+                    <ContactsTable
+                        contacts={contacts}
                         onSelectContact={handleSelectContact}
                         selectAll={selectAll}
                         onCheckAllChange={handleSelectAllChange}
                     />
                     {contacts.length > 50 && (
-                        <Pagination 
+                        <Pagination
                             currentPage={currentPage}
                             totalPages={totalPages}
                             onChange={handlePageChange}

@@ -1,6 +1,7 @@
 import * as react from "react"
 import LoginForm from "/@views/LoginForm/LoginForm";
 import Home from "/@views/Home/Home";
+import HomePage from "/@views/Home/HomePage/HomePage";
 import Contacts from "/@views/Home/Contacts/Contacts";
 import { createBrowserRouter, redirect, createHashRouter} from "react-router-dom";
 import ContactsTable from "./views/Home/Contacts/ContactsTable/ContactsTable";
@@ -25,7 +26,7 @@ export const router = createBrowserRouter([
             {
                 "path": "",
                 "index": true,
-                "element": <div></div>
+                "element": <HomePage />
             },
             {
                 "path": "contacts",

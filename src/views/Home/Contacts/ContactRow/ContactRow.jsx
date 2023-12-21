@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './ContactRow.css';
 
 
 function ContactRow({contact, onSelectContact, selectAll}) {
@@ -15,7 +16,7 @@ function ContactRow({contact, onSelectContact, selectAll}) {
    };
    
    return (
-      <tr className='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 ease-out duration-300'>
+      <tr className='dark:bg-graydark border-b dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 ease-out duration-300'>
          <td className='w-4 p-4'>
             <div className='flex items-center'>
                <input 

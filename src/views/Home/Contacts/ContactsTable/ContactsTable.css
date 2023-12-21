@@ -8,3 +8,10 @@
 ::-webkit-scrollbar-thumb {
   /* Customize the scrollbar thumb */
 }
+
+tr{
+    @apply bg-white;
+}
+
+
+

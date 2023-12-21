@@ -1,0 +1,15 @@
+tr{
+    @apply bg-white;
+}
+
+td{
+    @apply border-r border-lightgray border-t border-b-0;
+}
+
+td:first-child{
+    @apply border-r-0;
+}
+
+td:last-child{
+    @apply border-r-0;
+}

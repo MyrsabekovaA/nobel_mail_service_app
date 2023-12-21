@@ -1,0 +1,11 @@
+.site-container{
+    @apply flex flex-col
+}
+
+.main-content{
+    @apply flex flex-col
+}
+
+.shadow-effect{
+    @apply relative z-10 shadow
+}

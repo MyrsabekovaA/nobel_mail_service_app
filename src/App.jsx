@@ -3,12 +3,12 @@ import { RouterProvider } from 'react-router-dom';
 import { Provider, useSelector } from 'react-redux';
 import router from '/@/Routes';
 import store from '/@/GlobalStates/store';
-import { isLoggedInActions } from '/@/GlobalStates/LoggedIn';
+import { loginSuccess } from '/@/GlobalStates/LoggedIn';
 import '/@/App.css';
 
 class App extends Component {
     componentDidMount() {
-        store.dispatch(isLoggedInActions.setTrueLogIn());
+        store.dispatch(loginSuccess());
     }
 
     // constructor(props) {

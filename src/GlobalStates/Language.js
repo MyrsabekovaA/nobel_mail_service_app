@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import English from '/Flag_of_the_U.S..svg';
-import Ukrainian from '/Flag_of_Ukraine.svg';
+import English from '/Flag_of_the_U.S.png';
+import Ukrainian from '/Flag_of_Ukraine.png';
 
 const LANGUAGE_IMG = {
     "English":  English,
@@ -15,9 +15,11 @@ const languageSlice = createSlice({
     },
     reducers: {
         setLanguage: (state, action) => {
-            state.value = action.payload.language
+            state.value = action.payload;
+            state.img = LANGUAGE_IMG[action.payload];
         }
     }
+
 })
 
 export const languageActions = languageSlice.actions

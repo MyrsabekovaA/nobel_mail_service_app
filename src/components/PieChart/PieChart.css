@@ -1,0 +1,7 @@
+.pie-wrapper{
+    @apply bg-white
+}
+
+.apexcharts-legend-text{
+    @apply text-white
+}

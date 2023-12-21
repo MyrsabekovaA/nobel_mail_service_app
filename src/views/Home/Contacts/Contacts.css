@@ -1,6 +1,14 @@
 .action-btn {
-  @apply text-gray-900 bg-gray-50 border border-gray-300 dark:text-white/80 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 font-medium py-2 px-4 rounded;
+  @apply bg-bodydark border border-gray font-medium py-2 px-4 rounded;
 }
 .delete-btn {
-  @apply bg-red-600/90 text-gray-200 hover:bg-red-500/90;
+  @apply bg-danger text-gray;
 }
+
+input{
+  @apply bg-whiten;
+}
+
+/*.contacts-wrapper{*/
+/*  @apply bg-white;*/
+/*}*/
