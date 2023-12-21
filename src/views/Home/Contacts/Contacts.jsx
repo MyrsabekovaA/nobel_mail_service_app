@@ -13,10 +13,13 @@ import EditModal from "./Modals/EditModal/EditModal";
 import DropdownFilter from "../../../components/DropDownFilter/DropdownFilter";
 import LoadingOverlay from "../../../components/LoadingOverlay/LoadingOverlay";
 import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
+import { useDispatch } from "react-redux";
+import { successToast, errorToast } from "../../../GlobalStates/Toasts";
 
 function Contacts() {
+  const dispatch = useDispatch();
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODA1MGRlNzkyMDc2YmUzY2I1ZTE3OSIsImlhdCI6MTcwMzA3Nzk4OSwiZXhwIjoxNzAzMTQ5OTg5fQ.6GuR9Ry1UIk5IPQyk6f8HQlOSl6rC9bhM7XAe-d_KW8";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODA1MGRlNzkyMDc2YmUzY2I1ZTE3OSIsImlhdCI6MTcwMzE1NDE3OCwiZXhwIjoxNzAzMjI2MTc4fQ.M0AsxQ1wheqczB8Khrn6DObnjfkkd9_4k3Tq6fO2sDw";
 
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -123,21 +126,21 @@ function Contacts() {
       );
       if (response.status === 200 || response.status === 201) {
         console.log("Contact created successfully");
-        toast.success(`Successfully created ${contactData.email} contact!`);
+        dispatch(
+          successToast(`Successfully created ${contactData.email} contact!`)
+        );
 
         fetchData(currentPage, searchQuery);
       }
     } catch (error) {
       console.error("Error creating contact:", error);
-      toast.error(`Failed to create ${contactData.email} contact.`);
+      dispatch(errorToast(`Failed to create ${contactData.email} contact.`));
     } finally {
       setIsCreateModalOpen(false);
     }
   };
 
   const handleContactsEdit = async (updatedData) => {
-    // const editData = { firstName: "BABITA" };
-
     if (selectedContacts.length > 1) {
       try {
         const selectedIds = selectedContacts.map((contact) => contact.id);
@@ -153,12 +156,12 @@ function Contacts() {
 
         if (response.status === 200) {
           console.log("Contacts updated successfully");
-          toast.success("Contacts updated successfully!");
+          dispatch(successToast("Contacts updated successfully!"));
           fetchData(currentPage, searchQuery);
         }
       } catch (error) {
         console.error("Error updating contacts:", error);
-        toast.error(`Error updating contacts."`);
+        dispatch(errorToast(`Error updating contacts."`));
       }
     } else {
       try {
@@ -169,12 +172,12 @@ function Contacts() {
           { headers: headers }
         );
         if (response.status === 200) {
-          toast.success(`Successfully updated!`);
+          dispatch(successToast(`Successfully updated!`));
           fetchData(currentPage, searchQuery);
         }
       } catch (error) {
         console.error("Error updating contact:", error);
-        toast.error(`Error updating contact "."`);
+        dispatch(errorToast(`Error updating contact "."`));
       } finally {
         setIsOverlayLoading(false);
       }
@@ -196,15 +199,19 @@ function Contacts() {
 
         if (response.status === 204) {
           console.log("Contacts deleted successfully");
-          toast.success(
-            `Successfully deleted "${selectedContacts.length}" contacts!`
+          dispatch(
+            successToast(
+              `Successfully deleted "${selectedContacts.length}" contacts!`
+            )
           );
           fetchData(currentPage, searchQuery);
           setSelectedContacts([]);
         }
       } catch (error) {
         console.error("Error deleting contacts:", error);
-        toast.error(`Failed to delete "${selectedContacts.length}" contacts.`);
+        dispatch(
+          errorToast(`Failed to delete "${selectedContacts.length}" contacts.`)
+        );
       } finally {
         setIsOverlayLoading(false);
         handleDeleteModalDisplay();
@@ -222,11 +229,13 @@ function Contacts() {
           console.log("Contact deleted successfully");
           fetchData(currentPage, searchQuery);
           setSelectedContacts([]);
-          toast.success(`Successfully deleted "${selectedContacts[0].email}"!`);
+          dispatch(
+            successToast(`Successfully deleted "${selectedContacts[0].email}"!`)
+          );
         }
       } catch (error) {
         console.error("Error deleting contact:", error);
-        toast.error(`Failed to delete ${selectedContacts[0].email}.`);
+        dispatch(errorToast(`Failed to delete ${selectedContacts[0].email}.`));
       } finally {
         setIsOverlayLoading(false);
         handleDeleteModalDisplay();

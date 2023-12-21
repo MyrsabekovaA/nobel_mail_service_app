@@ -7,10 +7,12 @@ import "./ContactDetails.css";
 import ContactActivityList from "./ContactsActivityList/ContactsActivityList";
 import LoadingOverlay from "../../../components/LoadingOverlay/LoadingOverlay";
 import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
-
+import { useDispatch } from "react-redux";
+import { successToast, errorToast } from "../../../GlobalStates/Toasts";
 function ContactDetails() {
+  const dispatch = useDispatch();
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODA1MGRlNzkyMDc2YmUzY2I1ZTE3OSIsImlhdCI6MTcwMzA3Nzk4OSwiZXhwIjoxNzAzMTQ5OTg5fQ.6GuR9Ry1UIk5IPQyk6f8HQlOSl6rC9bhM7XAe-d_KW8";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODA1MGRlNzkyMDc2YmUzY2I1ZTE3OSIsImlhdCI6MTcwMzE1NDE3OCwiZXhwIjoxNzAzMjI2MTc4fQ.M0AsxQ1wheqczB8Khrn6DObnjfkkd9_4k3Tq6fO2sDw";
 
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -119,9 +121,11 @@ function ContactDetails() {
         { headers: headers }
       );
       if (response.status === 200) {
+        dispatch(successToast(`Contact updated successfully!`));
         fetchContactData();
       }
     } catch (error) {
+      dispatch(errorToast(`Failed to update contact.`));
       console.error("Error updating contact", error);
     } finally {
       setIsOverlayLoading(false);

@@ -1,19 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import { toast } from "react-toastify";
 export const toastsSlice = createSlice({
   name: "toasts",
   initialState: {
-    message: '',
-    type: null, // success, error, maybe something else
   },
   reducers: {
-    showToast: (state, action) => {
-      state.message = action.payload.message;
-      state.type = action.payload.type;
+    successToast: (state, action) => {
+      toast.success(action.payload);
     },
+    errorToast: (state, action) => {
+      toast.error(action.payload);
+    }
   },
 });
 
-export const { showToast } = toastsSlice.actions;
+export const { successToast, errorToast } = toastsSlice.actions;
 
 export default toastsSlice.reducer;
