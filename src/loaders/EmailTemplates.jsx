@@ -1,19 +1,26 @@
-import { data } from "autoprefixer"
+import { redirect } from "react-router-dom"
+import store from "/@/GlobalStates/store"
 
 let domain = "http://52.59.202.2:3000"
 
 //email templates
-export async function emailTemplatesLoader() {
+export async function emailTemplatesLoader({params}) {
+    const page = Number(params.pageNumber)
     let token = localStorage.getItem('token')
- let templates = await fetch(`${domain}/api/mail-templates`, {
-    method: "GET",
-    "headers": {
-        Authorization: `Bearer ${token}`,
-    }
- })
- console.log(templates)
- let data =  await templates.json()
- console.log(data)
- console.log(2)
- return data
+    let templates = await fetch(`${domain}/api/mail-templates?${
+        new URLSearchParams({
+            page,
+            pageSize: 1
+        })}
+        `, {
+        method: "GET",
+        "headers": {
+            Authorization: `Bearer ${token}`,
+        }
+    })
+    console.log(templates)
+    let data =  await templates.json()
+    console.log(data)
+    console.log(2)
+    return data
 }

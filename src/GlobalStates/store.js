@@ -5,6 +5,7 @@ import contactsReducer from "/@/GlobalStates/Contacts"
 import languageSlice from "/@/GlobalStates/Language"
 import themeSlice from "/@/GlobalStates/Theme";
 import toastsSlice from "/@/GlobalStates/Toasts";
+import emailTemplatesSlice from "/@/GlobalStates/EmailTemplates";
 
 const store = configureStore({
     reducer: {
@@ -14,7 +15,7 @@ const store = configureStore({
         language: languageSlice,
         theme: themeSlice,
         toasts: toastsSlice,
-
+        emailTemplates: emailTemplatesSlice,
     },
 })
 

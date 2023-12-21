@@ -46,9 +46,16 @@ export const router = createBrowserRouter([
                       element: <ContactDetails />,
                     },
                     {
-                        "path": "emailTemplates",
+                        "path": "emailTemplates/:pageNumber",
                         "element": <EmailTemplates/>,
-                        "loader": emailTemplatesLoader
+                        "loader": emailTemplatesLoader,
+                        children: [
+                            {
+                                "path": "",
+                                "index": true,
+                                "element": <div></div>
+                            }
+                        ]
                     }
                 ]
             },
