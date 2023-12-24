@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, redirect, useLoaderData, useNavigate, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, redirect, useLoaderData, useNavigate, useParams, Outlet} from "react-router-dom";
 import EmailTemplate from "./EmailTemplate/EmailTemplate";
 import "./EmailTemplates.css"
 import { emailTemplatesActions } from "/@/GlobalStates/EmailTemplates";
@@ -10,22 +10,22 @@ function EmailTemplates(props) {
     let [paginationActive, setPaginationActive] = useState(false)
     const params = useParams()
     const page = Number(params.pageNumber)
+    console.log(page)
     let [inputPageValue, setInputPageValue] = useState(page)
-    const dispatch = useDispatch()
+    console.log(inputPageValue)
     const navigate = useNavigate()
-    // console.log(params)
-    // if (Number(params.pageNumber)!==page) {
-    //     navigate(`/home/emailTemplates/${page}`)
-    // }
+    useEffect(() => {
+        setInputPageValue(page);
+    }, [page])
     function changeAllInputsValues(e) {
         setAllInputsValue(e.target.checked)
     }
-    return <div className="w-full p-4 bg-slate-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400" >
+    return <div className="relative w-full p-4 bg-slate-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400" >
         <div className="">
-            <button className="action-btn ">create</button>
-            <button className="action-btn  ml-3">inspect</button>
-            <button className="action-btn  ml-3">edit</button>
-            <button className="action-btn delete-btn  ml-3">delete</button>
+            <Link className="action-btn" to="create">create</Link>
+            <Link className="action-btn  ml-3" to="read">inspect</Link>
+            <Link className="action-btn  ml-3" to="update">edit</Link>
+            <Link className="action-btn delete-btn  ml-3" to="delete">delete</Link>
         </div>
         <table className="mt-3 ">
             <thead>
@@ -54,7 +54,6 @@ function EmailTemplates(props) {
                                            onChange={(e)=>setInputPageValue(e.target.value)}
                                            onBlur={(e)=>{
                                             setPaginationActive(false)
-                                            dispatch(emailTemplatesActions.changeEmailTemplatesPage({page:inputPageValue}))
                                             navigate(`/home/emailTemplates/${e.target.value}`)
                                            }}/>:
                                     <div className="" onClick={()=>setPaginationActive(true)}>
@@ -63,6 +62,7 @@ function EmailTemplates(props) {
                 
                 <Link className="" to={`/home/emailTemplates/${page+1}`}>{true&&">"}</Link>
         </div>
+        <Outlet/>
     </div>
 }
 

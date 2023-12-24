@@ -6,6 +6,7 @@ import LoginForm from "/@views/LoginForm/LoginForm";
 import Home from "/@views/Home/Home";
 import Contacts from "/@views/Home/Contacts/Contacts";
 import EmailTemplates from "/@views/Home/EmailTemplates/EmailTemplates";
+import CreateEmailTemplateForm from "/@views/Home/EmailTemplates/CreateEmailTemplatesForm/CreateEmailTemplatesForm";
 
 //importing loaders
 import {emailTemplatesLoader} from "/@/loaders/EmailTemplates";
@@ -54,6 +55,28 @@ export const router = createBrowserRouter([
                                 "path": "",
                                 "index": true,
                                 "element": <div></div>
+                            },
+                            {
+                                "path": "create",
+                                "element": <CreateEmailTemplateForm/>
+                            },
+                            {
+                                "path": "update",
+                                children: [
+                                    {"path": ":id"}
+                                ]
+                            },
+                            {
+                                "path": "delete",
+                                children: [
+                                    {"path": ":id"}
+                                ]
+                            },
+                            {
+                                "path": "read",
+                                children: [
+                                    {"path": ":id"}
+                                ]
                             }
                         ]
                     }

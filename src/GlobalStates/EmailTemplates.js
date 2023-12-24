@@ -8,7 +8,7 @@ export const emailTemplatesSlice = createSlice({
     },
     reducers: {
       changeEmailTemplatesPage: (state, action)=>{
-        console.log(action.payload.page)
+        console.log(`page: ${action.payload.page}`)
         if(action.payload.page>=1) {
             state.page = action.payload.page
         }
