@@ -8,6 +8,12 @@ function ContactsTable({
   selectAll,
   onCheckAllChange,
 }) {
+  // const onCheckAllChange = (isChecked) => {
+  //   setSelectAll(isChecked);
+  //   contacts.forEach((contact) => {
+  //     onSelectContact(contact, isChecked); // Update each contact's selected state
+  //   });
+  // };
   return (
     <div className="overflow-x-auto relative rounded-lg mt-8">
       <table className="text-sm text-left text-gray-500 dark:text-gray-400">
