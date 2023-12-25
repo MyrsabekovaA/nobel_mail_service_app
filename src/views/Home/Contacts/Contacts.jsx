@@ -13,17 +13,17 @@ import EditModal from "./Modals/EditModal/EditModal";
 import DropdownFilter from "../../../components/DropDownFilter/DropdownFilter";
 import LoadingOverlay from "../../../components/LoadingOverlay/LoadingOverlay";
 import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { successToast, errorToast } from "../../../GlobalStates/Toasts";
 
 function Contacts() {
   const dispatch = useDispatch();
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODA1MGRlNzkyMDc2YmUzY2I1ZTE3OSIsImlhdCI6MTcwMzE1NDE3OCwiZXhwIjoxNzAzMjI2MTc4fQ.M0AsxQ1wheqczB8Khrn6DObnjfkkd9_4k3Tq6fO2sDw";
+  const token = useSelector((state) => state.loggedIn.token);
 
   const headers = {
     Authorization: `Bearer ${token}`,
   };
+
   const [isLoading, setIsLoading] = useState(false);
   const [isOverlayLoading, setIsOverlayLoading] = useState(false);
   const [contacts, setContacts] = useState([]); // fetched contacts
@@ -41,17 +41,24 @@ function Contacts() {
 
   const fetchData = async (page, search = "") => {
     try {
+      let params = {
+        pageSize: Number(contactsPerPage),
+      };
+
+      if (search) {
+        params.search = search;
+      } else {
+        params.page = Number(page);
+      }
       setIsLoading(true);
       const response = await axios.get(`http://52.59.202.2:3000/api/contacts`, {
+        params: params,
         headers: headers,
       });
-      setContacts(response.data);
-      // console.log(response);
-      // Assuming the response has data and total pages
-      // setContacts(response.data.contacts);
-      // setTotalPages(response.data.totalPages);
-      // setTotalContacts(response.data.totalContacts)
-      // setTotalPages(20);
+
+      setContacts(response.data.contacts);
+      setTotalContacts(response.data.contactsCount);
+      setTotalPages(Math.ceil(totalContacts / contactsPerPage));
     } catch (error) {
       console.error("Error fetching contacts:", error);
     } finally {
@@ -60,10 +67,12 @@ function Contacts() {
   };
   useEffect(() => {
     fetchData(currentPage, searchQuery);
+    setSelectAll(false);
+    setSelectedContacts([]);
   }, [currentPage, searchQuery]);
 
   const handleSearch = (event) => {
-    setSearchQuery(event.target.value.toLowerCase());
+    setSearchQuery(event.target.value);
   };
 
   const handlePageChange = (pageNumber) => {
@@ -83,9 +92,9 @@ function Contacts() {
   const handleSelectAllChange = (isSelected) => {
     setSelectAll(isSelected);
     if (isSelected) {
-      setSelectedContacts(contacts); // Select all contacts on the current page
+      setSelectedContacts(contacts);
     } else {
-      setSelectedContacts([]); // Deselect all contacts
+      setSelectedContacts([]);
     }
   };
 
@@ -172,12 +181,12 @@ function Contacts() {
           { headers: headers }
         );
         if (response.status === 200) {
-          dispatch(successToast(`Successfully updated!`));
+          dispatch(successToast("Successfully updated!"));
           fetchData(currentPage, searchQuery);
         }
       } catch (error) {
         console.error("Error updating contact:", error);
-        dispatch(errorToast(`Error updating contact "."`));
+        dispatch(errorToast("Error updating contact."));
       } finally {
         setIsOverlayLoading(false);
       }
@@ -306,29 +315,23 @@ function Contacts() {
               </form>
             </div>
           </div>
-          {/* {contacts.length > 0 ? ( */}
           <ContactsTable
             contacts={contacts}
             onSelectContact={handleSelectContact}
             selectAll={selectAll}
             onCheckAllChange={handleSelectAllChange}
           />
-          {/* ) : ( */}
 
-          {/* <div className="text-xl text-center text-slate-700 dark:text-slate-200">
-            No contacts yet
-          </div> */}
-          {/* )} */}
           {isLoading && <LoadingSpinner />}
-          {contacts.length > contactsPerPage && (
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onChange={handlePageChange}
-              contactsPerPage={contactsPerPage}
-              totalContacts={totalContacts}
-            />
-          )}
+          {/* {contacts.length >= contactsPerPage && ( */}
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onChange={handlePageChange}
+            contactsPerPage={contactsPerPage}
+            totalContacts={totalContacts}
+          />
+          {/* )} */}
           {contacts.length > contactsPerPage && (
             <div className="flex justify-end mt-4 items-center gap-2">
               <label
@@ -372,18 +375,6 @@ function Contacts() {
         />
       )}
       {isOverlayLoading && <LoadingOverlay />}
-      <ToastContainer
-        // theme={isDarkMode ? "dark" : "light"}
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
     </div>
   );
 }

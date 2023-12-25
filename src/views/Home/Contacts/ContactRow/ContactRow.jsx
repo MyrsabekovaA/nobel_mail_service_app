@@ -6,12 +6,15 @@ function ContactRow({ contact, onSelectContact, selectAll }) {
   const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
-    setIsChecked(selectAll);
+    if (selectAll !== isChecked) {
+      setIsChecked(selectAll);
+    }
   }, [selectAll]);
 
   const handleCheckboxChange = (e) => {
-    setIsChecked(e.target.checked);
-    onSelectContact(contact, e.target.checked);
+    const { checked } = e.target;
+    setIsChecked(checked);
+    onSelectContact(contact, checked);
   };
 
   // Utility function to display a dash for empty fields
@@ -31,7 +34,7 @@ function ContactRow({ contact, onSelectContact, selectAll }) {
           <input
             id={checkboxId}
             onChange={handleCheckboxChange}
-            checked={selectAll || isChecked}
+            checked={isChecked}
             type="checkbox"
             className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
           />
@@ -42,7 +45,7 @@ function ContactRow({ contact, onSelectContact, selectAll }) {
       </td>
       <td className="px-6 py-4">
         <Link
-          to={`/Home/${contact.id}`}
+          to={`/Home/Contacts/${contact.id}`}
           className="transition-colors duration-200 hover:text-green-500 hover:underline"
         >
           {displayValueOrDash(contact.firstName)}
@@ -50,7 +53,7 @@ function ContactRow({ contact, onSelectContact, selectAll }) {
       </td>
       <td className="px-6 py-4">
         <Link
-          to={`/Home/${contact.id}`}
+          to={`/Home/Contacts/${contact.id}`}
           className="transition-colors duration-200 hover:text-green-500 hover:underline"
         >
           {displayValueOrDash(contact.lastName)}
@@ -58,7 +61,7 @@ function ContactRow({ contact, onSelectContact, selectAll }) {
       </td>
       <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
         <Link
-          to={`/Home/${contact.id}`}
+          to={`/Home/Contacts/${contact.id}`}
           className="transition-colors duration-200 hover:text-green-500 hover:underline"
         >
           {displayValueOrDash(contact.email)}
