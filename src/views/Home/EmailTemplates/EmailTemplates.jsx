@@ -6,6 +6,7 @@ import { emailTemplatesActions } from "/@/GlobalStates/EmailTemplates";
 import { useDispatch, useSelector } from "react-redux";
 function EmailTemplates(props) {
     let templates = useLoaderData()
+    console.log(templates)
     let [allInputsValue, setAllInputsValue] = useState(false)
     let [paginationActive, setPaginationActive] = useState(false)
     const params = useParams()

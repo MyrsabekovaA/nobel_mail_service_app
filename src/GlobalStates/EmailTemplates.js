@@ -4,7 +4,7 @@ export const emailTemplatesSlice = createSlice({
     name: "EmailTemplates",
     initialState: {
       page: 1,
-      selectedIds: []
+      selectedTemplates: []
     },
     reducers: {
       changeEmailTemplatesPage: (state, action)=>{
@@ -13,12 +13,14 @@ export const emailTemplatesSlice = createSlice({
             state.page = action.payload.page
         }
       },
-      emailTemplatesSelectedIdsPush: (state, action)=>{
-        if (state.selectedIds.includes(action.payload.id)){
-            state.selectedIds.push(action.payload.id)
-        }
+      emailTemplatesSelectedPush: (state, action)=>{
+        
       },
-      emailTemplatesSelectedIdsReset: (state, action)=>{
+      templateIdIsSelected: (state, action)=>{
+        const searchedId = action.payload.id
+        const searchedTemplate = state.selectedIds
+      },
+      emailTemplatesSelectedRecordsReset: (state, action)=>{
         state.selectedIds = []
       }
     }
