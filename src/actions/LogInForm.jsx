@@ -6,6 +6,7 @@ const loginAction = async ({params, request}) => {
     const response = await request.formData()
     const email = response.get("email")
     const password = response.get("password")
+    console.log(1, password, email)
     try {
         const auth = await fetch("http://52.59.202.2:3000/api/auth/login", {
             method: "POST",
@@ -18,19 +19,20 @@ const loginAction = async ({params, request}) => {
             })
         });
         if (await auth.status!==200) {
+            alert("Invalid Credits")
             throw new Error("Invalid credits, try again")
         }
         const {token, user} = await auth.json()
         console.log(token, user)
         console.log(user.name, user.email)
         let {dispatch} = store
-        dispatch(isLoggedInActions.setTrueLogIn())
-        dispatch(isLoggedInActions.setName({name: user.name}))
-        dispatch(isLoggedInActions.setEmail({email: user.email}))
-        dispatch(isLoggedInActions.setToken({token}))
-        return redirect("/Home")
+        await dispatch(isLoggedInActions.setTrueLogIn())
+        await dispatch(isLoggedInActions.setName({name: user.name}))
+        await dispatch(isLoggedInActions.setEmail({email: user.email}))
+        await dispatch(isLoggedInActions.setToken({token}))
+        return true
     } catch(err) {
-        alert(err.message)
+        console.log(err)
         return redirect("/LogInForm")
     }
 }
