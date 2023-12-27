@@ -3,7 +3,9 @@ import  isLoggedInReducer  from "/@/GlobalStates/LoggedIn"
 import sidebarReducer from "/@/GlobalStates/Sidebar"
 import contactsReducer from "/@/GlobalStates/Contacts"
 import languageSlice from "/@/GlobalStates/Language"
-import darkModeReducer from "/@/GlobalStates/DarkMode"
+import toastsSlice from "/@/GlobalStates/Toasts";
+import emailTemplatesSlice from "/@/GlobalStates/EmailTemplates";
+import darkModeReducer from "/@/GlobalStates/DarkMode";
 import taskReducer from "/@/GlobalStates/tasksSlice"
 
 const store = configureStore({
@@ -14,6 +16,8 @@ const store = configureStore({
         language: languageSlice,
         darkMode: darkModeReducer,
         tasks: taskReducer,
+        toasts: toastsSlice,
+        emailTemplates: emailTemplatesSlice,
     },
 })
 

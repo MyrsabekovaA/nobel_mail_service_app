@@ -10,6 +10,9 @@ export default defineConfig({
             '/@views': resolve(__dirname, './src/views')
         }
     },
+    define: {
+        'process.env': {}
+    },
     plugins: [
         react()
     ],

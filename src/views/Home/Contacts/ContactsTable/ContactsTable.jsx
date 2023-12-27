@@ -1,6 +1,6 @@
-import React from 'react';
-import './ContactsTable.css'
-import ContactRow from '../ContactRow/ContactRow';
+import React from "react";
+import "./ContactsTable.css";
+import ContactRow from "../ContactRow/ContactRow";
 
 function ContactsTable({contacts, onSelectContact, selectAll, onCheckAllChange}) {
    return (
@@ -59,4 +59,4 @@ function ContactsTable({contacts, onSelectContact, selectAll, onCheckAllChange})
    );
 }
 
-export default ContactsTable
+export default ContactsTable;

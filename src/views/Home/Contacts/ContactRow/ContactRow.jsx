@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './ContactRow.css';
 
+function ContactRow({ contact, onSelectContact, selectAll }) {
+  const checkboxId = `checkbox-${contact.id}`;
+  const [isChecked, setIsChecked] = useState(false);
 
-function ContactRow({contact, onSelectContact, selectAll}) {
-   const checkboxId = `checkbox-${contact.id}`;
-   const [isChecked, setIsChecked] = useState(false);
-   
-   useEffect(() => {
-       setIsChecked(selectAll);
-   }, [selectAll]);
+  useEffect(() => {
+    setIsChecked(selectAll);
+  }, [selectAll]);
 
    const handleCheckboxChange = (e) => {
        setIsChecked(e.target.checked);
@@ -62,4 +61,4 @@ function ContactRow({contact, onSelectContact, selectAll}) {
    );
 }
 
-export default ContactRow
+export default ContactRow;

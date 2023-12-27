@@ -4,111 +4,94 @@ import axios from 'axios';
 import './Contacts.css'
 import {Icon} from '@iconify/react';
 
-import ContactsTable from './ContactsTable/ContactsTable';
-import Pagination from './Pagination/Pagination';
-import DeleteModal from './Modals/DeleteModal/DeleteModal';
-import CreateModal from './Modals/CreateModal/CreateModal';
-import EditModal from './Modals/EditModal/EditModal';
+import ContactsTable from "./ContactsTable/ContactsTable";
+import Pagination from "./Pagination/Pagination";
+import DeleteModal from "./Modals/DeleteModal/DeleteModal";
+import CreateModal from "./Modals/CreateModal/CreateModal";
+import EditModal from "./Modals/EditModal/EditModal";
+import DropdownFilter from "../../../components/DropDownFilter/DropdownFilter";
+import LoadingOverlay from "../../../components/LoadingOverlay/LoadingOverlay";
+import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 
 function Contacts() {
-    const [contacts, setContacts] = useState([
-        {
-            "id": 1,
-            "firstName": "Alice",
-            "lastName": "Johnson",
-            "email": "alice@example.com",
-            "age": 30,
-            "country": "Canada",
-            "timezone": "GMT-04:00",
-            "sourceOfReferral": "Website",
-            "eduQuestSelectedDateTime": "2023-10-03T15:45:00Z",
-            "eduQuestDecision": "Pending"
-          },
-          {
-            "id": 2,
-            "firstName": "Bob",
-            "lastName": "Smith",
-            "email": "bob@example.com",
-            "age": 28,
-            "country": "United Kingdom",
-            "timezone": "GMT+00:00",
-            "sourceOfReferral": "Email",
-            "eduQuestSelectedDateTime": "2023-10-03T14:15:00Z",
-            "eduQuestDecision": "Selected"
-          }
-    ]); // fetched contacts
-    const [totalContacts, setTotalContacts] = useState(1000); // will be also fetched from request
-    const [currentPage, setCurrentPage] = useState(1); // current page state, changed onClick on paggination button
-    const [contactsPerPage] = useState(50); // i'm suggesting to create a field where you can change this value
-    const [totalPages, setTotalPages] = useState(0); // idealy fetched from request
-    const [searchQuery, setSearchQuery] = useState(''); // search input
-    const [selectedContacts, setSelectedContacts] = useState([]); // checked contacts
-    //? *probably would be better to move it in global state than lifting data from contactRow component. 
-    const [selectAll, setSelectAll] = useState(false);
-    const [newContact, setNewContact] = useState({}); // new contact object
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODA1MGRlNzkyMDc2YmUzY2I1ZTE3OSIsImlhdCI6MTcwMzA3Nzk4OSwiZXhwIjoxNzAzMTQ5OTg5fQ.6GuR9Ry1UIk5IPQyk6f8HQlOSl6rC9bhM7XAe-d_KW8";
 
-    // modal display states
-    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  const [isLoading, setIsLoading] = useState(false);
+  const [isOverlayLoading, setIsOverlayLoading] = useState(false);
+  const [contacts, setContacts] = useState([]); // fetched contacts
+  const [totalContacts, setTotalContacts] = useState(1000); // will be also fetched from request
+  const [currentPage, setCurrentPage] = useState(1); // current page state, changed onClick on paggination button
+  const [contactsPerPage, setContactsPerPage] = useState(50);
+  const [totalPages, setTotalPages] = useState(0); // idealy fetched from request
+  const [searchQuery, setSearchQuery] = useState(""); // search input
+  const [selectedContacts, setSelectedContacts] = useState([]); // checked contacts
+  const [selectAll, setSelectAll] = useState(false);
+  // modal display states
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-    
-    const fetchData = async (page, search = '') => {
-        try {
-            const response = await axios.get(`/api/contacts`, {
-                params: {
-                    page: page,
-                    limit: contactsPerPage,
-                    search: search
-                }
-            });
-            // Assuming the response has data and total pages
-            // setContacts(response.data.contacts);
-            // setTotalPages(response.data.totalPages);
-            // setTotalContacts(response.data.totalContacts)
-            setTotalPages(20);
+  const fetchData = async (page, search = "") => {
+    try {
+      setIsLoading(true);
+      const response = await axios.get(`http://52.59.202.2:3000/api/contacts`, {
+        headers: headers,
+      });
+      setContacts(response.data);
+      // console.log(response);
+      // Assuming the response has data and total pages
+      // setContacts(response.data.contacts);
+      // setTotalPages(response.data.totalPages);
+      // setTotalContacts(response.data.totalContacts)
+      // setTotalPages(20);
+    } catch (error) {
+      console.error("Error fetching contacts:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchData(currentPage, searchQuery);
+  }, [currentPage, searchQuery]);
 
-        } catch (error) {
-            console.error('Error fetching contacts:', error);
-        }
-    };
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value.toLowerCase());
+  };
 
-    useEffect(() => {
-        fetchData(currentPage, searchQuery);
-    }, [currentPage, searchQuery]);
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
-    const handleSearch = (event) => {
-        setSearchQuery(event.target.value.toLowerCase());
-    };
+  const handleSelectContact = (contact, isSelected) => {
+    if (isSelected) {
+      setSelectedContacts((prevContacts) => [...prevContacts, contact]);
+    } else {
+      setSelectedContacts((prevContacts) =>
+        prevContacts.filter((c) => c.id !== contact.id)
+      );
+    }
+  };
 
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
+  const handleSelectAllChange = (isSelected) => {
+    setSelectAll(isSelected);
+    if (isSelected) {
+      setSelectedContacts(contacts); // Select all contacts on the current page
+    } else {
+      setSelectedContacts([]); // Deselect all contacts
+    }
+  };
 
-    const handleSelectContact = (contact, isSelected) => {
-        if (isSelected) {
-            setSelectedContacts(prevContacts => [...prevContacts, contact]);
-        } else {
-            setSelectedContacts(prevContacts => prevContacts.filter(c => c.id !== contact.id));
-        }
-    };
+  const handleDeleteModalDisplay = () => {
+    setIsDeleteModalOpen(!isDeleteModalOpen);
+  };
 
-    const handleSelectAllChange = (isSelected) => {
-        setSelectAll(isSelected);
-        if (isSelected) {
-            setSelectedContacts(contacts); // Select all contacts on the current page
-        } else {
-            setSelectedContacts([]); // Deselect all contacts
-        }
-    };
-
-    const handleDeleteModalDisplay = () => {
-        setIsDeleteModalOpen(!isDeleteModalOpen);
-    };
-    
-    const handleCreateModalDisplay = () => {
-        setIsCreateModalOpen(!isCreateModalOpen);
-    };
+  const handleCreateModalDisplay = () => {
+    setIsCreateModalOpen(!isCreateModalOpen);
+  };
 
     const handleEditModalDisplay = () => {
         setIsEditModalOpen(!isEditModalOpen);

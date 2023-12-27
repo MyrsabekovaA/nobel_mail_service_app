@@ -1,31 +1,54 @@
 const {app} = require('./app.js')
-
+const port = process.env.PORT
+const domainName = process.env.DOMAIN_NAME
 app.get('/', (req, res)=>{
     res.send('<h1>Your server works fine</h1>')
 })
 
 app.get('/api/mail-templates', (req, res)=>{
     res.send(JSON.stringify({
-        id: 1,
-        name: "reminder",
-        googleDriveId: "Qwwkjr54-fdkjg"
-    }))
+      "data": [{
+        "id": 1,
+        "name": "reminder",
+        "googleDriveId": "Qwwkjr54-fdkjg"
+    }]}))
 })
-
-app.get('/api/autorize', (req,res)=>{
-    if(req.query.password==="admin"
-    && req.query.email==="admin") {
+app.get('/api/auth/current', (req, res)=>{
+  let token = req.headers.token
+  if(token==="300bucks") {
+    res.status(200).send(JSON.stringify({
+      token: "300buks",
+      user: {
+        email: "skjfhs",
+        name: "sjfdhks"
+      }
+    }))
+  } else {
+    res.status(400).send(Error("Token expired"))
+  }
+})
+app.post('/api/auth/login', (req,res)=>{
+  
+    if(req.body.password==="admin"
+    && req.body.email==="admin") {
         res.send(JSON.stringify({
-            valid: true
+           token: "300bucks", user: { email: "luntik@p", name: "benedykt"}
         }))
     }
     else {
-        res.send(JSON.stringify({
-            valid: false
-        }))
+        res.status(400)
+        res.send("Invalid email or password")
     }
 })
-
+app.post('/api/auth/logout', (req, res)=>{
+  res.status(200).send(JSON.stringify({
+    token: "sf",
+    user: {
+      email: "dsf",
+      name: "sf"
+    }
+  }))
+})
 app.get("/api/contacts", (req,res)=>{
     res.send(JSON.stringify([{
         "id": 1,
@@ -285,4 +308,8 @@ app.post("/contacts/bulking-creation", (req,res)=>{
         "eduQuestDecision": "Rejected"
       }
     ]))
+})
+
+app.listen(port, ()=>{
+  console.log(`link to server: http://${domainName}/`)
 })
