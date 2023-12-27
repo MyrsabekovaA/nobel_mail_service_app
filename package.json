@@ -32,7 +32,7 @@
   "scripts": {
     "start": "react-scripts start",
     "dev": "vite",
-    "APIserver": "node .\\server\\appRoutes.js",
+    "APIserver": "node server/appRoutes.js",
     "build": "vite build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
