@@ -17,6 +17,7 @@ function Home() {
 
     const location = useLocation();
     const isLoading = useSelector(state => state.loggedIn.isLoading);
+    let isLoggedIn = useSelector(state=>state.loggedIn.value)
     const isDarkModeEnabled = useSelector((state) => state.darkMode.enabled);
     const [showLoader, setShowLoader] = useState(isLoading);
     useEffect(() => {
@@ -38,7 +39,6 @@ function Home() {
     if (showLoader) {
         return <Loader />;
     }
-    let isLoggedIn = useSelector(state=>state.loggedIn.value)
     if (!isLoggedIn) {
         return <Navigate to = "/LogInForm"/>
     }
@@ -53,7 +53,7 @@ function Home() {
                         <div className="overlay absolute inset-0 bg-black bg-opacity-50 z-30"/>
                     )}
             <Header />
-            <main className="flex-grow flex">
+            <main className="flex-grow flex flex-col overflow-y-scroll">
                 <div className="mx-auto max-w-screen-2xl p-4 md:p-6 lg:p-4 xl:p-4 2xl:p-10">
                     <Outlet  />
                 </div>

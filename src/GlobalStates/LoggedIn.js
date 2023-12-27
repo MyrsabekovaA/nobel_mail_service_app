@@ -99,5 +99,5 @@ const isLoggedInSlice = createSlice({
     }
 });
 
-export const { loginStart, loginSuccess, loginFailure } = isLoggedInSlice.actions;
+export const isLoggedInActions = isLoggedInSlice.actions;
 export default isLoggedInSlice.reducer;

@@ -23,7 +23,7 @@ const Header = ({ isSidebarOpen}) => {
     useEffect(() => {
         function handleClickOutside(event) {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                setShowDropdown(false);
+                sidebarActions.setShowDropdown(false);
             }
         }
         document.addEventListener('mousedown', handleClickOutside);

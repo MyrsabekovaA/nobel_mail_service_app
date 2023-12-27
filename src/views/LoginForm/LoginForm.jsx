@@ -43,34 +43,6 @@ function FloatingLabelInput({ label, type, value, onChange, id, showPassword, se
                 </button>
             )}
         </div>
-        <div className={`relative mb-6 ${isActive ? "active" : ""}`}>
-            <input
-                id={id}
-                type={type}
-                value={value}
-                onChange={onChange}
-                className="peer h-10 w-full border-b-2 border-meta3 text-black placeholder-transparent
-                focus:outline-none focus:border-green"
-                placeholder={label}
-            />
-            <label
-                htmlFor={id}
-                className="absolute left-0 -top-3 text-success text-sm transition-all
-                peer-placeholder-shown:text-base peer-placeholder-shown:text-meta3
-                peer-placeholder-shown:top-2 peer-focus:-top-3 peer-focus:text-success peer-focus:text-sm"
-            >
-                {label}
-            </label>
-            {isPasswordField && (
-                <button
-                    onClick={handleToggleShowPassword}
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
-                    type="button"
-                >
-                    <Icon icon={showPassword ? eyeFill : eyeOffFill} />
-                </button>
-            )}
-        </div>
     );
 }
 function LoginForm() {
