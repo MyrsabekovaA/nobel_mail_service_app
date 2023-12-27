@@ -4,8 +4,10 @@ import EmailTemplate from "./EmailTemplate/EmailTemplate";
 import "./EmailTemplates.css"
 import { emailTemplatesActions } from "/@/GlobalStates/EmailTemplates";
 import { useDispatch, useSelector } from "react-redux";
+import { template } from "@babel/core";
 function EmailTemplates(props) {
     let templates = useLoaderData()
+    const dispatch = useDispatch()
     console.log(templates)
     let [allInputsValue, setAllInputsValue] = useState(false)
     let [paginationActive, setPaginationActive] = useState(false)
@@ -19,7 +21,9 @@ function EmailTemplates(props) {
         setInputPageValue(page);
     }, [page])
     function changeAllInputsValues(e) {
-        setAllInputsValue(e.target.checked)
+        templates.forEach(template => {
+            dispatch(emailTemplatesActions.emailTemplatesSelectedPush({...template}))
+        });
     }
     return <div className="relative w-full p-4 bg-slate-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400" >
         <div className="">
@@ -31,8 +35,8 @@ function EmailTemplates(props) {
         <table className="mt-3 ">
             <thead>
                 <tr>
-                    <th className="email-templates__table-cell">
-                        <input type="checkbox" onClick={changeAllInputsValues}/>
+                    <th className="email-templates__table-cell cursor-pointer" onClick={changeAllInputsValues}>
+                        Select all
                     </th>
                     <th className="email-templates__table-cell">Id</th>
                     <th className="email-templates__table-cell">Name</th>

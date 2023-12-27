@@ -12,9 +12,9 @@ export async function emailTemplatesLoader({params}) {
     let templates = await fetch(`${domain}/api/mail-templates?${
         new URLSearchParams({
             page,
-            pageSize: 1
+            pageSize: 2
         })}
-        `, {
+    `, {
         method: "GET",
         "headers": {
             Authorization: `Bearer ${token}`,

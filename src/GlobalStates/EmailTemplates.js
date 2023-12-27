@@ -1,3 +1,4 @@
+import { template } from "@babel/core";
 import { createSlice } from "@reduxjs/toolkit";
 
 export const emailTemplatesSlice = createSlice({
@@ -14,11 +15,22 @@ export const emailTemplatesSlice = createSlice({
         }
       },
       emailTemplatesSelectedPush: (state, action)=>{
-        
-      },
-      templateIdIsSelected: (state, action)=>{
         const searchedId = action.payload.id
-        const searchedTemplate = state.selectedIds
+        let searchedTemplateIsSelected = state.selectedTemplates.some(template => template.id === searchedId)
+        if(!searchedTemplateIsSelected) {
+            state.selectedTemplates.push({id: action.payload.id, 
+                                          name: action.payload.name,
+                                          googleDriveFileId: action.payload.googleDriveFileId})
+        }
+      },
+      emailTemplatesSelectedRemove: (state, action)=>{
+        const searchedId = action.payload.id
+        console.log(state.selectedTemplates.filter((template)=>{
+            return template.id !== searchedId
+        }))
+        state.selectedTemplates = state.selectedTemplates.filter((template)=>{
+            return template.id !== searchedId
+        })
       },
       emailTemplatesSelectedRecordsReset: (state, action)=>{
         state.selectedIds = []
