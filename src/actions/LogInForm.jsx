@@ -6,7 +6,6 @@ const loginAction = async ({params, request}) => {
     const response = await request.formData()
     const email = response.get("email")
     const password = response.get("password")
-    console.log(1, password, email)
     try {
         const auth = await fetch("http://52.59.202.2:3000/api/auth/login", {
             method: "POST",

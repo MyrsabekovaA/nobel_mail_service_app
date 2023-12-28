@@ -37,8 +37,8 @@ const NavMenu = () => {
                         <NavLink to={`/home/emailTemplates/${emailTemplatesPage}`} className='group relative flex items-center gap-2 rounded-sm
                         py-2 px-3 font-medium text-black-2 duration-300 ease-in-out hover:bg-secondary
                         dark:hover:bg-meta-4 dark:text-white'>
-                            <Icon icon="material-symbols:schedule-outline" className="text-xl" />
-                            <span className="ml-2">Schedule</span>
+                            <Icon icon="material-symbols:drafts-outline" className="text-xl" />
+                            <span className="ml-2">Mail Templates</span>
                         </NavLink>
                     </li>
                 </ul>

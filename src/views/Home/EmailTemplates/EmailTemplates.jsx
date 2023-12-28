@@ -8,9 +8,12 @@ import { template } from "@babel/core";
 function EmailTemplates(props) {
     let templates = useLoaderData()
     const dispatch = useDispatch()
+
     console.log(templates)
+
     let [allInputsValue, setAllInputsValue] = useState(false)
     let [paginationActive, setPaginationActive] = useState(false)
+    const SelectedTemplates = useSelector(state=>state.emailTemplates.selectedTemplates)
     const params = useParams()
     const page = Number(params.pageNumber)
     console.log(page)
@@ -28,9 +31,8 @@ function EmailTemplates(props) {
     return <div className="relative w-full p-4 bg-slate-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400" >
         <div className="">
             <Link className="action-btn" to="create">create</Link>
-            <Link className="action-btn  ml-3" to="read">inspect</Link>
-            <Link className="action-btn  ml-3" to="update">edit</Link>
-            <Link className="action-btn delete-btn  ml-3" to="delete">delete</Link>
+            {SelectedTemplates.length?<Link className="action-btn  ml-3" to="read">inspect</Link>:""}
+            {SelectedTemplates.length?<Link className="action-btn delete-btn  ml-3" to="delete">delete</Link>:""}
         </div>
         <table className="mt-3 ">
             <thead>

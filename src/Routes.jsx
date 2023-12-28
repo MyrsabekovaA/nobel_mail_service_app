@@ -8,12 +8,14 @@ import HomePage from "/@views/Home/HomePage/HomePage";
 import Contacts from "/@views/Home/Contacts/Contacts";
 import EmailTemplates from "/@views/Home/EmailTemplates/EmailTemplates";
 import CreateEmailTemplateForm from "/@views/Home/EmailTemplates/CreateEmailTemplatesForm/CreateEmailTemplatesForm";
+import EmailTemplatesDeletePopup from "/@views/Home/EmailTemplates/EmailTemplatesDeletePopup/EmailTemplatesDeletePopup";
 
 //importing loaders
 import {emailTemplatesLoader} from "/@/loaders/EmailTemplates";
 import LoginFormLoader from "./loaders/LogInForm";
 //importing actions
 import {loginAction} from "/@/actions/LogInForm";
+import { deleteTemplate } from "/@/actions/EmailTemplates";
 
 import ContactsTable from "/@views/Home/Contacts/ContactsTable/ContactsTable";
 import ContactDetails from "/@views/Home/ContactDetails/ContactDetails";
@@ -69,8 +71,12 @@ export const router = createBrowserRouter([
                             },
                             {
                                 "path": "delete",
+                                "element": <EmailTemplatesDeletePopup/>,
                                 children: [
-                                    {"path": ":id"}
+                                    {
+                                        "path": ":id",
+                                        "action": deleteTemplate
+                                    }
                                 ]
                             },
                             {
