@@ -5,16 +5,14 @@ import Datepicker from "tailwind-datepicker-react";
 
 import "./ContactDetails.css";
 import ContactActivityList from "./ContactsActivityList/ContactsActivityList";
-import LoadingOverlay from "../../../components/LoadingOverlay/LoadingOverlay";
-import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
-
+// import LoadingOverlay from "../../../components/LoadingOverlay/LoadingOverlay";
+// import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
+import { useDispatch, useSelector } from "react-redux";
+import { successToast, errorToast } from "../../../../GlobalStates/Toasts";
 function ContactDetails() {
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODA1MGRlNzkyMDc2YmUzY2I1ZTE3OSIsImlhdCI6MTcwMzA3Nzk4OSwiZXhwIjoxNzAzMTQ5OTg5fQ.6GuR9Ry1UIk5IPQyk6f8HQlOSl6rC9bhM7XAe-d_KW8";
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.loggedIn.token);
 
-  const headers = {
-    Authorization: `Bearer ${token}`,
-  };
   const options = {
     title: "Select Birth Date",
     autoHide: true,
@@ -89,45 +87,34 @@ function ContactDetails() {
 
   const [show, setShow] = useState(false);
   let { contactid } = useParams();
+  console.log(contactid); // Check if the id is being logged correctly
+
   const [isOverlayLoading, setIsOverlayLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [contact, setContact] = useState({});
-  // useEffect(() => {
-  //   console.log(contact);
-  // }, [contact]);
+  const [activities, setActivities] = useState([
+    {
+      id: "1",
+      contactId: "test-id",
+      typeOfActivity: "LINK",
+      templateId: "12431",
+      activityDescription:
+        "Link 'EQ Website' was clicked from the email 'Test Email'",
+      createdAt: "2023-01-01T12:00:00Z",
+    },
+    {
+      id: "2",
+      contactId: "test-id",
+      typeOfActivity: "SOMETHING",
+      templateId: "12412",
+      activityDescription: "opened email blabla",
+      createdAt: "2023-01-01T12:00:00Z",
+    },
+  ]);
 
-  const handleClose = (state) => {
-    setShow(state);
+  const headers = {
+    Authorization: `Bearer ${token}`,
   };
-
-  const handleChange = (e) => {
-    const { id, value } = e.target;
-    // console.log(e);
-    setContact((prevContact) => ({
-      ...prevContact,
-      [id]: value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      setIsOverlayLoading(true);
-      const response = await axios.put(
-        `http://52.59.202.2:3000/api/contacts/${contactid}`,
-        contact,
-        { headers: headers }
-      );
-      if (response.status === 200) {
-        fetchContactData();
-      }
-    } catch (error) {
-      console.error("Error updating contact", error);
-    } finally {
-      setIsOverlayLoading(false);
-    }
-  };
-
   const fetchContactData = async () => {
     try {
       setIsOverlayLoading(true);
@@ -156,9 +143,59 @@ function ContactDetails() {
       setIsOverlayLoading(false);
     }
   };
+
+  const fetchContactActivities = async () => {
+    try {
+      const response = await axios.get(
+        `http://52.59.202.2:3000/action/${contactid}`,
+        { headers: headers }
+      );
+      // setActivities(response.data.userActions);
+      console.log(response);
+    } catch (error) {
+      console.error("Error fetching activities", error);
+    }
+  };
   useEffect(() => {
     fetchContactData();
+    fetchContactActivities();
   }, [contactid]);
+
+  const handleClose = (state) => {
+    setShow(state);
+  };
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setContact((prevContact) => ({
+      ...prevContact,
+      [id]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      setIsOverlayLoading(true);
+      const response = await axios.put(
+        `http://52.59.202.2:3000/api/contacts/${contactid}`,
+        contact,
+        { headers: headers }
+      );
+      if (response.status === 200) {
+        dispatch(successToast(`Contact updated successfully!`));
+        fetchContactData();
+      }
+    } catch (error) {
+      dispatch(errorToast(`Failed to update contact.`));
+      console.error("Error updating contact", error);
+    } finally {
+      setIsOverlayLoading(false);
+    }
+  };
 
   return (
     <div className="bg-slate-100 dark:bg-gray-900  flex-1 py-8">
@@ -387,7 +424,7 @@ function ContactDetails() {
           <div>No contact found.</div>
         )}
       </div>
-      {isOverlayLoading && <LoadingOverlay />}
+      {/* {isOverlayLoading && <LoadingOverlay />} */}
     </div>
   );
 }

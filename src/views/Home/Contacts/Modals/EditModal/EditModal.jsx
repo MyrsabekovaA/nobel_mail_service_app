@@ -121,9 +121,6 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
     setFieldsToEdit({ ...fieldsToEdit, [field]: e.target.value });
   };
 
-  useEffect(() => {
-    console.log(fieldsToEdit);
-  }, [fieldsToEdit]);
   const renderInputField = (field) => {
     const fieldType = fieldTypes[field].type;
     switch (fieldType) {

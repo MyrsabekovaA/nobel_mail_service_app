@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, redirect, useLoaderData, useNavigate, useParams, Outlet} from "react-router-dom";
 import EmailTemplate from "./EmailTemplate/EmailTemplate";
-import "./EmailTemplates.css"
+import "./EmailTemplates.css";
 import { emailTemplatesActions } from "/@/GlobalStates/EmailTemplates";
 import { useDispatch, useSelector } from "react-redux";
 import { template } from "@babel/core";
@@ -28,7 +28,7 @@ function EmailTemplates(props) {
             dispatch(emailTemplatesActions.emailTemplatesSelectedPush({...template}))
         });
     }
-    return <div className="relative w-full p-4 bg-slate-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400" >
+    return (<div className="relative w-full p-4 bg-slate-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400" >
         <div className="">
             <Link className="action-btn" to="create">create</Link>
             {SelectedTemplates.length?<Link className="action-btn  ml-3" to="read">inspect</Link>:""}
@@ -71,6 +71,7 @@ function EmailTemplates(props) {
         </div>
         <Outlet/>
     </div>
+  );
 }
 
-export default EmailTemplates
+export default EmailTemplates;
