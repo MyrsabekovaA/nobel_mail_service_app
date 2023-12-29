@@ -18,6 +18,13 @@ const DropDownIcon = ({icon, image, text, options, additionalIcon, onToggle}) =>
         };
     }, []);
 
+    const handleOptionClick = (option) => {
+        if (option.onClick) {
+            option.onClick();
+        }
+        setIsOpen(false);
+    };
+
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
         if (onToggle) onToggle();
@@ -37,7 +44,7 @@ const DropDownIcon = ({icon, image, text, options, additionalIcon, onToggle}) =>
                  dropdown cursor-pointer z-40
                 ">
                     {options.map((option, index) => (
-                        <ul key={index} onClick={option.onClick} className="flex h-auto flex-col overflow-y-auto
+                        <ul key={index} onClick={() => handleOptionClick(option)} className="flex h-auto flex-col overflow-y-auto
                         cursor-pointer hover:bg-lightgreen dark:hover:bg-lightgray border-b border-gray
                         last:border-b-0 dark:text-white">
                             <li className="flex gap-4 border-t border-stroke px-2 py-3 hover:bg-gray-2 items-center

@@ -13,8 +13,6 @@ import {sidebarActions} from "/@/GlobalStates/Sidebar";
 import Loader from "/@/routesControll/loaders";
 
 function Home() {
-    
-
     const location = useLocation();
     const isLoading = useSelector(state => state.loggedIn.isLoading);
     let isLoggedIn = useSelector(state=>state.loggedIn.value)
@@ -45,15 +43,12 @@ function Home() {
     
     console.log(isLoggedIn)
     return (
-    <div className={`${isDarkModeEnabled ? 'dark' : ''}`}>
-        <div className="flex h-screen overflow-hidden w-full h-full">
+    <div className={`${isDarkModeEnabled ? 'dark' : ''} overflow-hidden`}>
+        <div className="flex overflow-hidden w-full h-full">
         <Sidebar />
         <div className="flex flex-col flex-grow">
-            {sidebarOpenned && (
-                        <div className="overlay absolute inset-0 bg-black bg-opacity-50 z-30"/>
-                    )}
             <Header />
-            <main className="flex-grow flex flex-col overflow-y-scroll">
+            <main className="flex-grow flex flex-col overflow-y-scroll bg-whiten dark:bg-graydark z-1 pt-24">
                 <div className="mx-auto max-w-screen-2xl p-4 md:p-6 lg:p-4 xl:p-4 2xl:p-10">
                     <Outlet  />
                 </div>

@@ -10,11 +10,17 @@ import {LANGUAGE_IMG, languageActions} from "/@/GlobalStates/Language";
 import English from "/Flag_of_the_U.S.png";
 import Ukrainian from "/Flag_of_Ukraine.png";
 import userImage from "/user.png";
+import { logOut } from '/@/GlobalStates/LoggedIn';
+import {Navigate, useNavigate} from 'react-router-dom';
+import Loader from "/@/routesControll/loaders";
+import LoginForm from "/@views/LoginForm/LoginForm";
 
 const Header = ({ isSidebarOpen}) => {
     const dispatch = useDispatch();
     const isDarkModeEnabled = useSelector((state) => state.darkMode.enabled);
     const dropdownRef = useRef(null);
+    const user = useSelector((state) => state.loggedIn.user);
+    const navigate = useNavigate();
 
     const handleToggleDarkMode = () => {
         dispatch(toggleDarkMode());
@@ -33,7 +39,7 @@ const Header = ({ isSidebarOpen}) => {
     }, [dropdownRef]);
 
     const handleToggleSidebar = () => {
-        dispatch(sidebarActions.setTrueSidebarOpened());
+        dispatch(sidebarActions.toggleSidebarOpened());
     };
 
     const iconColor = isDarkModeEnabled ? 'white' : 'black';
@@ -86,17 +92,16 @@ const Header = ({ isSidebarOpen}) => {
     };
 
     return (
-        <header className={`sticky top-0 flex w-full border-b dark:bg-compdark border-lightgreen shadow-sm 
-        dark:border-gray
-        ${isSidebarOpen ? 'fixed inset-0 bg-opacity-50 z-30' : ''}`}>
-            <div className='flex w-full items-center px-4 py-4 justify-between lg:justify-end md:px-6 2xl:px-11'>
-                <div className="flex items-center gap-2 sm:gap-4 lg:hidden">
+        <header className={`fixed z-10 top-0 flex w-full border-b dark:bg-compdark border-lightgreen shadow-sm 
+        dark:border-gray`}>
+            <div className='flex w-full items-center px-4 py-4 justify-between md:px-6 2xl:px-11'>
+                <div className="flex items-center gap-2 sm:gap-4">
                     <button onClick={handleToggleSidebar}>
                         <Icon icon="material-symbols:menu"/>
                     </button>
                 </div>
                 <div className="flex items-center gap-3 2xsm:gap-7">
-                    <ul className="flex items-center gap-2 2xsm:gap-4">
+                <ul className="flex items-center gap-2 2xsm:gap-4">
                         <li className="relative flex h-10 w-10 items-center justify-center rounded-full
                         border-[0.5px]
                         border-stroke bg-lightgreen dark:border-strokedark dark:bg-meta-4 dark:text-white">

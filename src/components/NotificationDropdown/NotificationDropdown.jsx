@@ -18,6 +18,11 @@ const NotificationDropdown = ({ icon, notifications }) => {
         };
     }, []);
 
+    const handleNotificationClick = (notification) => {
+        event.stopPropagation();
+        setIsOpen(false);
+    };
+
     return (
         <div ref={dropdownRef} className="relative">
             <button onClick={() => setIsOpen(!isOpen)} className="flex items-center gap-2">
@@ -29,7 +34,7 @@ const NotificationDropdown = ({ icon, notifications }) => {
                  dropdown cursor-pointer
                 ">
                     {notifications.map((notification, index) => (
-                        <div key={index} className="p-2 hover:bg-lightgreen dark:hover:bg-lightgray border-b border-gray
+                        <div key={index} onClick={() => handleNotificationClick(notification)} className="p-2 hover:bg-lightgreen dark:hover:bg-lightgray border-b border-gray
                         last:border-b-0 dark:text-white">
                             <div className={`font-semibold ${notification.isError ? '' : ''}`}>
                                 {notification.message}

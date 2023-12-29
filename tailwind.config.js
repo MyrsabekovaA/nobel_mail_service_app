@@ -61,10 +61,6 @@ module.exports = {
       sm: '640px',
     },
     extend: {
-      width: {
-        '70': '280px',
-        '24': '100px',
-      },
       fontFamily: {
         satoshi: ['Satoshi', 'sans-serif'],
       },

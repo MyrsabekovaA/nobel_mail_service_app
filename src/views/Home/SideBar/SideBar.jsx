@@ -36,25 +36,23 @@ const Sidebar = () => {
     });
 
     return (
-      <div ref={sidebarRef} className={`fixed lg:static top-0 left-0 z-50 flex h-screen w-72 flex-col 
-      overflow-y-auto bg-lightgreen transition-transform duration-300 ease-linear dark:bg-compdark ${
-          isSidebarOpen ? 'translate-x-0 z-99' : '-translate-x-full'
-      } lg:translate-x-0`}>
-          <div className="flex items-center justify-between p-4">
-              <NavLink to="/home">
-                  <img src={Logo} alt="Logo" className="h-10 w-10"/>
-              </NavLink>
-              <button
-                  onClick={() => dispatch(sidebarActions.toggleSidebarOpened())}
-              >
-                  <Icon icon="material-symbols:close" className="text-xl"/>
-              </button>
-          </div>
-          <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
-              <NavMenu isSidebarOpen={isSidebarOpen}/>
-          </div>
-      </div>
-  );
+        <div ref={sidebarRef} className={`fixed top-0 left-0 z-40 h-screen w-72 flex flex-col
+            overflow-y-auto bg-lightgreen transition-transform duration-300 ease-in-out dark:bg-compdark ${
+            isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}>
+            <div className="flex items-center justify-between px-4 py-6">
+                <NavLink to="/home">
+                    <img src={Logo} alt="Logo" className="h-10 w-10"/>
+                </NavLink>
+                <button onClick={() => dispatch(sidebarActions.toggleSidebarOpened())}>
+                    <Icon icon="material-symbols:close" className="text-xl"/>
+                </button>
+            </div>
+            <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
+                <NavMenu isSidebarOpen={isSidebarOpen}/>
+            </div>
+        </div>
+    );
 };
 
 export default Sidebar;
