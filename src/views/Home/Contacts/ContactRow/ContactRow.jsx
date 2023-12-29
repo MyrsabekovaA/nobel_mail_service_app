@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './ContactRow.css';
+import { Link } from 'react-router-dom';
 
 function ContactRow({ contact, onSelectContact, selectAll }) {
   const checkboxId = `checkbox-${contact.id}`;
