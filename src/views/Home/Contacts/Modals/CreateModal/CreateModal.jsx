@@ -127,68 +127,72 @@ function CreateModal({ onClose, onCreate }) {
   return (
     <div
       onClick={onClose}
-      className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex justify-center items-center"
+      className="fixed inset-0 z-50 bg-black bg-opacity-50 overflow-y-auto h-full w-full flex justify-center items-center"
     >
       <div
         onClick={handleModalClick}
-        className="bg-white dark:bg-slate-800 rounded-lg shadow-xl p-6 w-96 sm:w-96 max-h-[650px] overflow-y-auto"
+        className="bg-whiten dark:bg-compdark rounded-lg shadow-xl p-6 w-96 sm:w-96 max-h-[650px] md:min-w-[550px] overflow-y-auto"
       >
-        <h2 className="text-xl text-slate-600 dark:text-slate-200 font-bold mb-8 text-center block">
+        <h2 className="text-xl text-compdark dark:text-whiten font-medium mb-8 text-center block">
           Contact Creation
         </h2>
         <form>
-          <p className="dark:text-slate-200 mb-6">General Information</p>
+          <p className="dark:text-whiten/70 mb-6">General Information</p>
           <div className="flex flex-col gap-4">
-            <div className="create-item">
-              <label className="create-label" htmlFor="firstName">
-                First Name
-              </label>
-              <input
-                onChange={handleInputChange}
-                value={contactData.firstName}
-                className="create-input"
-                type="text"
-                id="firstName"
-              />
+            <div className="md:flex md:gap-3">
+              <div className="create-item">
+                <label className="create-label" htmlFor="firstName">
+                  First Name
+                </label>
+                <input
+                  onChange={handleInputChange}
+                  value={contactData.firstName}
+                  className="create-input"
+                  type="text"
+                  id="firstName"
+                />
+              </div>
+              <div className="create-item">
+                <label className="create-label" htmlFor="lastName">
+                  Second Name
+                </label>
+                <input
+                  onChange={handleInputChange}
+                  value={contactData.lastName}
+                  className="create-input"
+                  type="text"
+                  id="lastName"
+                />
+              </div>
             </div>
-            <div className="create-item">
-              <label className="create-label" htmlFor="lastName">
-                Second Name
-              </label>
-              <input
-                onChange={handleInputChange}
-                value={contactData.lastName}
-                className="create-input"
-                type="text"
-                id="lastName"
-              />
-            </div>
-            <div className="create-item">
-              <label className="create-label" htmlFor="email">
-                Email
-              </label>
-              <input
-                onChange={handleInputChange}
-                value={contactData.email}
-                className="create-input"
-                type="email"
-                id="email"
-              />
-            </div>
-            <div className="create-item">
-              <label className="create-label" htmlFor="timezone">
-                Timezone
-              </label>
-              <input
-                onChange={handleInputChange}
-                value={contactData.timezone}
-                className="create-input"
-                type="text"
-                id="timezone"
-              />
+            <div className="md:flex md:gap-3">
+              <div className="create-item">
+                <label className="create-label" htmlFor="email">
+                  Email
+                </label>
+                <input
+                  onChange={handleInputChange}
+                  value={contactData.email}
+                  className="create-input"
+                  type="email"
+                  id="email"
+                />
+              </div>
+              <div className="create-item">
+                <label className="create-label" htmlFor="timezone">
+                  Timezone
+                </label>
+                <input
+                  onChange={handleInputChange}
+                  value={contactData.timezone}
+                  className="create-input"
+                  type="text"
+                  id="timezone"
+                />
+              </div>
             </div>
           </div>
-          <p className="dark:text-slate-200 mt-4 mb-4">Personal Information</p>
+          <p className="dark:text-whiten/70  mt-4 mb-4">Personal Information</p>
           <div className="flex flex-col gap-4">
             {/* <div className="create-item">
               <label className="create-label" htmlFor="phone">
@@ -202,96 +206,102 @@ function CreateModal({ onClose, onCreate }) {
                 id="phone"
               />
             </div> */}
-            <div className="create-item relative">
-              <label className="create-label" htmlFor="birthDate">
-                Birth Date
-              </label>
-              <Datepicker
-                options={options}
-                onChange={handleBirthDateChange}
-                show={show}
-                setShow={handleClose}
-                value={contactData.birthDate}
-                className="create-input"
-                type="text"
-                id="birthDate"
-              />
+            <div className="md:flex md:gap-3">
+              <div className="create-item relative">
+                <label className="create-label" htmlFor="birthDate">
+                  Birth Date
+                </label>
+                <Datepicker
+                  options={options}
+                  onChange={handleBirthDateChange}
+                  show={show}
+                  setShow={handleClose}
+                  value={contactData.birthDate}
+                  className="create-input"
+                  type="text"
+                  id="birthDate"
+                />
+              </div>
+              <div className="create-item">
+                <label className="create-label" htmlFor="age">
+                  Age
+                </label>
+                <input
+                  onChange={handleInputChange}
+                  value={contactData.age}
+                  className="create-input"
+                  type="number"
+                  id="age"
+                />
+              </div>
             </div>
-            <div className="create-item">
-              <label className="create-label" htmlFor="age">
-                Age
-              </label>
-              <input
-                onChange={handleInputChange}
-                value={contactData.age}
-                className="create-input"
-                type="number"
-                id="age"
-              />
+            <div className="md:flex md:gap-3">
+              <div className="create-item">
+                <label className="create-label" htmlFor="country">
+                  Country
+                </label>
+                <input
+                  onChange={handleInputChange}
+                  value={contactData.country}
+                  className="create-input"
+                  type="text"
+                  id="country"
+                />
+              </div>
+              <div className="create-item">
+                <label className="create-label" htmlFor="city">
+                  City
+                </label>
+                <input
+                  onChange={handleInputChange}
+                  value={contactData.city}
+                  className="create-input"
+                  type="text"
+                  id="city"
+                />
+              </div>
             </div>
-            <div className="create-item">
-              <label className="create-label" htmlFor="country">
-                Country
-              </label>
-              <input
-                onChange={handleInputChange}
-                value={contactData.country}
-                className="create-input"
-                type="text"
-                id="country"
-              />
-            </div>
-            <div className="create-item">
-              <label className="create-label" htmlFor="city">
-                City
-              </label>
-              <input
-                onChange={handleInputChange}
-                value={contactData.city}
-                className="create-input"
-                type="text"
-                id="city"
-              />
-            </div>
-            <div className="create-item">
-              <label className="create-label" htmlFor="occupation">
-                Occupation
-              </label>
-              <select
-                onChange={handleInputChange}
-                value={contactData.occupation}
-                className="create-input"
-                type="text"
-                id="occupation"
-              >
-                <option value="Student">Student</option>
-                <option value="Employed">Employed</option>
-                <option value="Unemployed">Unemployed</option>
-                <option value="Other" selected>
-                  Other
-                </option>
-              </select>
-            </div>
-            <div className="create-item">
-              <label className="create-label" htmlFor="gender">
-                Gender
-              </label>
-              <select
-                onChange={handleInputChange}
-                value={contactData.gender}
-                className="create-input"
-                type="text"
-                id="gender"
-              >
-                <option value="Other" selected>
-                  Other
-                </option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-              </select>
+            <div className="md:flex md:gap-3">
+              <div className="create-item">
+                <label className="create-label" htmlFor="occupation">
+                  Occupation
+                </label>
+                <select
+                  onChange={handleInputChange}
+                  value={contactData.occupation}
+                  className="create-input"
+                  type="text"
+                  id="occupation"
+                >
+                  <option value="Student">Student</option>
+                  <option value="Employed">Employed</option>
+                  <option value="Unemployed">Unemployed</option>
+                  <option value="Other" selected>
+                    Other
+                  </option>
+                </select>
+              </div>
+              <div className="create-item">
+                <label className="create-label" htmlFor="gender">
+                  Gender
+                </label>
+                <select
+                  onChange={handleInputChange}
+                  value={contactData.gender}
+                  className="create-input"
+                  type="text"
+                  id="gender"
+                >
+                  <option value="Other" selected>
+                    Other
+                  </option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
             </div>
           </div>
-          <p className="dark:text-slate-200 mt-4 mb-4">EduQuest Information</p>
+          <p className="dark:text-whiten/70 mt-4 mb-4">EduQuest Information</p>
           <div className="flex flex-col gap-4">
             {/* <div className="create-item">
               <label className="create-label" htmlFor="eqList">
@@ -332,14 +342,14 @@ function CreateModal({ onClose, onCreate }) {
         <div className="flex justify-end mt-6">
           <button
             onClick={handleSubmit}
-            className="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg hover:bg-green-400 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            className="bg-green300 text-meta-2 dark:bg-success hover:bg-green300 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg  outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             type="button"
           >
             Create
           </button>
           <button
             onClick={onClose}
-            className="bg-gray-300 text-gray-700 active:bg-gray-400 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none ml-1 mb-1 ease-linear transition-all duration-150"
+            className="bg-gray/50 text-whiten font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none ml-1 mb-1 ease-linear transition-all duration-150"
             type="button"
           >
             Cancel

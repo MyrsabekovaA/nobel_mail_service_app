@@ -19,8 +19,9 @@ import EmailTemplatesDeletePopup from "/@views/Home/EmailTemplates/EmailTemplate
 import { emailTemplatesLoader } from "/@/loaders/EmailTemplates";
 import LoginFormLoader from "./loaders/LogInForm";
 //importing actions
-import {loginAction} from "/@/actions/LogInForm";
+import { loginAction } from "/@/actions/LogInForm";
 import { deleteTemplate } from "/@/actions/EmailTemplates";
+import AutomatizationPage from "./views/Home/AutomatizationPage/AutomatizationPage";
 
 export const router = createBrowserRouter(
   [
@@ -44,11 +45,15 @@ export const router = createBrowserRouter(
         {
           path: "",
           index: true,
-          element: <HomePage/>,
+          element: <HomePage />,
         },
         {
           path: "contacts",
           element: <Contacts />,
+        },
+        {
+          path: "automatizations",
+          element: <AutomatizationPage />,
         },
         {
           path: "contacts/:contactid",
@@ -60,36 +65,32 @@ export const router = createBrowserRouter(
           loader: emailTemplatesLoader,
           children: [
             {
-                "path": "",
-                "index": true,
-                "element": <div></div>
+              path: "",
+              index: true,
+              element: <div></div>,
             },
             {
-                "path": "create",
-                "element": <CreateEmailTemplateForm/>
+              path: "create",
+              element: <CreateEmailTemplateForm />,
             },
             {
-                "path": "update",
-                children: [
-                    {"path": ":id"}
-                ]
+              path: "update",
+              children: [{ path: ":id" }],
             },
             {
-                "path": "delete",
-                "element": <EmailTemplatesDeletePopup/>,
-                children: [
-                    {
-                        "path": ":id",
-                        "action": deleteTemplate
-                    }
-                ]
+              path: "delete",
+              element: <EmailTemplatesDeletePopup />,
+              children: [
+                {
+                  path: ":id",
+                  action: deleteTemplate,
+                },
+              ],
             },
             {
-                "path": "read",
-                children: [
-                    {"path": ":id"}
-                ]
-            }
+              path: "read",
+              children: [{ path: ":id" }],
+            },
           ],
         },
       ],

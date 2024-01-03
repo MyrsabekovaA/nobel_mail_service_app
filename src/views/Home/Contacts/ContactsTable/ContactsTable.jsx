@@ -16,16 +16,16 @@ function ContactsTable({
   // };
   return (
     <div className="overflow-x-auto relative rounded-lg mt-8">
-      <table className="text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase whitespace-nowrap bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
+      <table className="text-sm text-center border-gray/20 text-gray dark:text-gray-400">
+        <thead className="text-xs uppercase whitespace-nowrap">
+          <tr className="dark:bg-graydark">
             <th scope="col" className="p-4">
               <input
                 id="check-all"
                 onChange={(e) => onCheckAllChange(e.target.checked)}
                 checked={selectAll}
                 type="checkbox"
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                className="w-4 h-4 rounded"
               />
               <label htmlFor="check-all" className="sr-only">
                 checkbox

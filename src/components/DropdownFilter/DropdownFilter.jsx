@@ -29,7 +29,7 @@ function DropdownFilter({ categories }) {
     <div className="relative flex items-center justify-center">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className=" text-sm px-4 w-28 h-10 text-center flex items-center justify-between gap-1 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-lg dark:bg-blue-600 dark:hover:bg-blue-700"
+        className="text-sm px-4 w-28 h-10 text-center flex items-center justify-between gap-1 text-white bg-meta-5 hover:bg-meta-5/80 dark:bg-meta-4 dark:hover:bg-graydark focus:outline-none shadow-lg  font-medium rounded-lg transition-all duration-250"
         type="button"
       >
         Filter
@@ -50,16 +50,13 @@ function DropdownFilter({ categories }) {
       </button>
 
       {isOpen && (
-        <div className="absolute top-10 z-10 -left-8 mt-2 w-56  rounded-lg shadow bg-white dark:bg-gray-700">
+        <div className="absolute top-10 z-10 -left-8 mt-2 w-56 rounded-lg shadow dark:bg-compdark bg-whiten">
           <div className="p-4">
             {Object.entries(testCategories).map(([category, properties]) => (
-              <div
-                key={category}
-                className=" dark:text-slate-200 text-slate-800"
-              >
+              <div key={category} className="dark:text-whiten text-compdark">
                 <button
                   className="flex items-center justify-between w-full p-2 uppercase 
-                  font-medium text-left text-sm font-semibold border-b border-slate-500"
+                  font-medium text-left text-sm font-semibold border-b border-gray/50"
                   onClick={() => toggleCategory(category)}
                 >
                   {category}
@@ -93,8 +90,7 @@ function DropdownFilter({ categories }) {
                             checkedItems[`${category}-${property}`] || false
                           }
                           type="checkbox"
-                          className="w-4 h-4 text-blue-600 bg-gray-600 dark:bg-gray-600 border-gray-300 rounded 
-                           dark:bg-gray-700 dark:border-gray-600 w-4 h-4 bg-gray-100 border-gray-300 rounded  dark:bg-gray-600 dark:border-gray-500"
+                          className="w-4 h-4"
                         />
                         <label
                           htmlFor={`${category}-${property}`}
