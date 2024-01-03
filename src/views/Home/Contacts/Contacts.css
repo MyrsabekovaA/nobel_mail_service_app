@@ -1,11 +1,10 @@
 .action-btn {
-  @apply bg-bodydark border border-gray font-medium py-2 px-4 rounded;
+  @apply flex gap-2 items-center text-compdark dark:text-whiten bg-white dark:bg-meta-4 hover:bg-gray-3 dark:hover:bg-graydark shadow-lg border border-gray/50 font-medium py-2 px-4 rounded transition-all duration-200;
 }
 .delete-btn {
-  @apply bg-danger text-gray;
+  @apply flex gap-2 items-center bg-danger text-white hover:bg-meta-1 shadow-lg border border-gray/50 font-medium py-2 px-4 rounded transition-all duration-200;
 }
-
-input{
+input {
   @apply bg-whiten;
 }
 

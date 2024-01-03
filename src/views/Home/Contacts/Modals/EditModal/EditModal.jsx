@@ -173,14 +173,14 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
   return (
     <div
       onClick={onClose}
-      className="fixed inset-0  bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex justify-center items-center"
+      className="fixed inset-0 z-50 bg-black bg-opacity-50  h-full w-full flex justify-center items-center"
     >
       <div
         onClick={handleModalClick}
-        className="bg-white dark:bg-slate-800 flex flex-col  rounded-lg shadow-xl p-6 w-auto sm:w-96 min-h-[650px] min-w-[550px] overflow-y-auto"
+        className="bg-whiten dark:bg-compdark flex flex-col rounded-lg shadow-xl p-6 w-auto sm:w-96  min-h-[650px] min-w-[550px] "
       >
         <div className="flex justify-between items-center pb-4 px-4 -mx-6">
-          <h2 className="text-xl text-slate-600 dark:text-slate-200 font-bold">
+          <h2 className="text-xl text-compdark/90 dark:text-whiten font-medium">
             Editing{" "}
             {contactsToEdit.length === 0
               ? totalContacts
@@ -192,7 +192,7 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
           </h2>
           <button
             onClick={onClose}
-            className="text-black dark:text-white flex items-center"
+            className="text-compdark dark:text-whiten flex items-center"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -210,29 +210,36 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
             </svg>
           </button>
         </div>
-        <div className="flex flex-auto justify-between mb-8 -mx-6 border-t border-b border-slate-500/70">
-          <div className="flex bg-slate-200 dark:bg-gray-800 flex-auto w-80 px-3">
-            <div className="justify-center">
+        <div className="flex flex-auto justify-between mb-8 -mx-6 border-t border-b border-gray/50 ">
+          <div className="flex bg-meta-9 dark:bg-graydark/50 flex-auto w-80 px-3 max-h-[436px]  overflow-y-auto">
+            <div className="justify-center ">
               {currentTab === "edit" && (
-                <div className="py-6">
-                  <h3 className="text-lg font-medium text-slate-700 dark:text-slate-300 mb-3">
+                <div className="py-6 ">
+                  <h3 className="text-lg font-medium text-compdark/90 dark:text-whiten mb-3">
                     Fields to edit:
                   </h3>
-                  <div className="field-selection grid grid-cols-2 border-b border-slate-500/70 mb-3 pb-6">
-                    {Object.keys(fieldTypes).map((field) => (
-                      <div className="flex gap-1 p-1 items-center" key={field}>
-                        <input
-                          type="checkbox"
-                          id={field}
-                          name={field}
-                          checked={!!selectedFields[field]}
-                          onChange={handleCheckboxChange}
-                        />
-                        <label htmlFor={field}>{fieldTypes[field].name}</label>
-                      </div>
-                    ))}
+                  <div className="">
+                    <div className="field-selection grid grid-cols-2 border-b border-gray/50 mb-3 pb-6">
+                      {Object.keys(fieldTypes).map((field) => (
+                        <div
+                          className="flex gap-1 p-1 items-center"
+                          key={field}
+                        >
+                          <input
+                            type="checkbox"
+                            id={field}
+                            name={field}
+                            checked={!!selectedFields[field]}
+                            onChange={handleCheckboxChange}
+                          />
+                          <label htmlFor={field}>
+                            {fieldTypes[field].name}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                  <h3 className="text-lg font-medium text-slate-700 dark:text-slate-300 mb-3">
+                  <h3 className="text-lg font-medium text-compdark/90 dark:text-whiten mb-3">
                     Update field(s):
                   </h3>
                   <div className="flex flex-col gap-3 field-inputs">
@@ -253,8 +260,10 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
               {currentTab === "sendEmail" && <div>Content for Tab 4</div>}
             </div>
           </div>
-          <div className="actions bg-slate-300 dark:bg-gray-900 flex-auto w-32 px-3">
-            <h4 className="text-lg font-bold text-slate-500 p-2">Actions</h4>
+          <div className="actions bg-whiten dark:bg-graydark/90 flex-auto w-32 px-3 pt-4">
+            <h4 className="text-lg font-medium text-compdark/90 dark:text-whiten mb-3">
+              Actions
+            </h4>
             <ul className="flex flex-col gap-3">
               <li className="action-item">
                 <button
@@ -302,14 +311,14 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
         <div className="flex justify-end mt-6">
           <button
             onClick={handleSave}
-            className="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg hover:bg-green-400 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            className="bg-green300 text-meta-2 dark:bg-success hover:bg-green300 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg  outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             type="button"
           >
             Save
           </button>
           <button
             onClick={onClose}
-            className="bg-gray-300 text-gray-700 active:bg-gray-400 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none ml-1 mb-1 ease-linear transition-all duration-150"
+            className="bg-gray text-whiten active:bg-gray/50 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none ml-1 mb-1 ease-linear transition-all duration-150"
             type="button"
           >
             Cancel

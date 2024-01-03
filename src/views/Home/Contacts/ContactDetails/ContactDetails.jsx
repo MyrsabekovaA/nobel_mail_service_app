@@ -198,13 +198,15 @@ function ContactDetails() {
   };
 
   return (
-    <div className="bg-slate-100 dark:bg-gray-900  flex-1 py-8">
+    <div className="flex-1 py-8">
       <div className="container mx-auto px-4">
         {contact ? (
           <div className="flex flex-col md:flex-row gap-10">
-            <div className="flex-1 bg-slate-200 ">
+            <div className="flex-1 dark:bg-graydark/30 border-b-4 dark:border-b-green300 border-b-meta-5  rounded-xl">
               <form className="flex flex-col px-4 py-2">
-                <p className="dark:text-slate-200 mb-6">General Information</p>
+                <p className="flex self-start dark:text-meta-2 pb-2 border-b-4 dark:border-b-green300 border-b-meta-5 font-medium mb-6">
+                  General Information
+                </p>
                 <div className="flex flex-col gap-4">
                   <div className="form-item">
                     <label className="create-label" htmlFor="firstName">
@@ -255,7 +257,7 @@ function ContactDetails() {
                     />
                   </div>
                 </div>
-                <p className="dark:text-slate-200 mt-4 mb-4">
+                <p className="flex self-start dark:text-meta-2 pb-2 border-b-4 dark:border-b-green300 border-b-meta-5 font-medium mt-4 mb-4">
                   Personal Information
                 </p>
                 <div className="flex flex-col gap-4">
@@ -354,7 +356,7 @@ function ContactDetails() {
                     </select>
                   </div>
                 </div>
-                <p className="dark:text-slate-200 mt-4 mb-4">
+                <p className="flex self-start dark:text-meta-2 pb-2 border-b-4 dark:border-b-green300 border-b-meta-5 font-medium mt-4 mb-4">
                   EduQuest Information
                 </p>
                 <div className="flex flex-col gap-4">

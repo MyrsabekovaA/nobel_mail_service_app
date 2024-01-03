@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import './ContactRow.css';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import "./ContactRow.css";
+import { Link } from "react-router-dom";
 
 function ContactRow({ contact, onSelectContact, selectAll }) {
   const checkboxId = `checkbox-${contact.id}`;
@@ -18,18 +18,16 @@ function ContactRow({ contact, onSelectContact, selectAll }) {
     onSelectContact(contact, checked);
   };
 
-  // Utility function to display a dash for empty fields
   const displayValueOrDash = (value) => {
     return value || "—";
   };
 
-  // Handle date formatting and empty date fields
   const formatDate = (dateString) => {
     return dateString ? new Date(dateString).toLocaleDateString() : "—";
   };
 
   return (
-    <tr className="dark:bg-gray-800 bg-white border-b dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 ease-out duration-300">
+    <tr className="bg-whiten dark:bg-graydark/40 border-b ease-out duration-300 dark:hover:bg-graydark/80 hover:bg-gray/10">
       <td className="w-4 p-4">
         <div className="flex items-center">
           <input
@@ -37,45 +35,45 @@ function ContactRow({ contact, onSelectContact, selectAll }) {
             onChange={handleCheckboxChange}
             checked={isChecked}
             type="checkbox"
-            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            className="w-4 h-4 rounded"
           />
           <label htmlFor={checkboxId} className="sr-only">
             checkbox
           </label>
         </div>
       </td>
-      <td className="px-6 py-4">
+      <td className="px-6 py-4 ">
         <Link
           to={`/Home/Contacts/${contact.id}`}
-          className="transition-colors duration-200 hover:text-green-500 hover:underline"
+          className="transition-colors duration-200 hover:text-meta-5 dark:hover:text-green300 hover:underline"
         >
           {displayValueOrDash(contact.firstName)}
         </Link>
       </td>
-      <td className="px-6 py-4">
+      <td className="px-6 py-4 ">
         <Link
           to={`/Home/Contacts/${contact.id}`}
-          className="transition-colors duration-200 hover:text-green-500 hover:underline"
+          className="transition-colors duration-200 hover:text-meta-5 dark:hover:text-green300 hover:underline"
         >
           {displayValueOrDash(contact.lastName)}
         </Link>
       </td>
-      <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+      <td className="px-6 py-4 font-medium text-graydark whitespace-nowrap dark:text-white">
         <Link
           to={`/Home/Contacts/${contact.id}`}
-          className="transition-colors duration-200 hover:text-green-500 hover:underline"
+          className="transition-colors duration-200  hover:text-meta-5 dark:hover:text-green300 hover:underline"
         >
           {displayValueOrDash(contact.email)}
         </Link>
       </td>
-      <td className="px-6 py-4 flex items-center gap-1">
+      <td className="px-6 py-4 flex items-center gap-1 ">
         <div
           className={`${
             contact.eduQuestDecision === "Selected"
-              ? "bg-green-300"
+              ? "bg-green300"
               : contact.eduQuestDecision === "Pending"
-              ? "bg-orange-300"
-              : "bg-red-300"
+              ? "bg-warning"
+              : "bg-meta-1"
           } flex w-4 h-4 rounded-full`}
         ></div>
         {displayValueOrDash(contact.eduQuestDecision)}
