@@ -1,11 +1,15 @@
 import React from "react";
 import AutomatizationItem from "../AutomatizationItem/AutomatizationItem";
 
-function AutomatizationList({ automatizations }) {
+function AutomatizationList({ automatizations, templates }) {
   return (
-    <div className="grid mxsm:grid-cols-2 md:grid-cols-3">
+    <div className="grid gap-8 md:grid-cols-3">
       {automatizations.map((item) => (
-        <AutomatizationItem automatization={item} />
+        <AutomatizationItem
+          key={item.id}
+          automatization={item}
+          templates={templates}
+        />
       ))}
     </div>
   );

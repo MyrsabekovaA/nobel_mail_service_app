@@ -41,7 +41,7 @@ function Home() {
     return <Navigate to="/LogInForm" />;
   }
 
-  console.log(isLoggedIn);
+  console.log(new Date());
   return (
     <div className={`${isDarkModeEnabled ? "dark" : ""} h-full`}>
       <Sidebar />
