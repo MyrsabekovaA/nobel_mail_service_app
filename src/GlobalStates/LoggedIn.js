@@ -3,7 +3,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const checkToken = createAsyncThunk(
   "LoggedIn/checkToken",
   async ({token, user}, thunkApi) => {
-    console.log(token, user)
     let response = await fetch("http://52.59.202.2:3000/api/auth/current?"
     + new URLSearchParams(user), {
       method: "GET",
@@ -90,7 +89,6 @@ const isLoggedInSlice = createSlice({
       [checkToken.fulfilled]:(state, action)=>{
         state.value = true
         state.checkingStatus = "fullfilled"
-        console.log(1)
       }, 
       [logOut.fulfilled]:(state,action)=>{
         console.log("Logout response:", action.payload);

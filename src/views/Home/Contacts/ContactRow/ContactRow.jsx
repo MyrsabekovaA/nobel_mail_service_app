@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./ContactRow.css";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 function ContactRow({ contact, onSelectContact, selectAll }) {
   const checkboxId = `checkbox-${contact.id}`;
@@ -22,8 +23,14 @@ function ContactRow({ contact, onSelectContact, selectAll }) {
     return value || "—";
   };
 
-  const formatDate = (dateString) => {
-    return dateString ? new Date(dateString).toLocaleDateString() : "—";
+  const formatDate = (dateString, withTime) => {
+    if (dateString && withTime === false) {
+      return moment(dateString).format("DD.MM.YYYY");
+    } else if (dateString && withTime === true) {
+      return moment(dateString).format("DD.MM.YYYY HH:mm");
+    } else {
+      return "—";
+    }
   };
 
   return (
@@ -79,13 +86,13 @@ function ContactRow({ contact, onSelectContact, selectAll }) {
         {displayValueOrDash(contact.eduQuestDecision)}
       </td>
       <td className="px-6 py-4">
-        {formatDate(contact.eduQuestSelectedDateTime)}
+        {formatDate(contact.eduQuestSelectedDateTime, true)}
       </td>
       <td className="px-6 py-4">
         {displayValueOrDash(contact.isEqParticipationConfirmed)}
       </td>
       <td className="px-6 py-4">{displayValueOrDash(contact.timezone)}</td>
-      <td className="px-6 py-4">{formatDate(contact.birthDate)}</td>
+      <td className="px-6 py-4">{formatDate(contact.birthDate, false)}</td>
       <td className="px-6 py-4">{displayValueOrDash(contact.age)}</td>
       <td className="px-6 py-4">{displayValueOrDash(contact.country)}</td>
       <td className="px-6 py-4">{displayValueOrDash(contact.city)}</td>

@@ -5,10 +5,12 @@ import Datepicker from "tailwind-datepicker-react";
 
 import "./ContactDetails.css";
 import ContactActivityList from "./ContactsActivityList/ContactsActivityList";
-// import LoadingOverlay from "../../../components/LoadingOverlay/LoadingOverlay";
-// import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
+import LoadingOverlay from "../../../../components/LoadingOverlay/LoadingOverlay";
+import LoadingSpinner from "../../../../components/LoadingSpinner/LoadingSpinner";
 import { useDispatch, useSelector } from "react-redux";
 import { successToast, errorToast } from "../../../../GlobalStates/Toasts";
+import CustomDatepicker from "../../../../components/CustomDatepicker/CustomDatepicker";
+
 function ContactDetails() {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.loggedIn.token);
@@ -87,34 +89,31 @@ function ContactDetails() {
 
   const [show, setShow] = useState(false);
   let { contactid } = useParams();
-  console.log(contactid); // Check if the id is being logged correctly
 
   const [isOverlayLoading, setIsOverlayLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [contact, setContact] = useState({});
   const [activities, setActivities] = useState([
     {
-      id: "1",
-      contactId: "test-id",
-      typeOfActivity: "LINK",
-      templateId: "12431",
-      activityDescription:
-        "Link 'EQ Website' was clicked from the email 'Test Email'",
-      createdAt: "2023-01-01T12:00:00Z",
+      id: "65787e6cae1051c06b2e44e4",
+      contactId: "655f159d9f242bca14e45e75",
+      typeOfActivity: "UNSUBSCRIBE",
+      activityDescription: "User 'naumetdmytro1604@gmail.com' has unsubscribed",
+      createdAt: "2023-12-12T15:38:20.980Z",
     },
     {
-      id: "2",
-      contactId: "test-id",
-      typeOfActivity: "SOMETHING",
-      templateId: "12412",
-      activityDescription: "opened email blabla",
-      createdAt: "2023-01-01T12:00:00Z",
+      id: "65787e6cae1051c06b2e44e4",
+      contactId: "655f159d9f242bca14e45e75",
+      typeOfActivity: "UNSUBSCRIBE",
+      activityDescription: "User 'naumetdmytro1604@gmail.com' has unsubscribed",
+      createdAt: "2023-12-12T15:38:20.980Z",
     },
   ]);
 
   const headers = {
     Authorization: `Bearer ${token}`,
   };
+
   const fetchContactData = async () => {
     try {
       setIsOverlayLoading(true);
@@ -135,7 +134,7 @@ function ContactDetails() {
         city: data.city,
         occupation: data.occupation.toLowerCase(),
         gender: data.gender.toLowerCase(),
-        eduQuestSelectedDateTime: new Date(data.eduQuestSelectedDateTime),
+        eduQuestSelectedDateTime: data.eduQuestSelectedDateTime,
       });
     } catch (error) {
       console.error("Error fetching contact", error);
@@ -147,7 +146,7 @@ function ContactDetails() {
   const fetchContactActivities = async () => {
     try {
       const response = await axios.get(
-        `http://52.59.202.2:3000/action/${contactid}`,
+        `http://52.59.202.2:3000/actions/${contactid}`,
         { headers: headers }
       );
       // setActivities(response.data.userActions);
@@ -156,6 +155,7 @@ function ContactDetails() {
       console.error("Error fetching activities", error);
     }
   };
+
   useEffect(() => {
     fetchContactData();
     fetchContactActivities();
@@ -170,6 +170,12 @@ function ContactDetails() {
     setContact((prevContact) => ({
       ...prevContact,
       [id]: value,
+    }));
+  };
+  const handleDateChange = (id, newDate) => {
+    setContact((prevContact) => ({
+      ...prevContact,
+      [id]: newDate,
     }));
   };
 
@@ -202,10 +208,10 @@ function ContactDetails() {
       <div className="container mx-auto px-4">
         {contact ? (
           <div className="flex flex-col md:flex-row gap-10">
-            <div className="flex-1 dark:bg-graydark/30 border-b-4 dark:border-b-green300 border-b-meta-5  rounded-xl">
+            <div className="flex-1 bg-gray/10 dark:bg-graydark/30 rounded-xl">
               <form className="flex flex-col px-4 py-2">
-                <p className="flex self-start dark:text-meta-2 pb-2 border-b-4 dark:border-b-green300 border-b-meta-5 font-medium mb-6">
-                  General Information
+                <p className="flex self-start text-compdark/80 dark:text-meta-2 pb-2 border-b-4 dark:border-b-green300 border-b-meta-5 font-medium mb-6">
+                  General Information:
                 </p>
                 <div className="flex flex-col gap-4">
                   <div className="form-item">
@@ -257,28 +263,20 @@ function ContactDetails() {
                     />
                   </div>
                 </div>
-                <p className="flex self-start dark:text-meta-2 pb-2 border-b-4 dark:border-b-green300 border-b-meta-5 font-medium mt-4 mb-4">
-                  Personal Information
+                <p className="flex self-start text-compdark/80 dark:text-meta-2 pb-2 border-b-4 dark:border-b-green300 border-b-meta-5 font-medium mt-4 mb-4">
+                  Personal Information:
                 </p>
                 <div className="flex flex-col gap-4">
                   <div className="form-item relative">
                     <label className="create-label" htmlFor="birthDate">
                       Birth Date
                     </label>
-                    <Datepicker
-                      options={options}
-                      onChange={(date) =>
-                        setContact((prevContact) => ({
-                          ...prevContact,
-                          birthDate: date,
-                        }))
+                    <CustomDatepicker
+                      initialDate={contact.birthDate}
+                      timeOptionOn={false}
+                      onDateChange={(newDate) =>
+                        handleDateChange("birthDate", newDate)
                       }
-                      show={show}
-                      setShow={handleClose}
-                      value={contact.birthDate}
-                      className="form-date"
-                      type="text"
-                      id="birthDate"
                     />
                   </div>
                   <div className="form-item">
@@ -356,29 +354,10 @@ function ContactDetails() {
                     </select>
                   </div>
                 </div>
-                <p className="flex self-start dark:text-meta-2 pb-2 border-b-4 dark:border-b-green300 border-b-meta-5 font-medium mt-4 mb-4">
-                  EduQuest Information
+                <p className="flex self-start text-compdark/80 dark:text-meta-2 pb-2 border-b-4 dark:border-b-green300 border-b-meta-5 font-medium mt-4 mb-4">
+                  EduQuest Information:
                 </p>
                 <div className="flex flex-col gap-4">
-                  {/* <div className="form-item">
-              <label className="create-label" htmlFor="eqList">
-                Assign to EQ
-              </label>
-              <select
-                onChange={handleListAdd}
-                value={contact.listIds}
-                className="create-input"
-                type="text"
-                id="eqList"
-              >
-                <option value="">None</option>
-                {eqLists.map((eq) => (
-                  <option key={eq.id} value={eq.id}>
-                    {eq.eqDate}
-                  </option>
-                ))}
-              </select>
-            </div> */}
                   <div className="form-item">
                     <label
                       className="create-label"
@@ -386,17 +365,17 @@ function ContactDetails() {
                     >
                       EQ selected date time
                     </label>
-                    <input
-                      onChange={handleChange}
-                      value={contact.eduQuestSelectedDateTime}
-                      className="create-input"
-                      type="text"
-                      id="eduQuestSelectedDateTime"
+                    <CustomDatepicker
+                      initialDate={contact.eduQuestSelectedDateTime}
+                      timeOptionOn={true}
+                      onDateChange={(newDate) =>
+                        handleDateChange("eduQuestSelectedDateTime", newDate)
+                      }
                     />
                   </div>
                   <button
                     onClick={handleSubmit}
-                    className=" inline-flex self-end bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg hover:bg-green-400 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="inline-flex self-end bg-green-500 text-whiten bg-green300 active:bg-success font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg hover:bg-green300/90 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                   >
                     Save
@@ -406,12 +385,12 @@ function ContactDetails() {
             </div>
             <div className="flex-1">
               <div className="flex items-center justify-between mb-8">
-                <h3 className="ml-12 text-lg text-slate-300">
+                <h3 className="font-medium ml-12 text-lg text-compdark/80 dark:text-meta-2">
                   Recent Activities
                 </h3>
                 <select
                   // onChange={}
-                  className="self-end bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="p-2 text-sm rounded bg-whiten dark:bg-compdark outline-none focus:outline-meta-5 block"
                 >
                   <option value="all activities">All Activities</option>
                   <option value="email">Email</option>
@@ -419,14 +398,14 @@ function ContactDetails() {
                   <option value="something">Something</option>
                 </select>
               </div>
-              {/* <ContactActivityList activities={contact.activities} /> */}
+              <ContactActivityList activities={activities} />
             </div>
           </div>
         ) : (
           <div>No contact found.</div>
         )}
       </div>
-      {/* {isOverlayLoading && <LoadingOverlay />} */}
+      {isOverlayLoading && <LoadingOverlay />}
     </div>
   );
 }
