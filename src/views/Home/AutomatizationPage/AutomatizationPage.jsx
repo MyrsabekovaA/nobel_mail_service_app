@@ -39,9 +39,12 @@ function AutomatizationPage() {
 
   const fetchTemplates = async () => {
     try {
-      const response = axios.get(`http://52.59.202.2:3000/api/mail-templates`, {
-        header: headers,
-      });
+      const response = await axios.get(
+        `http://52.59.202.2:3000/api/mail-templates`,
+        {
+          header: headers,
+        }
+      );
       if (response.status === 200) {
         setTemplates(response.data);
       }

@@ -22,6 +22,7 @@ import LoginFormLoader from "./loaders/LogInForm";
 import { loginAction } from "/@/actions/LogInForm";
 import { deleteTemplate } from "/@/actions/EmailTemplates";
 import AutomatizationPage from "./views/Home/AutomatizationPage/AutomatizationPage";
+import ListsPage from "./views/Home/ListsPage/ListsPage";
 
 export const router = createBrowserRouter(
   [
@@ -58,6 +59,10 @@ export const router = createBrowserRouter(
         {
           path: "contacts/:contactid",
           element: <ContactDetails />,
+        },
+        {
+          path: "lists",
+          element: <ListsPage />,
         },
         {
           path: "emailTemplates/:pageNumber",

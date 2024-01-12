@@ -3,26 +3,18 @@ import "./AutomatizationItem.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { errorToast, successToast } from "../../../../GlobalStates/Toasts";
+import CustomDatepicker from "../../../../components/CustomDatepicker/CustomDatepicker";
 
 function AutomatizationItem({ automatization, templates }) {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.loggedIn.token);
   const headers = { Authorization: `Bearer ${token}` };
   const [automatizationData, setAutomatizationData] = useState({
-    id: automatization.id,
+    // id: automatization.id,
     name: automatization.name,
-    automationScheduledMails: [
-      {
-        timeZone: automatization.timeZone,
-        useContactTimezone: automatization.useContactTimezone,
-        scheduledDate: automatization.scheduledDate,
-        template: {
-          templateId: 2, //automatization.templateId,
-          templateName: "name", //automatization.templateName,
-        },
-      },
-    ],
+    automationScheduledMails: automatization.automationScheduledMails,
   });
+
   const defaultStep = {
     timeZone: "",
     useContactTimezone: false,
@@ -49,8 +41,9 @@ function AutomatizationItem({ automatization, templates }) {
 
   const handleUpdate = async () => {
     try {
+      console.log(automatizationData);
       const response = await axios.put(
-        `http://52.59.202.2:3000/api/mailing-automations/${automatizationData.id}`,
+        `http://52.59.202.2:3000/api/mailing-automations/${automatization.id}`,
         automatizationData,
         { headers: headers }
       );
@@ -61,6 +54,45 @@ function AutomatizationItem({ automatization, templates }) {
       dispatch(errorToast(`Error updating automatization!`));
       console.log(`Error updating automatization.`, error);
     }
+  };
+
+  const handleTemplateChange = (e, index) => {
+    const selectedTemplateId = e.target.value;
+    const updatedSteps = automatizationData.automationScheduledMails.map(
+      (step, idx) => {
+        if (idx === index) {
+          return {
+            ...step,
+            template: { ...step.template, templateId: selectedTemplateId },
+          };
+        }
+        return step;
+      }
+    );
+
+    setAutomatizationData({
+      ...automatizationData,
+      automationScheduledMails: updatedSteps,
+    });
+  };
+
+  const handleStepDateChange = (newDate, index) => {
+    const updatedSteps = automatizationData.automationScheduledMails.map(
+      (step, idx) => {
+        if (idx === index) {
+          return { ...step, scheduledDate: newDate };
+        }
+        return step;
+      }
+    );
+
+    setAutomatizationData({
+      ...automatizationData,
+      automationScheduledMails: updatedSteps,
+    });
+
+    console.log(automatizationData);
+    handleUpdate();
   };
 
   return (
@@ -104,18 +136,23 @@ function AutomatizationItem({ automatization, templates }) {
           >
             <select
               className="p-2 text-sm rounded bg-whiten dark:bg-compdark outline-none focus:outline-meta-5 block w-full"
-              // value={step.template.templateId}
-              // onChange={(e) => setAutomatizationData()}
+              value={step.template.id}
+              onChange={(e) => handleTemplateChange(e, index)}
+              onBlur={handleUpdate}
               name=""
               id=""
             >
               {templates.map((template) => (
-                <option key={template.templateId} value={template.templateId}>
-                  {template.templateName}
+                <option key={template.id} value={template.id}>
+                  {template.name}
                 </option>
               ))}
             </select>
-            <div>datepicker</div>
+            <CustomDatepicker
+              initialDate={step.scheduledDate}
+              timeOptionOn={true}
+              onDateChange={(newDate) => handleStepDateChange(newDate, index)}
+            />
             <button className="delete-step p-1 rounded-md hover:bg-gray/20 ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
