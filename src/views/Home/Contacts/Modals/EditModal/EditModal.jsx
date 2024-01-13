@@ -2,8 +2,19 @@ import React, { useEffect, useState } from "react";
 import Datepicker from "tailwind-datepicker-react";
 
 import "./EditModal.css";
+import axios from "axios";
+
+import { useDispatch, useSelector } from "react-redux";
+import { successToast, errorToast } from "../../../../../GlobalStates/Toasts";
 
 function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.loggedIn.token);
+
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
   const options = {
     title: "Select Birth Date",
     autoHide: true,
@@ -75,7 +86,9 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
       year: "numeric",
     },
   };
+
   const [show, setShow] = useState(false);
+
   const handleClose = (state) => {
     setShow(state);
   };
@@ -100,6 +113,51 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
 
   const [selectedFields, setSelectedFields] = useState([]);
   const [fieldsToEdit, setFieldsToEdit] = useState({});
+  const [automatizations, setAutomatizations] = useState([]);
+  const [templates, setTemplates] = useState([]);
+  const [pickedAutomatization, setPickedAutomatization] = useState("");
+  const [pickedTemplate, setPickedTemplate] = useState("");
+
+  const fetchAutomatizations = async () => {
+    try {
+      const response = await axios.get(
+        `http://52.59.202.2:3000/api/mailing-automations`,
+        {
+          headers: headers,
+        }
+      );
+      if (response.status === 200) {
+        setAutomatizations(response.data);
+      }
+    } catch (error) {
+      dispatch(errorToast("Error Fetching Automatizations"));
+      console.error("Error Fetching Automatizations", error);
+    } finally {
+    }
+  };
+
+  const fetchTemplates = async () => {
+    try {
+      const response = await axios.get(
+        `http://52.59.202.2:3000/api/mail-templates`,
+        {
+          headers: headers,
+        }
+      );
+      if (response.status === 200) {
+        setTemplates(response.data);
+      }
+    } catch (error) {
+      dispatch(errorToast("Error Fetching Templates"));
+      console.error("Error Fetching Templates", error);
+    } finally {
+    }
+  };
+
+  useEffect(() => {
+    fetchAutomatizations();
+    fetchTemplates();
+  }, []);
 
   const handleCheckboxChange = (e) => {
     const field = e.target.name;
@@ -114,9 +172,11 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
       setFieldsToEdit(updatedFieldsToEdit);
     }
   };
+
   const handleDateChange = (date, field) => {
     setFieldsToEdit({ ...fieldsToEdit, [field]: date });
   };
+
   const handleInputChange = (e, field) => {
     setFieldsToEdit({ ...fieldsToEdit, [field]: e.target.value });
   };
@@ -160,11 +220,83 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
     }
   };
 
-  const handleSave = () => {
+  const handleEdit = () => {
     if (onEdit) {
       onEdit(fieldsToEdit);
     }
-    onClose(); // Close the modal after saving
+    onClose();
+  };
+
+  const addToAutomatization = async () => {
+    try {
+      const payload = {
+        contactIds: contactsToEdit.map((contact) => contact.id),
+      };
+      const response = await axios.post(
+        `http://52.59.202.2:3000/api/mailing-automations/${pickedAutomatization}/add-contacts`,
+        payload,
+        {
+          headers: headers,
+        }
+      );
+      if (response.status === 200) {
+        dispatch(
+          successToast("Successfully added contacts to automatization!")
+        );
+      }
+    } catch (error) {
+      dispatch(errorToast("Error adding contacts to automatization."));
+      console.log(error);
+    }
+  };
+
+  const removeFromAutomatization = async () => {
+    try {
+      const payload = {
+        contactIds: contactsToEdit.map((contact) => contact.id),
+      };
+      const response = await axios.post(
+        `http://52.59.202.2:3000/api/mailing-automations/${pickedAutomatization}/remove-contacts`,
+        payload,
+        {
+          headers: headers,
+        }
+      );
+      if (response.status === 200) {
+        dispatch(
+          successToast("Successfully removed contacts from automatization!")
+        );
+      }
+    } catch (error) {
+      dispatch(errorToast("Error removing contacts from automatization."));
+      console.log(error);
+    }
+  };
+
+  const sendEmail = async () => {
+    try {
+      const payload = {
+        contactId: contactsToEdit.map((contact) => contact.id).join(","),
+        templateId: pickedTemplate,
+        scheduledDate: new Date(),
+        useContactTimezone: false,
+      };
+      const response = await axios.post(
+        `http://52.59.202.2:3000/api/scheduled-mails/`,
+        payload,
+        {
+          headers: headers,
+        }
+      );
+      if (response.status === 200) {
+        dispatch(
+          successToast("Successfully added contacts to automatization!")
+        );
+      }
+    } catch (error) {
+      dispatch(errorToast("Error adding contacts to automatization."));
+      console.log(error);
+    }
   };
 
   const handleModalClick = (e) => {
@@ -255,9 +387,57 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
                   </div>
                 </div>
               )}
-              {currentTab === "addToEq" && <div>Content for Tab 2</div>}
-              {currentTab === "removeFromEq" && <div>Content for Tab 3</div>}
-              {currentTab === "sendEmail" && <div>Content for Tab 4</div>}
+              {currentTab === "addToEq" && (
+                <div className="pt-4">
+                  <h3 className="text-lg font-medium text-compdark/90 dark:text-whiten mb-3">
+                    Pick Automatization:
+                  </h3>
+                  <select
+                    onChange={(e) => setPickedAutomatization(e.target.value)}
+                    className="bg-transparent border border-gray/50 text-graydark text-sm rounded-lg focus:ring-meta-5 focus:border-meta-5 block w-full p-2.5 dark:bg-gray dark:border-gray/50 dark:placeholder-gray/50 dark:text-white dark:focus:ring-meta-5 dark:focus:border-green300"
+                  >
+                    {automatizations.map((automatization) => (
+                      <option key={automatization.id} value={automatization.id}>
+                        {automatization.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+              {currentTab === "removeFromEq" && (
+                <div className="pt-4">
+                  <h3 className="text-lg font-medium text-compdark/90 dark:text-whiten mb-3">
+                    Pick Automatization:
+                  </h3>
+                  <select
+                    onChange={(e) => setPickedAutomatization(e.target.value)}
+                    className="bg-transparent border border-gray/50 text-graydark text-sm rounded-lg focus:ring-meta-5 focus:border-meta-5 block w-full p-2.5 dark:bg-gray dark:border-gray/50 dark:placeholder-gray/50 dark:text-white dark:focus:ring-meta-5 dark:focus:border-green300"
+                  >
+                    {automatizations.map((automatization) => (
+                      <option key={automatization.id} value={automatization.id}>
+                        {automatization.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+              {currentTab === "sendEmail" && (
+                <div className="pt-4">
+                  <h3 className="text-lg font-medium text-compdark/90 dark:text-whiten mb-3">
+                    Send an Email with Template:
+                  </h3>
+                  <select
+                    onChange={(e) => setPickedTemplate(e.target.value)}
+                    className="bg-transparent border border-gray/50 text-graydark text-sm rounded-lg focus:ring-meta-5 focus:border-meta-5 block w-full p-2.5 dark:bg-gray dark:border-gray/50 dark:placeholder-gray/50 dark:text-white dark:focus:ring-meta-5 dark:focus:border-green300"
+                  >
+                    {templates.map((template) => (
+                      <option key={template.id} value={template.id}>
+                        {template.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
             </div>
           </div>
           <div className="actions bg-whiten dark:bg-graydark/90 flex-auto w-32 px-3 pt-4">
@@ -309,13 +489,45 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
           </div>
         </div>
         <div className="flex justify-end mt-6">
-          <button
-            onClick={handleSave}
-            className="bg-green300 text-meta-2 dark:bg-success hover:bg-green300 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg  outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-            type="button"
-          >
-            Save
-          </button>
+          {currentTab === "edit" && (
+            <button
+              onClick={handleEdit}
+              className="bg-green300 text-meta-2 dark:bg-success hover:bg-green300 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              type="button"
+            >
+              Save
+            </button>
+          )}
+
+          {currentTab === "addToEq" && (
+            <button
+              onClick={addToAutomatization}
+              className="bg-green300 text-meta-2 dark:bg-success hover:bg-green300 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              type="button"
+            >
+              Add to EQ
+            </button>
+          )}
+
+          {currentTab === "removeFromEq" && (
+            <button
+              onClick={removeFromAutomatization}
+              className="bg-green300 text-meta-2 dark:bg-success hover:bg-green300 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              type="button"
+            >
+              Remove from EQ
+            </button>
+          )}
+          {currentTab === "sendEmail" && (
+            <button
+              onClick={sendEmail}
+              className="bg-green300 text-meta-2 dark:bg-success hover:bg-green300 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              type="button"
+            >
+              Send
+            </button>
+          )}
+
           <button
             onClick={onClose}
             className="bg-gray text-whiten active:bg-gray/50 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none ml-1 mb-1 ease-linear transition-all duration-150"
