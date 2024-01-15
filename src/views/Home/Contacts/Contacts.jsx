@@ -64,6 +64,7 @@ function Contacts() {
       setIsLoading(false);
     }
   };
+
   useEffect(() => {
     fetchData(currentPage, searchQuery);
     setSelectAll(false);

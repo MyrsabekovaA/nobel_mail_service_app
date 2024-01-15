@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./AutomatizationItem.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { errorToast, successToast } from "/@/GlobalStates/Toasts";
+import { errorToast, successToast } from "../../../../GlobalStates/Toasts";
+import CustomDatepicker from "../../../../components/CustomDatepicker/CustomDatepicker";
 import { Icon } from '@iconify/react';
 import DropDownIcon from "/@/components/DropDownIcon/DropDownIcon";
 
@@ -25,6 +26,7 @@ function AutomatizationItem({ automatization, templates, onDelete, onCopy }) {
       },
     ],
   });
+
   const defaultStep = {
     timeZone: "",
     useContactTimezone: false,
@@ -67,6 +69,7 @@ function AutomatizationItem({ automatization, templates, onDelete, onCopy }) {
 
   const handleUpdate = async () => {
     try {
+      console.log(automatizationData);
       const response = await axios.put(
         `http://52.59.202.2:3000/api/mailing-automations/${automatizationData.id}`,
         automatizationData,
@@ -94,6 +97,45 @@ function AutomatizationItem({ automatization, templates, onDelete, onCopy }) {
     }
   ];
 
+  const handleTemplateChange = (e, index) => {
+    const selectedTemplateId = e.target.value;
+    const updatedSteps = automatizationData.automationScheduledMails.map(
+      (step, idx) => {
+        if (idx === index) {
+          return {
+            ...step,
+            template: { ...step.template, templateId: selectedTemplateId },
+          };
+        }
+        return step;
+      }
+    );
+
+    setAutomatizationData({
+      ...automatizationData,
+      automationScheduledMails: updatedSteps,
+    });
+  };
+
+  const handleStepDateChange = (newDate, index) => {
+    const updatedSteps = automatizationData.automationScheduledMails.map(
+      (step, idx) => {
+        if (idx === index) {
+          return { ...step, scheduledDate: newDate };
+        }
+        return step;
+      }
+    );
+
+    setAutomatizationData({
+      ...automatizationData,
+      automationScheduledMails: updatedSteps,
+    });
+
+    console.log(automatizationData);
+    handleUpdate();
+  };
+
   return (
     <div className="max-w-xs border border-gray/50 rounded">
       <div className="flex items-center justify-between gap-2 p-2">
@@ -119,42 +161,46 @@ function AutomatizationItem({ automatization, templates, onDelete, onCopy }) {
       </div>
       <div className="flex flex-col gap-2 px-3 py-3 border-y border-gray/50 h-56 max-h-56 overflow-y-auto">
         {automatizationData.automationScheduledMails.map((step, index) => (
-            <div
-                key={index}
-                className="step flex gap-3 justify-between items-center outline outline-1 outline-gray/50 hover:outline-meta-5  hover:shadow-lg p-2 rounded transition duration-150 "
+          <div
+            key={index}
+            className="step flex gap-3 justify-between items-center outline outline-1 outline-gray/50 hover:outline-meta-5  hover:shadow-lg p-2 rounded transition duration-150 "
+          >
+            <select
+              className="p-2 text-sm rounded bg-whiten dark:bg-compdark outline-none focus:outline-meta-5 block w-full"
+              value={step.template.id}
+              onChange={(e) => handleTemplateChange(e, index)}
+              onBlur={handleUpdate}
+              name=""
+              id=""
             >
-              <span className="text-lg font-bold">{index + 1}.</span>
-              <select
-                  className="p-2 text-sm rounded bg-whiten dark:bg-compdark outline-none focus:outline-meta-5 block w-full"
-                  // value={step.template.templateId}
-                  // onChange={(e) => setAutomatizationData()}
-                  name=""
-                  id=""
+              {templates.map((template) => (
+                <option key={template.id} value={template.id}>
+                  {template.name}
+                </option>
+              ))}
+            </select>
+            <CustomDatepicker
+              initialDate={step.scheduledDate}
+              timeOptionOn={true}
+              onDateChange={(newDate) => handleStepDateChange(newDate, index)}
+            />
+            <button className="delete-step p-1 rounded-md hover:bg-gray/20 ">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
               >
-                {templates.map((template) => (
-                    <option key={template.templateId} value={template.templateId}>
-                      {template.templateName}
-                    </option>
-                ))}
-              </select>
-              <div>datepicker</div>
-              <button className="delete-step p-1 rounded-md hover:bg-gray/20" onClick={() => handleDeleteStep(index)}>
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                >
-                  <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6 18 18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18 18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
         ))}
       </div>
       <div className="flex items-center justify-between gap-2 p-2">
