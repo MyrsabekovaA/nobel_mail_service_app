@@ -30,7 +30,7 @@ const NavMenu = () => {
                         py-2 px-3 font-medium text-black-2 duration-300 ease-in-out hover:bg-secondary
                         dark:hover:bg-meta-4 dark:text-white'>
                             <Icon icon="material-symbols:schedule-outline" className="text-xl" />
-                            <span className="ml-2">Automatization</span>
+                            <span className="ml-2">Automatizations</span>
                         </NavLink>
                     </li>
                     <li>

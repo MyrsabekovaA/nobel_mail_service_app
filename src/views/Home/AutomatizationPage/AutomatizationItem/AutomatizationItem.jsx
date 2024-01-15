@@ -161,46 +161,47 @@ function AutomatizationItem({ automatization, templates, onDelete, onCopy }) {
       </div>
       <div className="flex flex-col gap-2 px-3 py-3 border-y border-gray/50 h-56 max-h-56 overflow-y-auto">
         {automatizationData.automationScheduledMails.map((step, index) => (
-          <div
-            key={index}
-            className="step flex gap-3 justify-between items-center outline outline-1 outline-gray/50 hover:outline-meta-5  hover:shadow-lg p-2 rounded transition duration-150 "
-          >
-            <select
-              className="p-2 text-sm rounded bg-whiten dark:bg-compdark outline-none focus:outline-meta-5 block w-full"
-              value={step.template.id}
-              onChange={(e) => handleTemplateChange(e, index)}
-              onBlur={handleUpdate}
-              name=""
-              id=""
+            <div
+                key={index}
+                className="step flex gap-3 justify-between items-center outline outline-1 outline-gray/50 hover:outline-meta-5  hover:shadow-lg p-2 rounded transition duration-150 "
             >
-              {templates.map((template) => (
-                <option key={template.id} value={template.id}>
-                  {template.name}
-                </option>
-              ))}
-            </select>
-            <CustomDatepicker
-              initialDate={step.scheduledDate}
-              timeOptionOn={true}
-              onDateChange={(newDate) => handleStepDateChange(newDate, index)}
-            />
-            <button className="delete-step p-1 rounded-md hover:bg-gray/20 ">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
+              <span className="text-lg font-bold">{index + 1}.</span>
+              <select
+                  className="p-2 text-sm rounded bg-whiten dark:bg-compdark outline-none focus:outline-meta-5 block w-full"
+                  value={step.template.id}
+                  onChange={(e) => handleTemplateChange(e, index)}
+                  onBlur={handleUpdate}
+                  name=""
+                  id=""
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18 18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-          </div>
+                {templates.map((template) => (
+                    <option key={template.id} value={template.id}>
+                      {template.name}
+                    </option>
+                ))}
+              </select>
+              <CustomDatepicker
+                  initialDate={step.scheduledDate}
+                  timeOptionOn={true}
+                  onDateChange={(newDate) => handleStepDateChange(newDate, index)}
+              />
+              <button className="delete-step p-1 rounded-md hover:bg-gray/20 ">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                >
+                  <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18 18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
         ))}
       </div>
       <div className="flex items-center justify-between gap-2 p-2">
