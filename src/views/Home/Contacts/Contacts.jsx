@@ -13,7 +13,7 @@ import DropdownFilter from "../../../components/DropDownFilter/DropdownFilter";
 import LoadingOverlay from "../../../components/LoadingOverlay/LoadingOverlay";
 import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 import { useDispatch, useSelector } from "react-redux";
-import { successToast, errorToast } from "../../../GlobalStates/Toasts";
+import { successToast, errorToast } from "/@/GlobalStates/Toasts";
 
 function Contacts() {
   const dispatch = useDispatch();
