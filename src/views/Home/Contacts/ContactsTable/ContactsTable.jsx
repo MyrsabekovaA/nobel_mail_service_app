@@ -79,7 +79,7 @@ function ContactsTable({
           </tr>
         </thead>
         <tbody>
-          {contacts.map((contact) => (
+          {contacts?.map((contact) => (
             <ContactRow
               key={contact.id}
               contact={contact}

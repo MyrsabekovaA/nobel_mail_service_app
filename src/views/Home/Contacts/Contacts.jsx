@@ -33,23 +33,41 @@ function Contacts() {
   const [searchQuery, setSearchQuery] = useState(""); // search input
   const [selectedContacts, setSelectedContacts] = useState([]); // checked contacts
   const [selectAll, setSelectAll] = useState(false);
+  const [lists, setLists] = useState([]);
   // modal display states
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const fetchData = async (page, search = "") => {
-    try {
-      let params = {
-        pageSize: Number(contactsPerPage),
-      };
+  const [areFiltersApplied, setAreFiltersApplied] = useState(false);
+  const [checkedItems, setCheckedItems] = useState({
+    eqLists: [],
+    statuses: [],
+  });
 
-      if (search) {
-        params.search = search;
+  const fetchData = async (
+    page,
+    search = "",
+    contactsPerPage,
+    checkedItems = {}
+  ) => {
+    try {
+      let params = {};
+
+      if (search || (checkedItems.eqLists && checkedItems.eqLists.length > 0)) {
+        if (search) {
+          params.search = search;
+        }
+        if (checkedItems.eqLists && checkedItems.eqLists.length > 0) {
+          params.listIds = checkedItems.eqLists.join(",");
+        }
       } else {
+        params.pageSize = Number(contactsPerPage);
         params.page = Number(page);
       }
+
       setIsLoading(true);
+
       const response = await axios.get(`http://52.59.202.2:3000/api/contacts`, {
         params: params,
         headers: headers,
@@ -65,11 +83,46 @@ function Contacts() {
     }
   };
 
+  const handleCheckedItemsChange = (newCheckedItems) => {
+    setCheckedItems(newCheckedItems);
+
+    const isFilterActive = Object.values(newCheckedItems).some(
+      (category) => Array.isArray(category) && category.length > 0
+    );
+
+    setAreFiltersApplied(isFilterActive);
+  };
+
+  const fetchLists = async () => {
+    try {
+      const response = await axios.get(
+        `http://52.59.202.2:3000/api/contacts-lists`,
+        { headers: headers }
+      );
+
+      if (response.status === 200) {
+        setLists(response.data);
+        console.log(response.data);
+      }
+    } catch (error) {
+      dispatch(errorToast("Error fetching lists"));
+      console.log("Error fetching lists", error);
+    }
+  };
+
   useEffect(() => {
-    fetchData(currentPage, searchQuery);
+    fetchData(currentPage, searchQuery, contactsPerPage);
     setSelectAll(false);
     setSelectedContacts([]);
-  }, [currentPage, searchQuery]);
+  }, [currentPage, searchQuery, contactsPerPage]);
+
+  useEffect(() => {
+    fetchData(currentPage, searchQuery, contactsPerPage, checkedItems);
+  }, [checkedItems]);
+
+  useEffect(() => {
+    fetchLists();
+  }, []);
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
@@ -323,7 +376,10 @@ function Contacts() {
             </div>
             <div className="flex items-center gap-3 flex-wrap">
               <div>
-                <DropdownFilter />
+                <DropdownFilter
+                  eqLists={lists}
+                  onCheckedItemsChange={handleCheckedItemsChange}
+                />
               </div>
               <form className="flex items-center">
                 <label htmlFor="simple-search" className="sr-only">
@@ -365,16 +421,16 @@ function Contacts() {
           />
 
           {isLoading && <LoadingSpinner />}
-          {/* {contacts.length >= contactsPerPage && ( */}
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onChange={handlePageChange}
-            contactsPerPage={contactsPerPage}
-            totalContacts={totalContacts}
-          />
-          {/* )} */}
-          {contacts.length > contactsPerPage && (
+          {!areFiltersApplied && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onChange={handlePageChange}
+              contactsPerPage={contactsPerPage}
+              totalContacts={totalContacts}
+            />
+          )}
+          {!areFiltersApplied && (
             <div className="flex justify-end mt-4 items-center gap-2">
               <label
                 htmlFor="contacts-per-page"

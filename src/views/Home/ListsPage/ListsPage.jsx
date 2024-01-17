@@ -14,6 +14,7 @@ function ListsPage() {
   };
   const [lists, setLists] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [checkedList, setCheckedList] = useState("");
   const [automatizations, setAutomatizations] = useState([]);
 
   const fetchLists = async () => {
