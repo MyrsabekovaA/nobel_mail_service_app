@@ -1,7 +1,7 @@
 import React from "react";
 import ListItem from "../ListItem/ListItem";
 
-function ListsList({ lists, modalOpen }) {
+function ListsList({ lists }) {
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-sm border-gray/20 text-gray dark:text-gray-400">
@@ -71,7 +71,7 @@ function ListsList({ lists, modalOpen }) {
         </thead>
         <tbody>
           {lists.map((list) => (
-            <ListItem key={list.id} list={list} modalOpen={modalOpen} />
+            <ListItem key={list.id} list={list} />
           ))}
         </tbody>
       </table>

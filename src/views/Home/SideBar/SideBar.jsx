@@ -42,7 +42,7 @@ const Sidebar = () => {
   return (
     <div
       ref={sidebarRef}
-      className={`fixed top-0 left-0 z-40 h-screen w-72 flex flex-col
+      className={`fixed top-0 left-0 z-50 h-screen w-72 flex flex-col
             overflow-y-auto bg-lightgreen transition-transform duration-300 ease-in-out dark:bg-compdark ${
               isSidebarOpen ? "translate-x-0" : "-translate-x-full"
             }`}
