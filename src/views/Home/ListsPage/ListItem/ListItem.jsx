@@ -1,6 +1,11 @@
 import React from "react";
 import moment from "moment";
-function ListItem({ list, modalOpen }) {
+import { toggleModal, setSelectedListId } from "/@/GlobalStates/Lists";
+import { useDispatch } from "react-redux";
+
+function ListItem({ list }) {
+  const dispatch = useDispatch();
+
   const formatDate = (dateString, withTime) => {
     if (dateString && withTime === false) {
       return moment(dateString).format("DD.MM.YYYY");
@@ -10,6 +15,7 @@ function ListItem({ list, modalOpen }) {
       return "—";
     }
   };
+
   return (
     <tr className="bg-whiten dark:bg-graydark/40 border-b ease-out duration-300 dark:hover:bg-graydark/80 hover:bg-gray/10">
       <td className="px-4 py-2.5 text-meta-5 font-medium text-center">
@@ -19,7 +25,12 @@ function ListItem({ list, modalOpen }) {
       <td className="px-4 py-2.5">{formatDate(list.createdAt, true)}</td>
       <td className="px-4 py-2.5">
         <div>
-          <button onClick={modalOpen}>
+          <button
+            onClick={() => {
+              dispatch(setSelectedListId(list.id));
+              dispatch(toggleModal());
+            }}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

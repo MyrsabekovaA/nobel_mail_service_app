@@ -31,7 +31,7 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
       disabledText: "text-gray-400",
       input: "border-gray-300 focus:border-green-500",
       inputIcon: "text-green-500",
-      selected: "bg-green-500 text-white hover:bg-green-500",
+      selected: "bg-green-500 text-whiten hover:bg-green-500",
     },
     icons: {
       // () => ReactElement | JSX.Element
@@ -394,8 +394,11 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
                   </h3>
                   <select
                     onChange={(e) => setPickedAutomatization(e.target.value)}
-                    className="bg-transparent border border-gray/50 text-graydark text-sm rounded-lg focus:ring-meta-5 focus:border-meta-5 block w-full p-2.5 dark:bg-gray dark:border-gray/50 dark:placeholder-gray/50 dark:text-white dark:focus:ring-meta-5 dark:focus:border-green300"
+                    className="bg-gray border border-gray/50 text-graydark text-sm rounded-lg focus:ring-meta-5 focus:border-meta-5 block w-full p-2.5 dark:bg-compdark dark:border-gray/50 dark:placeholder-gray/50 dark:text-whiten dark:focus:ring-meta-5 dark:focus:border-green300"
                   >
+                    <option value="" disabled selected>
+                      Pick automatization
+                    </option>
                     {automatizations.map((automatization) => (
                       <option key={automatization.id} value={automatization.id}>
                         {automatization.name}
@@ -411,8 +414,11 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
                   </h3>
                   <select
                     onChange={(e) => setPickedAutomatization(e.target.value)}
-                    className="bg-transparent border border-gray/50 text-graydark text-sm rounded-lg focus:ring-meta-5 focus:border-meta-5 block w-full p-2.5 dark:bg-gray dark:border-gray/50 dark:placeholder-gray/50 dark:text-white dark:focus:ring-meta-5 dark:focus:border-green300"
+                    className="bg-gray border border-gray/50 text-graydark text-sm rounded-lg focus:ring-meta-5 focus:border-meta-5 block w-full p-2.5 dark:bg-compdark dark:border-gray/50 dark:placeholder-gray/50 dark:text-whiten dark:focus:ring-meta-5 dark:focus:border-green300"
                   >
+                    <option value="" disabled selected>
+                      Pick automatization
+                    </option>
                     {automatizations.map((automatization) => (
                       <option key={automatization.id} value={automatization.id}>
                         {automatization.name}
@@ -428,8 +434,11 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
                   </h3>
                   <select
                     onChange={(e) => setPickedTemplate(e.target.value)}
-                    className="bg-transparent border border-gray/50 text-graydark text-sm rounded-lg focus:ring-meta-5 focus:border-meta-5 block w-full p-2.5 dark:bg-gray dark:border-gray/50 dark:placeholder-gray/50 dark:text-white dark:focus:ring-meta-5 dark:focus:border-green300"
+                    className="bg-gray border border-gray/50 text-graydark text-sm rounded-lg focus:ring-meta-5 focus:border-meta-5 block w-full p-2.5 dark:bg-compdark dark:border-gray/50 dark:placeholder-gray/50 dark:text-whiten dark:focus:ring-meta-5 dark:focus:border-green300"
                   >
+                    <option value="" disabled selected>
+                      Pick a template
+                    </option>
                     {templates.map((template) => (
                       <option key={template.id} value={template.id}>
                         {template.name}

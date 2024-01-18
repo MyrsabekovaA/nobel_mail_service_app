@@ -93,7 +93,7 @@ const Header = ({ isSidebarOpen }) => {
 
   return (
     <header
-      className={`fixed z-50 top-0 flex w-full border-b dark:bg-compdark border-lightgreen shadow-sm 
+      className={`fixed z-40 top-0 flex w-full border-b dark:bg-compdark border-lightgreen shadow-sm 
         dark:border-gray`}
     >
       <div className="flex w-full items-center px-4 py-4 justify-between md:px-6 2xl:px-11">

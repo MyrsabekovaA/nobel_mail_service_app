@@ -59,7 +59,7 @@ function Contacts() {
           params.search = search;
         }
         if (checkedItems.eqLists && checkedItems.eqLists.length > 0) {
-          params.listIds = checkedItems.eqLists.join(",");
+          params.listIds = checkedItems.eqLists;
         }
       } else {
         params.pageSize = Number(contactsPerPage);
