@@ -394,7 +394,7 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
                   </h3>
                   <select
                     onChange={(e) => setPickedAutomatization(e.target.value)}
-                    className="bg-gray border border-gray/50 text-graydark text-sm rounded-lg focus:ring-meta-5 focus:border-meta-5 block w-full p-2.5 dark:bg-compdark dark:border-gray/50 dark:placeholder-gray/50 dark:text-whiten dark:focus:ring-meta-5 dark:focus:border-green300"
+                    className="bg-whiten border border-gray/50 text-graydark text-sm rounded-lg focus:ring-meta-5 focus:border-meta-5 block w-full p-2.5 dark:bg-compdark dark:border-gray/50 dark:placeholder-gray/50 dark:text-whiten dark:focus:ring-meta-5 dark:focus:border-green300"
                   >
                     <option value="" disabled selected>
                       Pick automatization
@@ -414,7 +414,7 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
                   </h3>
                   <select
                     onChange={(e) => setPickedAutomatization(e.target.value)}
-                    className="bg-gray border border-gray/50 text-graydark text-sm rounded-lg focus:ring-meta-5 focus:border-meta-5 block w-full p-2.5 dark:bg-compdark dark:border-gray/50 dark:placeholder-gray/50 dark:text-whiten dark:focus:ring-meta-5 dark:focus:border-green300"
+                    className="bg-whiten border border-gray/50 text-graydark text-sm rounded-lg focus:ring-meta-5 focus:border-meta-5 block w-full p-2.5 dark:bg-compdark dark:border-gray/50 dark:placeholder-gray/50 dark:text-whiten dark:focus:ring-meta-5 dark:focus:border-green300"
                   >
                     <option value="" disabled selected>
                       Pick automatization
@@ -434,7 +434,7 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
                   </h3>
                   <select
                     onChange={(e) => setPickedTemplate(e.target.value)}
-                    className="bg-gray border border-gray/50 text-graydark text-sm rounded-lg focus:ring-meta-5 focus:border-meta-5 block w-full p-2.5 dark:bg-compdark dark:border-gray/50 dark:placeholder-gray/50 dark:text-whiten dark:focus:ring-meta-5 dark:focus:border-green300"
+                    className="bg-whiten border border-gray/50 text-graydark text-sm rounded-lg focus:ring-meta-5 focus:border-meta-5 block w-full p-2.5 dark:bg-compdark dark:border-gray/50 dark:placeholder-gray/50 dark:text-whiten dark:focus:ring-meta-5 dark:focus:border-green300"
                   >
                     <option value="" disabled selected>
                       Pick a template
