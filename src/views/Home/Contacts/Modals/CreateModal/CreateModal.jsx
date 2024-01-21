@@ -104,13 +104,7 @@ function CreateModal({ onClose, onCreate }) {
   const handleBirthDateChange = (date) => {
     setContactData({ ...contactData, birthDate: date });
   };
-  // const handleListAdd = (e) => {
-  //   const id = e.target.value;
-  //   setContactData((prevState) => ({
-  //     ...prevState,
-  //     listIds: [id],
-  //   }));
-  // };
+
   useEffect(() => {
     console.log(contactData);
   }, [contactData]);

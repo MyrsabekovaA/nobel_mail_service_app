@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ListsList from "./ListsList/ListsList";
 import AddModal from "./AddModal/AddModal";
 import { fetchLists } from "/@/GlobalStates/Lists";
-import { fetchAutomatizations } from "/@/GlobalStates/Automatization";
+import { fetchAutomations } from "/@/GlobalStates/Automation";
 import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 
 function ListsPage() {
@@ -12,13 +12,11 @@ function ListsPage() {
   const isOpen = useSelector((state) => state.lists.isModalOpen);
   const isLoading = useSelector((state) => state.lists.isLoading);
   const lists = useSelector((state) => state.lists.eqLists);
-  const automatizations = useSelector(
-    (state) => state.automatization.automatizations
-  );
+  const automations = useSelector((state) => state.automations.automations);
 
   useEffect(() => {
     dispatch(fetchLists());
-    dispatch(fetchAutomatizations());
+    dispatch(fetchAutomations());
   }, []);
 
   return (
@@ -29,7 +27,7 @@ function ListsPage() {
           {isLoading && <LoadingSpinner className="text-center" />}
         </div>
       </div>
-      {isOpen && <AddModal automatizations={automatizations} />}
+      {isOpen && <AddModal automations={automations} />}
     </div>
   );
 }

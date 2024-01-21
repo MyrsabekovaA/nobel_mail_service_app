@@ -1,7 +1,0 @@
-.step:hover button {
-  @apply opacity-100;
-}
-
-.delete-step {
-  @apply opacity-0 transition-all duration-150;
-}

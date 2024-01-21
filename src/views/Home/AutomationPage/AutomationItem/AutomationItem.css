@@ -1,0 +1,35 @@
+.step:hover button {
+  @apply opacity-100;
+}
+
+.delete-step {
+  @apply opacity-0 transition-all duration-150;
+}
+
+.step-select {
+  @apply transition-all duration-150 max-w-[100px] bg-whiten border border-gray/50 text-graydark text-sm rounded-lg dark:hover:border-meta-5 hover:border-meta-5
+  focus:ring-meta-5 focus:border-meta-5 block p-2 dark:bg-compdark dark:border-gray/50 dark:placeholder-gray/50 dark:text-whiten dark:focus:ring-meta-5 dark:focus:border-green300;
+}
+.automation-item {
+  @apply rounded border border-gray/50;
+}
+
+/* Hide the default scrollbar */
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+/* Customize the scrollbar track */
+::-webkit-scrollbar-track {
+  @apply bg-gray/20 /* Background color of the track */;
+}
+
+/* Customize the scrollbar thumb (the draggable part) */
+::-webkit-scrollbar-thumb {
+  @apply bg-gray/50 rounded; /* Background color of the thumb */
+}
+
+/* On hover, customize the scrollbar thumb */
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray/90;
+}

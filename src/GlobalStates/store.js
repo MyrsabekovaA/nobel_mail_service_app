@@ -7,8 +7,9 @@ import toastsSlice from "/@/GlobalStates/Toasts";
 import emailTemplatesSlice from "/@/GlobalStates/EmailTemplates";
 import darkModeReducer from "/@/GlobalStates/DarkMode";
 import taskReducer from "/@/GlobalStates/tasksSlice"
-import automatizationReducer from "/@/GlobalStates/Automatization"
+import automationsSlice from "/@/GlobalStates/Automation"
 import listsSlice from "/@/GlobalStates/Lists"
+import templatesSlice from "/@/GlobalStates/Templates"
 
 const store = configureStore({
     reducer: {
@@ -20,8 +21,9 @@ const store = configureStore({
         tasks: taskReducer,
         toasts: toastsSlice,
         emailTemplates: emailTemplatesSlice,
-        automatization: automatizationReducer,
-        lists: listsSlice
+        automations: automationsSlice,
+        lists: listsSlice,
+        templates: templatesSlice,
     },
 })
 
