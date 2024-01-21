@@ -1,3 +1,21 @@
 .flatpickr-calendar {
   @apply bg-compdark;
 }
+
+.flatpickr-input {
+  @apply transition-all duration-150 bg-whiten border border-gray/50 text-graydark text-sm rounded-lg focus:ring-meta-5 focus:border-meta-5 block p-2 dark:bg-compdark dark:border-gray/50 dark:placeholder-gray/50 dark:text-whiten focus:border-meta-5 block p-2 dark:bg-compdark dark:border-gray/50 dark:placeholder-gray/50 dark:text-whiten dark:focus:ring-meta-5 dark:focus:border-green300;
+}
+/* Style for hover state */
+.flatpickr-input:hover {
+  @apply border-meta-5;
+}
+
+/* Style for focus state */
+.flatpickr-input:focus {
+  @apply border-meta-5;
+}
+
+/* Style for active state */
+.flatpickr-input:active {
+  @apply border-meta-5;
+}

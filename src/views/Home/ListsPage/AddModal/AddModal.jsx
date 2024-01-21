@@ -3,7 +3,7 @@ import { toggleModal, addToAutomatization } from "/@/GlobalStates/Lists";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingOverlay from "../../../../components/LoadingOverlay/LoadingOverlay";
 
-function AddModal({ automatizations }) {
+function AddModal({ automations }) {
   const dispatch = useDispatch();
   const isLoadingForModal = useSelector(
     (state) => state.lists.isLoadingForModal
@@ -30,10 +30,10 @@ function AddModal({ automatizations }) {
             onChange={(e) => setSelectedAutomatizationId(e.target.value)}
             className="bg-whiten border border-gray/50 text-graydark text-sm rounded-lg focus:ring-meta-5 focus:border-meta-5 block w-full p-2.5 dark:bg-compdark dark:border-gray/50 dark:placeholder-gray/50 dark:text-whiten dark:focus:ring-meta-5 dark:focus:border-green300"
           >
-            <option value="" disabled selected>
+            <option disabled selected>
               Pick automatization
             </option>
-            {automatizations.map((automatization) => (
+            {automations.map((automatization) => (
               <option key={automatization.id} value={automatization.id}>
                 {automatization.name}
               </option>

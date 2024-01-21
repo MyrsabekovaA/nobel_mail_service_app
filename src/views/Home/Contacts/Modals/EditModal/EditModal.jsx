@@ -113,12 +113,12 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
 
   const [selectedFields, setSelectedFields] = useState([]);
   const [fieldsToEdit, setFieldsToEdit] = useState({});
-  const [automatizations, setAutomatizations] = useState([]);
+  const [automations, setAutomations] = useState([]);
   const [templates, setTemplates] = useState([]);
-  const [pickedAutomatization, setPickedAutomatization] = useState("");
+  const [pickedAutomation, setPickedAutomation] = useState("");
   const [pickedTemplate, setPickedTemplate] = useState("");
 
-  const fetchAutomatizations = async () => {
+  const fetchAutomations = async () => {
     try {
       const response = await axios.get(
         `http://52.59.202.2:3000/api/mailing-automations`,
@@ -127,11 +127,11 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
         }
       );
       if (response.status === 200) {
-        setAutomatizations(response.data);
+        setAutomations(response.data);
       }
     } catch (error) {
-      dispatch(errorToast("Error Fetching Automatizations"));
-      console.error("Error Fetching Automatizations", error);
+      dispatch(errorToast("Error Fetching Automations"));
+      console.error("Error Fetching Automations", error);
     } finally {
     }
   };
@@ -155,7 +155,7 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
   };
 
   useEffect(() => {
-    fetchAutomatizations();
+    fetchAutomations();
     fetchTemplates();
   }, []);
 
@@ -227,36 +227,34 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
     onClose();
   };
 
-  const addToAutomatization = async () => {
+  const addToAutomation = async () => {
     try {
       const payload = {
         contactIds: contactsToEdit.map((contact) => contact.id),
       };
       const response = await axios.post(
-        `http://52.59.202.2:3000/api/mailing-automations/${pickedAutomatization}/add-contacts`,
+        `http://52.59.202.2:3000/api/mailing-automations/${pickedAutomation}/add-contacts`,
         payload,
         {
           headers: headers,
         }
       );
       if (response.status === 200) {
-        dispatch(
-          successToast("Successfully added contacts to automatization!")
-        );
+        dispatch(successToast("Successfully added contacts to automation!"));
       }
     } catch (error) {
-      dispatch(errorToast("Error adding contacts to automatization."));
+      dispatch(errorToast("Error adding contacts to automation."));
       console.log(error);
     }
   };
 
-  const removeFromAutomatization = async () => {
+  const removeFromAutomation = async () => {
     try {
       const payload = {
         contactIds: contactsToEdit.map((contact) => contact.id),
       };
       const response = await axios.post(
-        `http://52.59.202.2:3000/api/mailing-automations/${pickedAutomatization}/remove-contacts`,
+        `http://52.59.202.2:3000/api/mailing-automations/${pickedAutomation}/remove-contacts`,
         payload,
         {
           headers: headers,
@@ -264,11 +262,11 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
       );
       if (response.status === 200) {
         dispatch(
-          successToast("Successfully removed contacts from automatization!")
+          successToast("Successfully removed contacts from automation!")
         );
       }
     } catch (error) {
-      dispatch(errorToast("Error removing contacts from automatization."));
+      dispatch(errorToast("Error removing contacts from automation."));
       console.log(error);
     }
   };
@@ -289,12 +287,10 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
         }
       );
       if (response.status === 200) {
-        dispatch(
-          successToast("Successfully added contacts to automatization!")
-        );
+        dispatch(successToast("Successfully added contacts to automation!"));
       }
     } catch (error) {
-      dispatch(errorToast("Error adding contacts to automatization."));
+      dispatch(errorToast("Error adding contacts to automation."));
       console.log(error);
     }
   };
@@ -390,18 +386,18 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
               {currentTab === "addToEq" && (
                 <div className="pt-4">
                   <h3 className="text-lg font-medium text-compdark/90 dark:text-whiten mb-3">
-                    Pick Automatization:
+                    Pick Automation:
                   </h3>
                   <select
-                    onChange={(e) => setPickedAutomatization(e.target.value)}
+                    onChange={(e) => setPickedAutomation(e.target.value)}
                     className="bg-whiten border border-gray/50 text-graydark text-sm rounded-lg focus:ring-meta-5 focus:border-meta-5 block w-full p-2.5 dark:bg-compdark dark:border-gray/50 dark:placeholder-gray/50 dark:text-whiten dark:focus:ring-meta-5 dark:focus:border-green300"
                   >
                     <option value="" disabled selected>
-                      Pick automatization
+                      Pick automation
                     </option>
-                    {automatizations.map((automatization) => (
-                      <option key={automatization.id} value={automatization.id}>
-                        {automatization.name}
+                    {automations.map((automation) => (
+                      <option key={automation.id} value={automation.id}>
+                        {automation.name}
                       </option>
                     ))}
                   </select>
@@ -410,18 +406,18 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
               {currentTab === "removeFromEq" && (
                 <div className="pt-4">
                   <h3 className="text-lg font-medium text-compdark/90 dark:text-whiten mb-3">
-                    Pick Automatization:
+                    Pick Automation:
                   </h3>
                   <select
-                    onChange={(e) => setPickedAutomatization(e.target.value)}
+                    onChange={(e) => setPickedAutomation(e.target.value)}
                     className="bg-whiten border border-gray/50 text-graydark text-sm rounded-lg focus:ring-meta-5 focus:border-meta-5 block w-full p-2.5 dark:bg-compdark dark:border-gray/50 dark:placeholder-gray/50 dark:text-whiten dark:focus:ring-meta-5 dark:focus:border-green300"
                   >
                     <option value="" disabled selected>
-                      Pick automatization
+                      Pick automation
                     </option>
-                    {automatizations.map((automatization) => (
-                      <option key={automatization.id} value={automatization.id}>
-                        {automatization.name}
+                    {automations.map((automation) => (
+                      <option key={automation.id} value={automation.id}>
+                        {automation.name}
                       </option>
                     ))}
                   </select>
@@ -510,7 +506,7 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
 
           {currentTab === "addToEq" && (
             <button
-              onClick={addToAutomatization}
+              onClick={addToAutomation}
               className="bg-green300 text-meta-2 dark:bg-success hover:bg-green300 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               type="button"
             >
@@ -520,7 +516,7 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
 
           {currentTab === "removeFromEq" && (
             <button
-              onClick={removeFromAutomatization}
+              onClick={removeFromAutomation}
               className="bg-green300 text-meta-2 dark:bg-success hover:bg-green300 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               type="button"
             >

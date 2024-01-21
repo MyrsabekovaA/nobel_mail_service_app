@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/dark.css";
 import "./CustomDatepicker.css";
@@ -24,6 +24,7 @@ function CustomDatepicker({ initialDate, onDateChange, timeOptionOn }) {
 
   return (
     <Flatpickr
+      className="z-10"
       value={date}
       onChange={handleDateChange}
       options={{
