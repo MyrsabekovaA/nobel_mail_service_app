@@ -90,17 +90,22 @@ function CreateModal({ onClose, onCreate }) {
     birthDate: "",
     eduQuestSelectedDateTime: "",
   });
+
   const [eqLists, setEqLists] = useState([
     { id: 1, eqDate: "25 November Weekend" },
     { id: 2, eqDate: "23 December Weekday" },
   ]);
+
   const [show, setShow] = useState(false);
+
   const handleClose = (state) => {
     setShow(state);
   };
+
   const handleInputChange = (e) => {
     setContactData({ ...contactData, [e.target.id]: e.target.value });
   };
+
   const handleBirthDateChange = (date) => {
     setContactData({ ...contactData, birthDate: date });
   };

@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const checkToken = createAsyncThunk(
   "LoggedIn/checkToken",
   async ({token, user}, thunkApi) => {
-    let response = await fetch("http://52.59.202.2:3000/api/auth/current?"
+    let response = await fetch(`https://mail-service-412008.ey.r.appspot.com/api/auth/current?`
     + new URLSearchParams(user), {
       method: "GET",
       "headers": {
@@ -20,7 +20,7 @@ export const checkToken = createAsyncThunk(
 export const logOut = createAsyncThunk(
   "LoggedIn/logOut",
   async ({token, user}, thunkApi) => {
-    const response = await fetch("http://52.59.202.2:3000/api/auth/logout", {
+    const response = await fetch(`https://mail-service-412008.ey.r.appspot.com/api/auth/logout`, {
       method: "POST",
       headers: {
         token

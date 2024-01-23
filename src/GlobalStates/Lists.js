@@ -17,7 +17,7 @@ export const fetchLists = createAsyncThunk(
       try {
          const token = getState().loggedIn.token;
          const headers = { Authorization: `Bearer ${token}` };
-         const response = await axios.get('http://52.59.202.2:3000/api/contacts-lists', { headers });
+         const response = await axios.get(`https://mail-service-412008.ey.r.appspot.com/api/contacts-lists`, { headers });
          return response.data;
       } catch (error) {
          return rejectWithValue(error.response.data);
@@ -34,7 +34,7 @@ export const addToAutomatization = createAsyncThunk(
          const contactParams = {
             listIds: selectedListId
          };
-         const contactsResponse = await axios.get(`http://52.59.202.2:3000/api/contacts`, 
+         const contactsResponse = await axios.get(`https://mail-service-412008.ey.r.appspot.com/api/contacts`, 
          { 
             headers: headers, 
             params: contactParams 
@@ -44,7 +44,7 @@ export const addToAutomatization = createAsyncThunk(
             contactIds: contactsResponse.data.contacts.map((contact) => contact.id)
          };
 
-         const response = await axios.post(`http://52.59.202.2:3000/api/mailing-automations/${automatizationId}/add-contacts`, 
+         const response = await axios.post(`https://mail-service-412008.ey.r.appspot.com/api/mailing-automations/${automatizationId}/add-contacts`, 
          payload, 
          { headers: headers });
 

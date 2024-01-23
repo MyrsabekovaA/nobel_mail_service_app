@@ -13,7 +13,7 @@ export const fetchTemplates = createAsyncThunk(
       try {
          const token = getState().loggedIn.token;
          const headers = { Authorization: `Bearer ${token}` };
-         const response = await axios.get('http://52.59.202.2:3000/api/mail-templates', { headers });
+         const response = await axios.get('https://mail-service-412008.ey.r.appspot.com/api/mail-templates', { headers });
          return response.data;
       } catch (error) {
          return rejectWithValue(error.response.data);

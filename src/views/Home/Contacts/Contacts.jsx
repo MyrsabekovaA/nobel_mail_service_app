@@ -68,10 +68,13 @@ function Contacts() {
 
       setIsLoading(true);
 
-      const response = await axios.get(`http://52.59.202.2:3000/api/contacts`, {
-        params: params,
-        headers: headers,
-      });
+      const response = await axios.get(
+        `https://mail-service-412008.ey.r.appspot.com/api/contacts`,
+        {
+          params: params,
+          headers: headers,
+        }
+      );
 
       setContacts(response.data.contacts);
       setTotalContacts(response.data.contactsCount);
@@ -96,7 +99,7 @@ function Contacts() {
   const fetchLists = async () => {
     try {
       const response = await axios.get(
-        `http://52.59.202.2:3000/api/contacts-lists`,
+        `https://mail-service-412008.ey.r.appspot.com/api/contacts-lists`,
         { headers: headers }
       );
 
@@ -166,7 +169,7 @@ function Contacts() {
   const handleContactCreate = async (contactData) => {
     try {
       const response = await axios.post(
-        `http://52.59.202.2:3000/api/contacts/`,
+        `https://mail-service-412008.ey.r.appspot.com/api/contacts/`,
         {
           firstName: contactData.firstName,
           lastName: contactData.lastName,
@@ -208,7 +211,7 @@ function Contacts() {
         const selectedIds = selectedContacts.map((contact) => contact.id);
         console.log("bulk editing");
         const response = await axios.put(
-          `http://52.59.202.2:3000/api/contacts`,
+          `https://mail-service-412008.ey.r.appspot.com/api/contacts`,
           {
             contactIds: selectedIds,
             updates: updatedData,
@@ -229,7 +232,7 @@ function Contacts() {
       try {
         setIsOverlayLoading(true);
         const response = await axios.put(
-          `http://52.59.202.2:3000/api/contacts/${selectedContacts[0].id}`,
+          `https://mail-service-412008.ey.r.appspot.com/api/contacts/${selectedContacts[0].id}`,
           updatedData,
           { headers: headers }
         );
@@ -252,7 +255,7 @@ function Contacts() {
         setIsOverlayLoading(true);
         const idsToDelete = selectedContacts.map((contact) => contact.id);
         const response = await axios.delete(
-          `http://52.59.202.2:3000/api/contacts/`,
+          `https://mail-service-412008.ey.r.appspot.com/api/contacts/`,
           {
             headers: headers,
             data: { contactIds: idsToDelete },
@@ -283,7 +286,7 @@ function Contacts() {
       try {
         setIsOverlayLoading(true);
         const response = await axios.delete(
-          `http://52.59.202.2:3000/api/contacts/${selectedContacts[0].id}`,
+          `https://mail-service-412008.ey.r.appspot.com/api/contacts/${selectedContacts[0].id}`,
           { headers: headers }
         );
 

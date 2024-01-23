@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Datepicker from "tailwind-datepicker-react";
+import { fetchAutomations } from "/@/GlobalStates/Automation";
+import { fetchTemplates } from "/@/GlobalStates/Templates";
 
 import "./EditModal.css";
 import axios from "axios";
@@ -113,51 +115,16 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
 
   const [selectedFields, setSelectedFields] = useState([]);
   const [fieldsToEdit, setFieldsToEdit] = useState({});
-  const [automations, setAutomations] = useState([]);
-  const [templates, setTemplates] = useState([]);
+  const automations = useSelector((state) => state.automations.automations);
+  const templates = useSelector((state) => state.templates.templates);
+
   const [pickedAutomation, setPickedAutomation] = useState("");
   const [pickedTemplate, setPickedTemplate] = useState("");
 
-  const fetchAutomations = async () => {
-    try {
-      const response = await axios.get(
-        `http://52.59.202.2:3000/api/mailing-automations`,
-        {
-          headers: headers,
-        }
-      );
-      if (response.status === 200) {
-        setAutomations(response.data);
-      }
-    } catch (error) {
-      dispatch(errorToast("Error Fetching Automations"));
-      console.error("Error Fetching Automations", error);
-    } finally {
-    }
-  };
-
-  const fetchTemplates = async () => {
-    try {
-      const response = await axios.get(
-        `http://52.59.202.2:3000/api/mail-templates`,
-        {
-          headers: headers,
-        }
-      );
-      if (response.status === 200) {
-        setTemplates(response.data);
-      }
-    } catch (error) {
-      dispatch(errorToast("Error Fetching Templates"));
-      console.error("Error Fetching Templates", error);
-    } finally {
-    }
-  };
-
   useEffect(() => {
-    fetchAutomations();
-    fetchTemplates();
-  }, []);
+    dispatch(fetchAutomations());
+    dispatch(fetchTemplates());
+  }, [dispatch]);
 
   const handleCheckboxChange = (e) => {
     const field = e.target.name;
@@ -233,7 +200,7 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
         contactIds: contactsToEdit.map((contact) => contact.id),
       };
       const response = await axios.post(
-        `http://52.59.202.2:3000/api/mailing-automations/${pickedAutomation}/add-contacts`,
+        `https://mail-service-412008.ey.r.appspot.com/api/mailing-automations/${pickedAutomation}/add-contacts`,
         payload,
         {
           headers: headers,
@@ -254,7 +221,7 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
         contactIds: contactsToEdit.map((contact) => contact.id),
       };
       const response = await axios.post(
-        `http://52.59.202.2:3000/api/mailing-automations/${pickedAutomation}/remove-contacts`,
+        `https://mail-service-412008.ey.r.appspot.com/api/mailing-automations/${pickedAutomation}/remove-contacts`,
         payload,
         {
           headers: headers,
@@ -280,7 +247,7 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
         useContactTimezone: false,
       };
       const response = await axios.post(
-        `http://52.59.202.2:3000/api/scheduled-mails/`,
+        `https://mail-service-412008.ey.r.appspot.com/api/scheduled-mails/`,
         payload,
         {
           headers: headers,

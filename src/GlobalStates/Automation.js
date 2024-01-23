@@ -15,7 +15,7 @@ export const fetchAutomations = createAsyncThunk(
         try {
             const token = getState().loggedIn.token;
             const headers = { Authorization: `Bearer ${token}` };
-            const response = await axios.get('http://52.59.202.2:3000/api/mailing-automations', { headers });
+            const response = await axios.get(`https://mail-service-412008.ey.r.appspot.com/api/mailing-automations`, { headers });
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
@@ -39,7 +39,7 @@ export const createAutomation = createAsyncThunk(
                     }
                 ],
             }
-            const response = await axios.post('http://52.59.202.2:3000/api/mailing-automations',
+            const response = await axios.post(`https://mail-service-412008.ey.r.appspot.com/api/mailing-automations`,
             payload,
             { headers });
             if(response.status === 201) {
@@ -60,7 +60,7 @@ export const deleteAutomation = createAsyncThunk(
         try {
             const token = getState().loggedIn.token;
             const headers = { Authorization: `Bearer ${token}` };
-            const response = await axios.delete(`http://52.59.202.2:3000/api/mailing-automations/${automationId}`, {headers})
+            const response = await axios.delete(`https://mail-service-412008.ey.r.appspot.com/api/mailing-automations/${automationId}`, {headers})
             if(response.status === 204) {
                 dispatch(successToast("Automation deleted!"))
                 await dispatch(fetchAutomations())
@@ -79,12 +79,12 @@ export const updateAutomation = createAsyncThunk(
         try {
             const token = getState().loggedIn.token;
             const headers = { Authorization: `Bearer ${token}` };
-            const transformedData = {
-                ...data,
-                automationScheduledMails: data.automationScheduledMails.map(({ template, mailingAutomationId, ...rest }) => rest)
-              };
-            const response = await axios.put(`http://52.59.202.2:3000/api/mailing-automations/${id}`,
-            transformedData,
+            // const transformedData = {
+            //     ...data,
+            //     automationScheduledMails: data.automationScheduledMails.map(({ template, mailingAutomationId, ...rest }) => rest)
+            //   };
+            const response = await axios.put(`https://mail-service-412008.ey.r.appspot.com/api/mailing-automations/${id}`,
+            data,
             { headers });
             if(response.status === 200) {
                 dispatch(successToast("Automation updated successfully!"))
@@ -175,7 +175,7 @@ const automationsSlice = createSlice({
                 state.error = action.payload;
                 state.isLoadingUpdate = false;
             })
-}
+    }
 });
 
 export const { updateAutomations, addAutomation, copyAutomation } = automationsSlice.actions;
