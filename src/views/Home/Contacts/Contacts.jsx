@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import "./Contacts.css";
-import { Icon } from "@iconify/react";
 
 import ContactsTable from "./ContactsTable/ContactsTable";
 import Pagination from "./Pagination/Pagination";
@@ -14,6 +13,8 @@ import LoadingOverlay from "../../../components/LoadingOverlay/LoadingOverlay";
 import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 import { useDispatch, useSelector } from "react-redux";
 import { successToast, errorToast } from "/@/GlobalStates/Toasts";
+import { fetchLists } from "/@/GlobalStates/Lists";
+import { fetchContacts, setContactsPerPage } from "/@/GlobalStates/Contacts";
 
 function Contacts() {
   const dispatch = useDispatch();
@@ -22,18 +23,29 @@ function Contacts() {
   const headers = {
     Authorization: `Bearer ${token}`,
   };
+  // redux
+  const isLoading = useSelector((state) => state.contacts.isLoading);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const contacts = useSelector((state) => state.contacts.contacts);
+  const lists = useSelector((state) => state.lists.lists);
+  const totalContacts = useSelector((state) => state.contacts.totalContacts);
+  const totalPages = useSelector((state) => state.contacts.totalPages);
+  const contactsPerPage = useSelector(
+    (state) => state.contacts.contactsPerPage
+  );
+  // before
   const [isOverlayLoading, setIsOverlayLoading] = useState(false);
-  const [contacts, setContacts] = useState([]); // fetched contacts
-  const [totalContacts, setTotalContacts] = useState(1000); // will be also fetched from request
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [contacts, setContacts] = useState([]); // fetched contacts
+  // const [lists, setLists] = useState([]);
+  // const [totalContacts, setTotalContacts] = useState(1000);
+  // const [totalPages, setTotalPages] = useState(0); // idealy fetched from request
+  // const [contactsPerPage, setContactsPerPage] = useState(50);
+
   const [currentPage, setCurrentPage] = useState(1); // current page state, changed onClick on paggination button
-  const [contactsPerPage, setContactsPerPage] = useState(50);
-  const [totalPages, setTotalPages] = useState(0); // idealy fetched from request
   const [searchQuery, setSearchQuery] = useState(""); // search input
   const [selectedContacts, setSelectedContacts] = useState([]); // checked contacts
   const [selectAll, setSelectAll] = useState(false);
-  const [lists, setLists] = useState([]);
   // modal display states
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -45,46 +57,46 @@ function Contacts() {
     statuses: [],
   });
 
-  const fetchData = async (
-    page,
-    search = "",
-    contactsPerPage,
-    checkedItems = {}
-  ) => {
-    try {
-      let params = {};
+  // const fetchData = async (
+  //   page,
+  //   search = "",
+  //   contactsPerPage,
+  //   checkedItems = {}
+  // ) => {
+  //   try {
+  //     let params = {};
 
-      if (search || (checkedItems.eqLists && checkedItems.eqLists.length > 0)) {
-        if (search) {
-          params.search = search;
-        }
-        if (checkedItems.eqLists && checkedItems.eqLists.length > 0) {
-          params.listIds = checkedItems.eqLists;
-        }
-      } else {
-        params.pageSize = Number(contactsPerPage);
-        params.page = Number(page);
-      }
+  //     if (search || (checkedItems.eqLists && checkedItems.eqLists.length > 0)) {
+  //       if (search) {
+  //         params.search = search;
+  //       }
+  //       if (checkedItems.eqLists && checkedItems.eqLists.length > 0) {
+  //         params.listIds = checkedItems.eqLists;
+  //       }
+  //     } else {
+  //       params.pageSize = Number(contactsPerPage);
+  //       params.page = Number(page);
+  //     }
 
-      setIsLoading(true);
+  //     setIsLoading(true);
 
-      const response = await axios.get(
-        `https://mail-service-412008.ey.r.appspot.com/api/contacts`,
-        {
-          params: params,
-          headers: headers,
-        }
-      );
+  //     const response = await axios.get(
+  //       `https://mail-service-412008.ey.r.appspot.com/api/contacts`,
+  //       {
+  //         params: params,
+  //         headers: headers,
+  //       }
+  //     );
 
-      setContacts(response.data.contacts);
-      setTotalContacts(response.data.contactsCount);
-      setTotalPages(Math.ceil(totalContacts / contactsPerPage));
-    } catch (error) {
-      console.error("Error fetching contacts:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  //     setContacts(response.data.contacts);
+  //     setTotalContacts(response.data.contactsCount);
+  //     setTotalPages(Math.ceil(totalContacts / contactsPerPage));
+  //   } catch (error) {
+  //     console.error("Error fetching contacts:", error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   const handleCheckedItemsChange = (newCheckedItems) => {
     setCheckedItems(newCheckedItems);
@@ -96,31 +108,35 @@ function Contacts() {
     setAreFiltersApplied(isFilterActive);
   };
 
-  const fetchLists = async () => {
-    try {
-      const response = await axios.get(
-        `https://mail-service-412008.ey.r.appspot.com/api/contacts-lists`,
-        { headers: headers }
-      );
+  // const fetchLists = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `https://mail-service-412008.ey.r.appspot.com/api/contacts-lists`,
+  //       { headers: headers }
+  //     );
 
-      if (response.status === 200) {
-        setLists(response.data);
-        console.log(response.data);
-      }
-    } catch (error) {
-      dispatch(errorToast("Error fetching lists"));
-      console.log("Error fetching lists", error);
-    }
-  };
+  //     if (response.status === 200) {
+  //       setLists(response.data);
+  //       console.log(response.data);
+  //     }
+  //   } catch (error) {
+  //     dispatch(errorToast("Error fetching lists"));
+  //     console.log("Error fetching lists", error);
+  //   }
+  // };
 
   useEffect(() => {
-    fetchData(currentPage, searchQuery, contactsPerPage);
+    dispatch(fetchContacts(currentPage, searchQuery, contactsPerPage));
+    // fetchData(currentPage, searchQuery, contactsPerPage);
     setSelectAll(false);
     setSelectedContacts([]);
   }, [currentPage, searchQuery, contactsPerPage]);
 
   useEffect(() => {
-    fetchData(currentPage, searchQuery, contactsPerPage, checkedItems);
+    dispatch(
+      fetchContacts(currentPage, searchQuery, contactsPerPage, checkedItems)
+    );
+    // fetchData(currentPage, searchQuery, contactsPerPage, checkedItems);
   }, [checkedItems]);
 
   useEffect(() => {
@@ -194,8 +210,9 @@ function Contacts() {
         dispatch(
           successToast(`Successfully created ${contactData.email} contact!`)
         );
+        dispatch(fetchContacts(currentPage, searchQuery));
 
-        fetchData(currentPage, searchQuery);
+        // fetchData(currentPage, searchQuery);
       }
     } catch (error) {
       console.error("Error creating contact:", error);
@@ -222,7 +239,9 @@ function Contacts() {
         if (response.status === 200) {
           console.log("Contacts updated successfully");
           dispatch(successToast("Contacts updated successfully!"));
-          fetchData(currentPage, searchQuery);
+          dispatch(fetchContacts(currentPage, searchQuery));
+
+          // fetchData(currentPage, searchQuery);
         }
       } catch (error) {
         console.error("Error updating contacts:", error);
@@ -238,7 +257,10 @@ function Contacts() {
         );
         if (response.status === 200) {
           dispatch(successToast("Successfully updated!"));
-          fetchData(currentPage, searchQuery);
+
+          dispatch(fetchContacts(currentPage, searchQuery));
+
+          // fetchData(currentPage, searchQuery);
         }
       } catch (error) {
         console.error("Error updating contact:", error);
@@ -269,7 +291,9 @@ function Contacts() {
               `Successfully deleted "${selectedContacts.length}" contacts!`
             )
           );
-          fetchData(currentPage, searchQuery);
+          dispatch(fetchContacts(currentPage, searchQuery));
+
+          // fetchData(currentPage, searchQuery);
           setSelectedContacts([]);
         }
       } catch (error) {
@@ -292,7 +316,9 @@ function Contacts() {
 
         if (response.status === 204) {
           console.log("Contact deleted successfully");
-          fetchData(currentPage, searchQuery);
+          dispatch(fetchContacts(currentPage, searchQuery));
+
+          // fetchData(currentPage, searchQuery);
           setSelectedContacts([]);
           dispatch(
             successToast(`Successfully deleted "${selectedContacts[0].email}"!`)
@@ -308,6 +334,12 @@ function Contacts() {
     }
   };
 
+  const handleContactsPerPageChange = (e) => {
+    const newContactsPerPage = Number(e.target.value);
+    dispatch(setContactsPerPage(newContactsPerPage));
+    setContactsPerPage(newContactsPerPage); // Update local state if needed
+    // setCurrentPage(1); // Reset current page when changing contacts per page
+  };
   return (
     <div className="">
       <div className="container mx-auto px-4">
@@ -443,7 +475,7 @@ function Contacts() {
               </label>
               <select
                 id="contacts-per-page"
-                onChange={(e) => setContactsPerPage(Number(e.target.value))}
+                onChange={handleContactsPerPageChange}
                 className="bg-gray-50 border border-gray-300 text-slate-800 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-slate-200 dark:focus:ring-blue-500 dark:focus:border-blue-500"
               >
                 <option value="50">50</option>
