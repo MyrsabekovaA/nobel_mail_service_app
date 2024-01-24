@@ -220,6 +220,7 @@ function Contacts() {
         );
 
         if (response.status === 200) {
+          console.log(response);
           console.log("Contacts updated successfully");
           dispatch(successToast("Contacts updated successfully!"));
           fetchData(currentPage, searchQuery);

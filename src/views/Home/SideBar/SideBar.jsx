@@ -5,6 +5,7 @@ import Logo from "/Nobel_logo.png";
 import NavMenu from "./NavMenu/NavMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { sidebarActions } from "/@/GlobalStates/Sidebar";
+import SideBar from "./SideBar";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -48,8 +49,10 @@ const Sidebar = () => {
             }`}
     >
       <div className="flex items-center justify-between px-4 py-6">
-        <NavLink to="/home">
-          <img src={Logo} alt="Logo" className="h-10 w-10 bg-transparent" />
+        <NavLink to="/home" className="logo" isActive={() => false}>
+          <div>
+            <img src={Logo} alt="Logo" className="h-10 w-10" />
+          </div>
         </NavLink>
         <button onClick={() => dispatch(sidebarActions.toggleSidebarOpened())}>
           <Icon icon="material-symbols:close" className="text-xl" />

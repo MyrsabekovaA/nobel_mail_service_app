@@ -6,27 +6,35 @@ import moment from "moment";
 
 function CustomDatepicker({ initialDate, onDateChange, timeOptionOn }) {
   const [date, setDate] = useState("");
+  const [userTimezoneOffset, setUserTimezoneOffset] = useState(0);
 
   useEffect(() => {
     if (initialDate) {
       const formattedDate = timeOptionOn
-        ? moment(initialDate).format("DD.MM.YYYY HH:mm")
-        : moment(initialDate).format("DD.MM.YYYY");
+        ? moment.utc(initialDate).format("DD.MM.YYYY HH:mm")
+        : moment.utc(initialDate).format("DD.MM.YYYY");
       setDate(formattedDate);
     } else {
       setDate("");
     }
   }, [initialDate, timeOptionOn]);
 
+  useEffect(() => {
+    setUserTimezoneOffset(new Date().getTimezoneOffset());
+  }, []);
+
   const handleDateChange = (selectedDates) => {
-    console.log(selectedDates[0]);
-    onDateChange(selectedDates[0]);
+    const adjustedDate = moment(selectedDates[0]).subtract(
+      userTimezoneOffset,
+      "minutes"
+    );
+    console.log(adjustedDate.toDate());
+    onDateChange(adjustedDate.toDate());
   };
 
   return (
     <Flatpickr
-      className=""
-      title={date}
+      className="z-10"
       value={date}
       onChange={handleDateChange}
       options={{
