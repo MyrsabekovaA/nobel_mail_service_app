@@ -29,6 +29,18 @@ const NavMenu = () => {
           </li>
           <li>
             <NavLink
+              to="/home/lists"
+              className="group relative flex items-center gap-2 rounded-sm py-2 px-3
+                                 font-medium
+                                 text-black-2 duration-300 ease-in-out hover:bg-secondary dark:hover:bg-meta-4
+                                 dark:text-white"
+            >
+              <Icon icon="bi:list-task" className="text-xl" />
+              <span className="ml-2">Lists</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
               to="/home/automations"
               className="group relative flex items-center gap-2 rounded-sm
                         py-2 px-3 font-medium text-black-2 duration-300 ease-in-out hover:bg-secondary
@@ -38,7 +50,7 @@ const NavMenu = () => {
                 icon="material-symbols:schedule-outline"
                 className="text-xl"
               />
-              <span className="ml-2">Automatizations</span>
+              <span className="ml-2">Automations</span>
             </NavLink>
           </li>
           <li>

@@ -151,14 +151,15 @@ function AutomationItem({ automation, templates }) {
     <div className="automation-item">
       <div className="flex items-center justify-between gap-2 p-2">
         <input
-          className="p-1 appearance-none outline-none bg-transparent focus:outline-meta-5 rounded-md transition-all duration-150"
+          className="p-1 w-full appearance-none outline-none bg-transparent focus:outline-meta-5 rounded-md transition-all duration-150"
           type="text"
-          onChange={(e) =>
+          onChange={(e) => {
             setAutomationData({
               ...automationData,
               name: e.target.value,
-            })
-          }
+            });
+            setIsEdited(true);
+          }}
           placeholder="Card name"
           value={automationData.name}
         />
@@ -168,7 +169,7 @@ function AutomationItem({ automation, templates }) {
               isEdited ? "opacity-100" : "opacity-0"
             }`}
           ></div>
-          <button className="p-1 rounded-md hover:bg-gray/20 transition-colors durration-150">
+          <button className="relative z-10 p-1 rounded-md hover:bg-gray/20 transition-colors durration-150">
             <DropDownIcon
               icon={<Icon icon="ep:more-filled" />}
               options={dropdownOptions}
@@ -176,13 +177,13 @@ function AutomationItem({ automation, templates }) {
           </button>
         </div>
       </div>
-      <div className="flex flex-col gap-2 px-3 py-3 border-y border-gray/50 h-56 max-h-56 overflow-y-auto">
+      <div className="relative flex flex-col gap-2 px-3 py-3 border-y border-gray/50 h-56 max-h-56 overflow-y-auto">
         {automationData.automationScheduledMails.map((step, index) => (
           <div
             key={index}
-            className="step flex gap-3 items-center justify-between outline outline-1 outline-gray/50 hover:outline-meta-5  hover:shadow-lg p-2 rounded transition duration-150 "
+            className="step flex gap-1 items-center justify-between outline outline-1 outline-gray/50 hover:outline-meta-5  hover:shadow-lg p-2 rounded transition duration-150 "
           >
-            <span className="">{index + 1}.</span>
+            {/* <span className="">{index + 1}.</span> */}
             <select
               className="step-select"
               value={step.templateId}
@@ -204,7 +205,7 @@ function AutomationItem({ automation, templates }) {
             />
             <div>
               <button
-                className="flex gap-1 "
+                className="flex gap-1"
                 title="Toggle to use contact's timezone"
                 onClick={() => toggleUseContactTimezone(index)}
               >
@@ -214,7 +215,7 @@ function AutomationItem({ automation, templates }) {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke=""
-                  className={`w-6 h-6 hover:stroke-gray transition-all duration-150 active:stroke-green300 ${
+                  className={`2xsm:w-4 3xsm:h-4 xsm:w-6 xsm:h-6 hover:stroke-gray transition-all duration-150 active:stroke-green300 ${
                     step.useContactTimezone
                       ? "stroke-green300"
                       : "stroke-gray/50"
@@ -238,7 +239,7 @@ function AutomationItem({ automation, templates }) {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-6 h-6"
+                className="2xsm:w-4 3xsm:h-4 xsm:w-6 xsm:h-6"
               >
                 <path
                   strokeLinecap="round"

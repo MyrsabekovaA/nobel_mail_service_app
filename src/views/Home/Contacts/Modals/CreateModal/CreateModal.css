@@ -1,9 +1,29 @@
 .create-input {
-  @apply w-full appearance-none focus:outline-none w-full bg-transparent border-b-2 border-gray focus:border-meta-5 dark:text-whiten text-compdark transition-colors duration-200;
+  @apply transition-all duration-150 bg-whiten border border-gray/50 text-graydark text-sm rounded-lg focus:ring-meta-5 focus:border-meta-5 block p-2 dark:bg-compdark dark:border-gray/50 dark:placeholder-gray/50 dark:text-whiten focus:border-meta-5 block p-2 dark:bg-compdark dark:border-gray/50 dark:placeholder-gray/50 dark:text-whiten dark:focus:ring-meta-5 dark:focus:border-green300;
 }
 .create-label {
   @apply text-sm text-compdark/80 dark:text-gray/90;
 }
 .create-item {
   @apply flex flex-col gap-2 flex-1;
+}
+
+/* Hide the default scrollbar */
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+/* Customize the scrollbar track */
+::-webkit-scrollbar-track {
+  @apply bg-gray/20 /* Background color of the track */;
+}
+
+/* Customize the scrollbar thumb (the draggable part) */
+::-webkit-scrollbar-thumb {
+  @apply bg-gray/50 rounded; /* Background color of the thumb */
+}
+
+/* On hover, customize the scrollbar thumb */
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray/90;
 }

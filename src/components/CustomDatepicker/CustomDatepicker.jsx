@@ -19,12 +19,14 @@ function CustomDatepicker({ initialDate, onDateChange, timeOptionOn }) {
   }, [initialDate, timeOptionOn]);
 
   const handleDateChange = (selectedDates) => {
+    console.log(selectedDates[0]);
     onDateChange(selectedDates[0]);
   };
 
   return (
     <Flatpickr
-      className="z-10"
+      className=""
+      title={date}
       value={date}
       onChange={handleDateChange}
       options={{

@@ -1,5 +1,5 @@
 .action-btn {
-  @apply flex gap-2 items-center text-compdark dark:text-whiten bg-white dark:bg-meta-4 hover:bg-gray-3 dark:hover:bg-graydark shadow-lg border border-gray/50 font-medium py-2 px-4 rounded transition-all duration-200;
+  @apply flex gap-2 items-center text-compdark dark:text-whiten bg-whiten dark:bg-meta-4 hover:bg-gray-3 dark:hover:bg-graydark shadow-lg border border-gray/50 font-medium py-2 px-4 rounded transition-all duration-200;
 }
 .delete-btn {
   @apply flex gap-2 items-center bg-danger text-white hover:bg-meta-1 shadow-lg border border-gray/50 font-medium py-2 px-4 rounded transition-all duration-200;
@@ -8,6 +8,22 @@ input {
   @apply bg-whiten;
 }
 
-/*.contacts-wrapper{*/
-/*  @apply bg-white;*/
-/*}*/
+/* Hide the default scrollbar */
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+/* Customize the scrollbar track */
+::-webkit-scrollbar-track {
+  @apply bg-gray/20 /* Background color of the track */;
+}
+
+/* Customize the scrollbar thumb (the draggable part) */
+::-webkit-scrollbar-thumb {
+  @apply bg-gray/50 rounded; /* Background color of the thumb */
+}
+
+/* On hover, customize the scrollbar thumb */
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray/90;
+}

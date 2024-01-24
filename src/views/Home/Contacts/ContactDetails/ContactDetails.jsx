@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Datepicker from "tailwind-datepicker-react";
 
 import "./ContactDetails.css";
 import ContactActivityList from "./ContactsActivityList/ContactsActivityList";
@@ -15,79 +14,6 @@ function ContactDetails() {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.loggedIn.token);
 
-  const options = {
-    title: "Select Birth Date",
-    autoHide: true,
-    todayBtn: false,
-    clearBtn: true,
-    clearBtnText: "Clear",
-    maxDate: new Date("2030-01-01"),
-    minDate: new Date("1950-01-01"),
-    theme: {
-      todayBtn: "",
-      clearBtn: "",
-      background: "bg-white dark:bg-slate-800 shadow",
-      text: "text-slate-600 dark:text-slate-200 ",
-      disabledText: "text-gray-400",
-      input: "border-gray-300 focus:border-green-500",
-      inputIcon: "text-green-500",
-      selected: "bg-green-500 text-white hover:bg-green-500",
-    },
-    icons: {
-      // () => ReactElement | JSX.Element
-      prev: () => (
-        <span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
-            />
-          </svg>
-        </span>
-      ),
-      next: () => (
-        <span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-            />
-          </svg>
-        </span>
-      ),
-    },
-    datepickerClassNames: "top-15",
-    defaultDate: "",
-    language: "en",
-    disabledDates: [],
-    weekDays: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
-    inputNameProp: "date",
-    inputIdProp: "date",
-    inputPlaceholderProp: "Select Date",
-    inputDateFormatProp: {
-      day: "numeric",
-      month: "numeric",
-      year: "numeric",
-    },
-  };
-
-  const [show, setShow] = useState(false);
   let { contactid } = useParams();
 
   const [isOverlayLoading, setIsOverlayLoading] = useState(false);
@@ -118,7 +44,7 @@ function ContactDetails() {
     try {
       setIsOverlayLoading(true);
       const response = await axios.get(
-        `http://52.59.202.2:3000/api/contacts/${contactid}`,
+        `https://mail-service-412008.ey.r.appspot.com/api/contacts/${contactid}`,
         { headers: headers }
       );
       const data = response.data;
@@ -136,6 +62,7 @@ function ContactDetails() {
         gender: data.gender.toLowerCase(),
         eduQuestSelectedDateTime: data.eduQuestSelectedDateTime,
       });
+      setIsOverlayLoading(false);
     } catch (error) {
       console.error("Error fetching contact", error);
     } finally {
@@ -146,7 +73,7 @@ function ContactDetails() {
   const fetchContactActivities = async () => {
     try {
       const response = await axios.get(
-        `http://52.59.202.2:3000/actions/${contactid}`,
+        `https://mail-service-412008.ey.r.appspot.com/actions/${contactid}`,
         { headers: headers }
       );
       // setActivities(response.data.userActions);
@@ -158,12 +85,8 @@ function ContactDetails() {
 
   useEffect(() => {
     fetchContactData();
-    fetchContactActivities();
+    // fetchContactActivities();
   }, [contactid]);
-
-  const handleClose = (state) => {
-    setShow(state);
-  };
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -187,7 +110,7 @@ function ContactDetails() {
       };
       setIsOverlayLoading(true);
       const response = await axios.put(
-        `http://52.59.202.2:3000/api/contacts/${contactid}`,
+        `https://mail-service-412008.ey.r.appspot.com/api/contacts/${contactid}`,
         contact,
         { headers: headers }
       );
@@ -398,7 +321,7 @@ function ContactDetails() {
                   <option value="something">Something</option>
                 </select>
               </div>
-              <ContactActivityList activities={activities} />
+              {/* <ContactActivityList activities={activities} /> */}
             </div>
           </div>
         ) : (

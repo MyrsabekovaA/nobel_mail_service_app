@@ -83,9 +83,14 @@ export const updateAutomation = createAsyncThunk(
             //     ...data,
             //     automationScheduledMails: data.automationScheduledMails.map(({ template, mailingAutomationId, ...rest }) => rest)
             //   };
+            const params = {
+                sortBy: "createdAt",
+                sortOrder: "desc",
+            }
+            
             const response = await axios.put(`https://mail-service-412008.ey.r.appspot.com/api/mailing-automations/${id}`,
             data,
-            { headers });
+            { headers, params });
             if(response.status === 200) {
                 dispatch(successToast("Automation updated successfully!"))
             }

@@ -1,113 +1,33 @@
 import React, { useEffect, useState } from "react";
 import "./CreateModal.css";
-import Datepicker from "tailwind-datepicker-react";
+import CustomDatepicker from "../../../../../components/CustomDatepicker/CustomDatepicker";
 
 function CreateModal({ onClose, onCreate }) {
-  const options = {
-    title: "Select Birth Date",
-    autoHide: true,
-    todayBtn: false,
-    clearBtn: true,
-    clearBtnText: "Clear",
-    maxDate: new Date("2030-01-01"),
-    minDate: new Date("1950-01-01"),
-    theme: {
-      todayBtn: "",
-      clearBtn: "",
-      background: "bg-white dark:bg-slate-800 shadow",
-      text: "text-slate-600 dark:text-slate-200 ",
-      disabledText: "text-gray-400",
-      input: "border-gray-300 focus:border-green-500",
-      inputIcon: "text-green-500",
-      selected: "bg-green-500 text-white hover:bg-green-500",
-    },
-    icons: {
-      // () => ReactElement | JSX.Element
-      prev: () => (
-        <span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
-            />
-          </svg>
-        </span>
-      ),
-      next: () => (
-        <span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-            />
-          </svg>
-        </span>
-      ),
-    },
-    datepickerClassNames: "top-15",
-    defaultDate: "",
-    language: "en",
-    disabledDates: [],
-    weekDays: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
-    inputNameProp: "date",
-    inputIdProp: "date",
-    inputPlaceholderProp: "Select Date",
-    inputDateFormatProp: {
-      day: "numeric",
-      month: "numeric",
-      year: "numeric",
-    },
-  };
   const [contactData, setContactData] = useState({
     firstName: "",
     lastName: "",
     age: 0,
     city: "",
     email: "",
-    gender: "",
+    gender: "Other",
     country: "",
     timezone: "",
-    occupation: "",
+    occupation: "Other",
     sourceOfReferral: "",
-    eduQuestDecision: "Pending",
-    intershipMotivation: "",
+    intershipMotivation: "—",
     birthDate: "",
     eduQuestSelectedDateTime: "",
   });
-
-  const [eqLists, setEqLists] = useState([
-    { id: 1, eqDate: "25 November Weekend" },
-    { id: 2, eqDate: "23 December Weekday" },
-  ]);
-
-  const [show, setShow] = useState(false);
-
-  const handleClose = (state) => {
-    setShow(state);
-  };
 
   const handleInputChange = (e) => {
     setContactData({ ...contactData, [e.target.id]: e.target.value });
   };
 
-  const handleBirthDateChange = (date) => {
-    setContactData({ ...contactData, birthDate: date });
+  const handleDateChange = (id, newDate) => {
+    setContactData((prevContact) => ({
+      ...prevContact,
+      [id]: newDate,
+    }));
   };
 
   useEffect(() => {
@@ -184,6 +104,7 @@ function CreateModal({ onClose, onCreate }) {
                 <input
                   onChange={handleInputChange}
                   value={contactData.timezone}
+                  placeholder="Europe/Kiev"
                   className="create-input"
                   type="text"
                   id="timezone"
@@ -210,15 +131,12 @@ function CreateModal({ onClose, onCreate }) {
                 <label className="create-label" htmlFor="birthDate">
                   Birth Date
                 </label>
-                <Datepicker
-                  options={options}
-                  onChange={handleBirthDateChange}
-                  show={show}
-                  setShow={handleClose}
-                  value={contactData.birthDate}
-                  className="create-input"
-                  type="text"
-                  id="birthDate"
+                <CustomDatepicker
+                  initialDate={null}
+                  timeOptionOn={false}
+                  onDateChange={(newDate) =>
+                    handleDateChange("birthDate", newDate)
+                  }
                 />
               </div>
               <div className="create-item">
@@ -302,25 +220,6 @@ function CreateModal({ onClose, onCreate }) {
           </div>
           <p className="dark:text-whiten/70 mt-4 mb-4">EduQuest Information</p>
           <div className="flex flex-col gap-4">
-            {/* <div className="create-item">
-              <label className="create-label" htmlFor="eqList">
-                Assign to EQ
-              </label>
-              <select
-                onChange={handleListAdd}
-                value={contactData.listIds}
-                className="create-input"
-                type="text"
-                id="eqList"
-              >
-                <option value="">None</option>
-                {eqLists.map((eq) => (
-                  <option key={eq.id} value={eq.id}>
-                    {eq.eqDate}
-                  </option>
-                ))}
-              </select>
-            </div> */}
             <div className="create-item">
               <label
                 className="create-label"
@@ -328,12 +227,12 @@ function CreateModal({ onClose, onCreate }) {
               >
                 EQ selected date time
               </label>
-              <input
-                onChange={handleInputChange}
-                value={contactData.eduQuestSelectedDateTime}
-                className="create-input"
-                type="text"
-                id="eduQuestSelectedDateTime"
+              <CustomDatepicker
+                initialDate={null}
+                timeOptionOn={true}
+                onDateChange={(newDate) =>
+                  handleDateChange("eduQuestSelectedDateTime", newDate)
+                }
               />
             </div>
           </div>

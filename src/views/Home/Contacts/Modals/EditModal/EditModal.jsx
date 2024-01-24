@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Datepicker from "tailwind-datepicker-react";
 import { fetchAutomations } from "/@/GlobalStates/Automation";
 import { fetchTemplates } from "/@/GlobalStates/Templates";
 
@@ -8,6 +7,7 @@ import axios from "axios";
 
 import { useDispatch, useSelector } from "react-redux";
 import { successToast, errorToast } from "../../../../../GlobalStates/Toasts";
+import CustomDatepicker from "../../../../../components/CustomDatepicker/CustomDatepicker";
 
 function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
   const dispatch = useDispatch();
@@ -17,83 +17,6 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
     Authorization: `Bearer ${token}`,
   };
 
-  const options = {
-    title: "Select Birth Date",
-    autoHide: true,
-    todayBtn: false,
-    clearBtn: true,
-    clearBtnText: "Clear",
-    maxDate: new Date("2030-01-01"),
-    minDate: new Date("1950-01-01"),
-    theme: {
-      todayBtn: "",
-      clearBtn: "",
-      background: "bg-white dark:bg-slate-800 shadow",
-      text: "text-slate-600 dark:text-slate-200 ",
-      disabledText: "text-gray-400",
-      input: "border-gray-300 focus:border-green-500",
-      inputIcon: "text-green-500",
-      selected: "bg-green-500 text-whiten hover:bg-green-500",
-    },
-    icons: {
-      // () => ReactElement | JSX.Element
-      prev: () => (
-        <span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
-            />
-          </svg>
-        </span>
-      ),
-      next: () => (
-        <span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-            />
-          </svg>
-        </span>
-      ),
-    },
-    datepickerClassNames: "top-15",
-    defaultDate: "",
-    language: "en",
-    disabledDates: [],
-    weekDays: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
-    inputNameProp: "date",
-    inputIdProp: "date",
-    inputPlaceholderProp: "Select Date",
-    inputDateFormatProp: {
-      day: "numeric",
-      month: "numeric",
-      year: "numeric",
-    },
-  };
-
-  const [show, setShow] = useState(false);
-
-  const handleClose = (state) => {
-    setShow(state);
-  };
   const [currentTab, setCurrentTab] = useState("edit");
 
   const fieldTypes = {
@@ -171,15 +94,10 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
         );
       case "date":
         return (
-          <Datepicker
-            options={options}
-            onChange={(date) => handleDateChange(date, field)}
-            show={show}
-            setShow={handleClose}
-            value={fieldsToEdit[field] || ""}
-            className="edit-input"
-            type="text"
-            id="birthDate"
+          <CustomDatepicker
+            initialDate={null}
+            timeOptionOn={true}
+            onDateChange={(newDate) => handleDateChange(field, newDate)}
           />
         );
       default:

@@ -2,7 +2,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import isLoggedInReducer  from "/@/GlobalStates/LoggedIn"
 import sidebarReducer from "/@/GlobalStates/Sidebar"
 import contactsSlice from "/@/GlobalStates/Contacts"
-import languageSlice from "/@/GlobalStates/Language"
 import toastsSlice from "/@/GlobalStates/Toasts";
 import emailTemplatesSlice from "/@/GlobalStates/EmailTemplates";
 import darkModeReducer from "/@/GlobalStates/DarkMode";
@@ -16,7 +15,6 @@ const store = configureStore({
         loggedIn: isLoggedInReducer,
         sidebar: sidebarReducer,
         contacts: contactsSlice,
-        language: languageSlice,
         darkMode: darkModeReducer,
         tasks: taskReducer,
         toasts: toastsSlice,

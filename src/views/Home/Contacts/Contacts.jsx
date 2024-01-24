@@ -64,6 +64,8 @@ function Contacts() {
       } else {
         params.pageSize = Number(contactsPerPage);
         params.page = Number(page);
+        params.sortBy = "createdAt";
+        params.sortOrder = "desc";
       }
 
       setIsLoading(true);
@@ -180,12 +182,10 @@ function Contacts() {
           country: contactData.country,
           timezone: contactData.timezone,
           occupation: contactData.occupation,
-          sourceOfReferral: "Telegram", //contactData.sourceOfReferral,
-          eduQuestDecision: new Date(), //contactData.eduQuestDecision,
-          intershipMotivation: "test", //contactData.intershipMotivation,
+          sourceOfReferral: contactData.sourceOfReferral,
+          intershipMotivation: contactData.intershipMotivation,
           birthDate: contactData.birthDate,
-          eduQuestSelectedDateTime: new Date(),
-          // contactData.eduQuestSelectedDateTime
+          eduQuestSelectedDateTime: contactData.eduQuestSelectedDateTime,
         },
         { headers: headers }
       );
@@ -444,7 +444,7 @@ function Contacts() {
               <select
                 id="contacts-per-page"
                 onChange={(e) => setContactsPerPage(Number(e.target.value))}
-                className="bg-gray-50 border border-gray-300 text-slate-800 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-slate-200 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="bg-whiten border border-gray/50 text-graydark text-sm rounded-lg focus:ring-meta-5 focus:border-meta-5 p-2.5 dark:bg-compdark dark:border-gray/50 dark:placeholder-gray/50 dark:text-whiten dark:focus:ring-meta-5 dark:focus:border-green300"
               >
                 <option value="50">50</option>
                 <option value="100">100</option>
