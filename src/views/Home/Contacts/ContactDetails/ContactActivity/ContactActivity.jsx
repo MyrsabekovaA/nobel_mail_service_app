@@ -25,7 +25,7 @@ function ContactActivity({ activity }) {
           </svg>
           <div>{activity.createdAt}</div>
         </div>
-        <div className="absolute top-0 -left-[62px] flex p-2 border border-gray/50 bg-whiten dark:bg-compdark rounded-full">
+        <div className="absolute -top-5 -left-5 z-10 flex p-2 border border-gray/50 bg-whiten dark:bg-compdark rounded-full">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

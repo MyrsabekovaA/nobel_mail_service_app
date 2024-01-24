@@ -96,8 +96,8 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
         return (
           <CustomDatepicker
             initialDate={null}
-            timeOptionOn={true}
-            onDateChange={(newDate) => handleDateChange(field, newDate)}
+            timeOptionOn={field === "birthDate" ? false : true}
+            onDateChange={(newDate) => handleDateChange(newDate, field)}
           />
         );
       default:

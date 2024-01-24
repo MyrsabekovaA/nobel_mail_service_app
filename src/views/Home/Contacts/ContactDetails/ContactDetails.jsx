@@ -34,6 +34,76 @@ function ContactDetails() {
       activityDescription: "User 'naumetdmytro1604@gmail.com' has unsubscribed",
       createdAt: "2023-12-12T15:38:20.980Z",
     },
+    {
+      id: "65787e6cae1051c06b2e44e4",
+      contactId: "655f159d9f242bca14e45e75",
+      typeOfActivity: "UNSUBSCRIBE",
+      activityDescription: "User 'naumetdmytro1604@gmail.com' has unsubscribed",
+      createdAt: "2023-12-12T15:38:20.980Z",
+    },
+    {
+      id: "65787e6cae1051c06b2e44e4",
+      contactId: "655f159d9f242bca14e45e75",
+      typeOfActivity: "UNSUBSCRIBE",
+      activityDescription: "User 'naumetdmytro1604@gmail.com' has unsubscribed",
+      createdAt: "2023-12-12T15:38:20.980Z",
+    },
+    {
+      id: "65787e6cae1051c06b2e44e4",
+      contactId: "655f159d9f242bca14e45e75",
+      typeOfActivity: "UNSUBSCRIBE",
+      activityDescription: "User 'naumetdmytro1604@gmail.com' has unsubscribed",
+      createdAt: "2023-12-12T15:38:20.980Z",
+    },
+    {
+      id: "65787e6cae1051c06b2e44e4",
+      contactId: "655f159d9f242bca14e45e75",
+      typeOfActivity: "UNSUBSCRIBE",
+      activityDescription: "User 'naumetdmytro1604@gmail.com' has unsubscribed",
+      createdAt: "2023-12-12T15:38:20.980Z",
+    },
+    {
+      id: "65787e6cae1051c06b2e44e4",
+      contactId: "655f159d9f242bca14e45e75",
+      typeOfActivity: "UNSUBSCRIBE",
+      activityDescription: "User 'naumetdmytro1604@gmail.com' has unsubscribed",
+      createdAt: "2023-12-12T15:38:20.980Z",
+    },
+    {
+      id: "65787e6cae1051c06b2e44e4",
+      contactId: "655f159d9f242bca14e45e75",
+      typeOfActivity: "UNSUBSCRIBE",
+      activityDescription: "User 'naumetdmytro1604@gmail.com' has unsubscribed",
+      createdAt: "2023-12-12T15:38:20.980Z",
+    },
+    {
+      id: "65787e6cae1051c06b2e44e4",
+      contactId: "655f159d9f242bca14e45e75",
+      typeOfActivity: "UNSUBSCRIBE",
+      activityDescription: "User 'naumetdmytro1604@gmail.com' has unsubscribed",
+      createdAt: "2023-12-12T15:38:20.980Z",
+    },
+    {
+      id: "65787e6cae1051c06b2e44e4",
+      contactId: "655f159d9f242bca14e45e75",
+      typeOfActivity: "UNSUBSCRIBE",
+      activityDescription: "User 'naumetdmytro1604@gmail.com' has unsubscribed",
+      createdAt: "2023-12-12T15:38:20.980Z",
+    },
+    {
+      id: "65787e6cae1051c06b2e44e4",
+      contactId: "655f159d9f242bca14e45e75",
+      typeOfActivity: "UNSUBSCRIBE",
+      activityDescription: "User 'naumetdmytro1604@gmail.com' has unsubscribed",
+      createdAt: "2023-12-12T15:38:20.980Z",
+    },
+    {
+      id: "65787e6cae1051c06b2e44e4",
+      contactId: "655f159d9f242bca14e45e75",
+      typeOfActivity: "UNSUBSCRIBE",
+      activityDescription: "User 'naumetdmytro1604@gmail.com' has unsubscribed",
+      createdAt: "2023-12-12T15:38:20.980Z",
+    },
   ]);
 
   const headers = {
@@ -85,7 +155,7 @@ function ContactDetails() {
 
   useEffect(() => {
     fetchContactData();
-    // fetchContactActivities();
+    fetchContactActivities();
   }, [contactid]);
 
   const handleChange = (e) => {
@@ -95,6 +165,7 @@ function ContactDetails() {
       [id]: value,
     }));
   };
+
   const handleDateChange = (id, newDate) => {
     setContact((prevContact) => ({
       ...prevContact,
@@ -321,7 +392,7 @@ function ContactDetails() {
                   <option value="something">Something</option>
                 </select>
               </div>
-              {/* <ContactActivityList activities={activities} /> */}
+              <ContactActivityList activities={activities} />
             </div>
           </div>
         ) : (

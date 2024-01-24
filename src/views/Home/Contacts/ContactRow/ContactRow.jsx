@@ -27,7 +27,7 @@ function ContactRow({ contact, onSelectContact, selectAll }) {
     if (dateString && withTime === false) {
       return moment(dateString).format("DD.MM.YYYY");
     } else if (dateString && withTime === true) {
-      return moment(dateString).format("DD.MM.YYYY HH:mm");
+      return moment.utc(dateString).format("DD.MM.YYYY HH:mm");
     } else {
       return "—";
     }
