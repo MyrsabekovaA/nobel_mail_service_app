@@ -30,6 +30,13 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script>
+      window.process = {
+          env: {
+              NODE_ENV: 'production'
+          }
+      } 
+    </script>
     <script type="module" src="/@/index.jsx"></script>
     <!--
       This HTML file is a template.
