@@ -13,7 +13,7 @@ function CreateModal({ onClose, onCreate }) {
     country: "",
     timezone: "",
     occupation: "Other",
-    sourceOfReferral: "",
+    sourceOfReferral: "—",
     intershipMotivation: "—",
     birthDate: "",
     eduQuestSelectedDateTime: "",

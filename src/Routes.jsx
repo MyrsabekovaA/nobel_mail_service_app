@@ -23,6 +23,7 @@ import { loginAction } from "/@/actions/LogInForm";
 import { deleteTemplate } from "/@/actions/EmailTemplates";
 import AutomationPage from "./views/Home/AutomationPage/AutomationPage";
 import ListsPage from "./views/Home/ListsPage/ListsPage";
+import UnsubscribePage from "./views/UnsubscribePage/UnsubscribePage";
 
 export const router = createBrowserRouter(
   [
@@ -38,6 +39,10 @@ export const router = createBrowserRouter(
       action: loginAction,
       loader: LoginFormLoader,
       element: <LoginForm />,
+    },
+    {
+      path: "unsubscribe/:id",
+      element: <UnsubscribePage />,
     },
     {
       path: "home",

@@ -2,16 +2,15 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import "./Contacts.css";
-import { Icon } from "@iconify/react";
 
 import ContactsTable from "./ContactsTable/ContactsTable";
 import Pagination from "./Pagination/Pagination";
 import DeleteModal from "./Modals/DeleteModal/DeleteModal";
 import CreateModal from "./Modals/CreateModal/CreateModal";
 import EditModal from "./Modals/EditModal/EditModal";
-import DropdownFilter from "../../../components/DropDownFilter/DropdownFilter";
 import LoadingOverlay from "../../../components/LoadingOverlay/LoadingOverlay";
 import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
+import DropdownFilter from "../../../components/DropdownFilter/DropdownFilter";
 import { useDispatch, useSelector } from "react-redux";
 import { successToast, errorToast } from "/@/GlobalStates/Toasts";
 
@@ -25,6 +24,7 @@ function Contacts() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isOverlayLoading, setIsOverlayLoading] = useState(false);
+  const [isElementsHidden, setIsElementsHidden] = useState(false);
   const [contacts, setContacts] = useState([]); // fetched contacts
   const [totalContacts, setTotalContacts] = useState(1000); // will be also fetched from request
   const [currentPage, setCurrentPage] = useState(1); // current page state, changed onClick on paggination button
@@ -107,7 +107,6 @@ function Contacts() {
 
       if (response.status === 200) {
         setLists(response.data);
-        console.log(response.data);
       }
     } catch (error) {
       dispatch(errorToast("Error fetching lists"));
@@ -129,12 +128,18 @@ function Contacts() {
     fetchLists();
   }, []);
 
-  const handleSearch = (event) => {
-    setSearchQuery(event.target.value);
-  };
-
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+  };
+
+  const handleSearch = (e) => {
+    if (e.target.value) {
+      setSearchQuery(e.target.value);
+      setIsElementsHidden(true);
+    } else {
+      setSearchQuery("");
+      setIsElementsHidden(false);
+    }
   };
 
   const handleSelectContact = (contact, isSelected) => {
@@ -190,7 +195,6 @@ function Contacts() {
         { headers: headers }
       );
       if (response.status === 200 || response.status === 201) {
-        console.log("Contact created successfully");
         dispatch(
           successToast(`Successfully created ${contactData.email} contact!`)
         );
@@ -209,7 +213,6 @@ function Contacts() {
     if (selectedContacts.length > 1) {
       try {
         const selectedIds = selectedContacts.map((contact) => contact.id);
-        console.log("bulk editing");
         const response = await axios.put(
           `https://mail-service-412008.ey.r.appspot.com/api/contacts`,
           {
@@ -220,8 +223,6 @@ function Contacts() {
         );
 
         if (response.status === 200) {
-          console.log(response);
-          console.log("Contacts updated successfully");
           dispatch(successToast("Contacts updated successfully!"));
           fetchData(currentPage, searchQuery);
         }
@@ -264,7 +265,6 @@ function Contacts() {
         );
 
         if (response.status === 204) {
-          console.log("Contacts deleted successfully");
           dispatch(
             successToast(
               `Successfully deleted "${selectedContacts.length}" contacts!`
@@ -292,7 +292,6 @@ function Contacts() {
         );
 
         if (response.status === 204) {
-          console.log("Contact deleted successfully");
           fetchData(currentPage, searchQuery);
           setSelectedContacts([]);
           dispatch(
@@ -425,7 +424,7 @@ function Contacts() {
           />
 
           {isLoading && <LoadingSpinner />}
-          {!areFiltersApplied && (
+          {!isElementsHidden && (
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}
@@ -434,7 +433,7 @@ function Contacts() {
               totalContacts={totalContacts}
             />
           )}
-          {!areFiltersApplied && (
+          {!isElementsHidden && (
             <div className="flex justify-end mt-4 items-center gap-2">
               <label
                 htmlFor="contacts-per-page"

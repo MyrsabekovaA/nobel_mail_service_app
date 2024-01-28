@@ -30,10 +30,6 @@ function DropdownFilter({ eqLists, onFilterChange, onCheckedItemsChange }) {
     onCheckedItemsChange(checkedItems);
   }, [checkedItems, onCheckedItemsChange]);
 
-  useEffect(() => {
-    console.log(checkedItems);
-  }, [checkedItems]);
-
   const renderCheckboxes = (category, items) => {
     return items.map((item, index) => {
       const key = item.id || item;

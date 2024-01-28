@@ -3,7 +3,7 @@
 }
 
 .flatpickr-input {
-  @apply transition-all duration-150 bg-whiten border border-gray/50 text-graydark text-sm rounded-lg focus:ring-meta-5 focus:border-meta-5 block p-2 dark:bg-compdark dark:border-gray/50 dark:placeholder-gray/50 dark:text-whiten focus:border-meta-5 block p-2 dark:bg-compdark dark:border-gray/50 dark:placeholder-gray/50 dark:text-whiten dark:focus:ring-meta-5 dark:focus:border-green300;
+  @apply z-0 transition-all duration-150 bg-whiten border border-gray/50 text-graydark text-sm rounded-lg focus:ring-meta-5 focus:border-meta-5 block p-2 dark:bg-compdark dark:border-gray/50 dark:placeholder-gray/50 dark:text-whiten focus:border-meta-5 block p-2 dark:bg-compdark dark:border-gray/50 dark:placeholder-gray/50 dark:text-whiten dark:focus:ring-meta-5 dark:focus:border-green300;
 }
 /* Style for hover state */
 .flatpickr-input:hover {

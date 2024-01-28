@@ -171,11 +171,11 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
           headers: headers,
         }
       );
-      if (response.status === 200) {
-        dispatch(successToast("Successfully added contacts to automation!"));
+      if (response.status === 201) {
+        dispatch(successToast("Email sent successfully!"));
       }
     } catch (error) {
-      dispatch(errorToast("Error adding contacts to automation."));
+      dispatch(errorToast("Error sending email"));
       console.log(error);
     }
   };
@@ -194,14 +194,14 @@ function EditModal({ onClose, onEdit, contactsToEdit, totalContacts }) {
       >
         <div className="flex justify-between items-center pb-4 px-4 -mx-6">
           <h2 className="text-xl text-compdark/90 dark:text-whiten font-medium">
-            Editing{" "}
-            {contactsToEdit.length === 0
-              ? totalContacts
-              : contactsToEdit.length}{" "}
-            contact
-            {contactsToEdit.length > 1 || contactsToEdit.length === 0
-              ? "s"
-              : ""}
+            {!contactsToEdit.length ? (
+              <span className=" underline">No selected contacts</span>
+            ) : (
+              <span>
+                Editing {contactsToEdit.length} contact
+                {contactsToEdit.length > 1 ? "s" : ""}
+              </span>
+            )}
           </h2>
           <button
             onClick={onClose}
