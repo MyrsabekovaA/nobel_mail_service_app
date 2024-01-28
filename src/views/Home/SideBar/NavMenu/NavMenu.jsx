@@ -21,7 +21,7 @@ const NavMenu = () => {
               className="group relative flex items-center gap-2 rounded-sm py-2 px-3
                                  font-medium
                                  text-black-2 duration-300 ease-in-out hover:bg-secondary dark:hover:bg-meta-4
-                                 dark:text-white"
+                                 dark:text-white hover:text-whiten"
             >
               <Icon icon="uil:users-alt" className="text-xl" />
               <span className="ml-2">Contacts</span>
@@ -33,7 +33,7 @@ const NavMenu = () => {
               className="group relative flex items-center gap-2 rounded-sm py-2 px-3
                                  font-medium
                                  text-black-2 duration-300 ease-in-out hover:bg-secondary dark:hover:bg-meta-4
-                                 dark:text-white"
+                                 dark:text-white hover:text-whiten"
             >
               <Icon icon="bi:list-task" className="text-xl" />
               <span className="ml-2">Lists</span>
@@ -43,7 +43,7 @@ const NavMenu = () => {
             <NavLink
               to="/home/automations"
               className="group relative flex items-center gap-2 rounded-sm
-                        py-2 px-3 font-medium text-black-2 duration-300 ease-in-out hover:bg-secondary
+                        py-2 px-3 font-medium text-black-2 duration-300 ease-in-out hover:bg-secondary hover:text-whiten
                         dark:hover:bg-meta-4 dark:text-white"
             >
               <Icon
@@ -57,7 +57,7 @@ const NavMenu = () => {
             <NavLink
               to={`/home/emailTemplates/${emailTemplatesPage}`}
               className="group relative flex items-center gap-2 rounded-sm
-                        py-2 px-3 font-medium text-black-2 duration-300 ease-in-out hover:bg-secondary
+                        py-2 px-3 font-medium text-black-2 duration-300 ease-in-out hover:bg-secondary hover:text-whiten
                         dark:hover:bg-meta-4 dark:text-white"
             >
               <Icon

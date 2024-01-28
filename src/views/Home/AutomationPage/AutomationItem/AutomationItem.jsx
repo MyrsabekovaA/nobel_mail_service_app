@@ -177,11 +177,11 @@ function AutomationItem({ automation, templates }) {
           </button>
         </div>
       </div>
-      <div className="relative flex flex-col gap-2 px-3 py-3 border-y border-gray/50 h-56 max-h-56 overflow-y-auto">
+      <div className="relative flex flex-col gap-2 px-1.5 py-3 border-y border-gray/50 h-56 max-h-56 overflow-y-auto">
         {automationData.automationScheduledMails.map((step, index) => (
           <div
             key={index}
-            className="step flex gap-1 items-center justify-between outline outline-1 outline-gray/50 hover:outline-meta-5  hover:shadow-lg p-2 rounded transition duration-150 "
+            className="step flex gap-1 items-center hover:outline hover:outline-1 hover:outline-meta-5  hover:shadow-lg p-2 rounded transition duration-150 "
           >
             {/* <span className="">{index + 1}.</span> */}
             <select

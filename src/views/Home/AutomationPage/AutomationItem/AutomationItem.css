@@ -3,7 +3,7 @@
 }
 
 .delete-step {
-  @apply transition-all duration-150;
+  @apply transition-all duration-150 lg:opacity-0;
 }
 
 .step-select {
@@ -16,7 +16,7 @@
 
 /* Hide the default scrollbar */
 ::-webkit-scrollbar {
-  @apply w-2;
+  @apply w-2 h-2;
 }
 
 /* Customize the scrollbar track */

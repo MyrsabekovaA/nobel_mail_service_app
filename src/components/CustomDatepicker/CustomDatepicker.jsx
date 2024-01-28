@@ -34,7 +34,6 @@ function CustomDatepicker({ initialDate, onDateChange, timeOptionOn }) {
 
   return (
     <Flatpickr
-      className="z-10"
       value={date}
       onChange={handleDateChange}
       options={{

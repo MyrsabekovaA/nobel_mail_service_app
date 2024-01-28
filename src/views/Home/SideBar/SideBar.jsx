@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Icon } from "@iconify/react";
-import Logo from "/Nobel_logo.png";
+import Logo from "/logo.png";
 import NavMenu from "./NavMenu/NavMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { sidebarActions } from "/@/GlobalStates/Sidebar";
@@ -49,11 +49,11 @@ const Sidebar = () => {
             }`}
     >
       <div className="flex items-center justify-between px-4 py-6">
-        <NavLink to="/home" className="logo" isActive={() => false}>
+        <Link to="/home" className="logo">
           <div>
             <img src={Logo} alt="Logo" className="h-10 w-10" />
           </div>
-        </NavLink>
+        </Link>
         <button onClick={() => dispatch(sidebarActions.toggleSidebarOpened())}>
           <Icon icon="material-symbols:close" className="text-xl" />
         </button>

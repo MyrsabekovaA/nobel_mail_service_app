@@ -19,92 +19,8 @@ function ContactDetails() {
   const [isOverlayLoading, setIsOverlayLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [contact, setContact] = useState({});
-  const [activities, setActivities] = useState([
-    {
-      id: "65787e6cae1051c06b2e44e4",
-      contactId: "655f159d9f242bca14e45e75",
-      typeOfActivity: "UNSUBSCRIBE",
-      activityDescription: "User 'naumetdmytro1604@gmail.com' has unsubscribed",
-      createdAt: "2023-12-12T15:38:20.980Z",
-    },
-    {
-      id: "65787e6cae1051c06b2e44e4",
-      contactId: "655f159d9f242bca14e45e75",
-      typeOfActivity: "UNSUBSCRIBE",
-      activityDescription: "User 'naumetdmytro1604@gmail.com' has unsubscribed",
-      createdAt: "2023-12-12T15:38:20.980Z",
-    },
-    {
-      id: "65787e6cae1051c06b2e44e4",
-      contactId: "655f159d9f242bca14e45e75",
-      typeOfActivity: "UNSUBSCRIBE",
-      activityDescription: "User 'naumetdmytro1604@gmail.com' has unsubscribed",
-      createdAt: "2023-12-12T15:38:20.980Z",
-    },
-    {
-      id: "65787e6cae1051c06b2e44e4",
-      contactId: "655f159d9f242bca14e45e75",
-      typeOfActivity: "UNSUBSCRIBE",
-      activityDescription: "User 'naumetdmytro1604@gmail.com' has unsubscribed",
-      createdAt: "2023-12-12T15:38:20.980Z",
-    },
-    {
-      id: "65787e6cae1051c06b2e44e4",
-      contactId: "655f159d9f242bca14e45e75",
-      typeOfActivity: "UNSUBSCRIBE",
-      activityDescription: "User 'naumetdmytro1604@gmail.com' has unsubscribed",
-      createdAt: "2023-12-12T15:38:20.980Z",
-    },
-    {
-      id: "65787e6cae1051c06b2e44e4",
-      contactId: "655f159d9f242bca14e45e75",
-      typeOfActivity: "UNSUBSCRIBE",
-      activityDescription: "User 'naumetdmytro1604@gmail.com' has unsubscribed",
-      createdAt: "2023-12-12T15:38:20.980Z",
-    },
-    {
-      id: "65787e6cae1051c06b2e44e4",
-      contactId: "655f159d9f242bca14e45e75",
-      typeOfActivity: "UNSUBSCRIBE",
-      activityDescription: "User 'naumetdmytro1604@gmail.com' has unsubscribed",
-      createdAt: "2023-12-12T15:38:20.980Z",
-    },
-    {
-      id: "65787e6cae1051c06b2e44e4",
-      contactId: "655f159d9f242bca14e45e75",
-      typeOfActivity: "UNSUBSCRIBE",
-      activityDescription: "User 'naumetdmytro1604@gmail.com' has unsubscribed",
-      createdAt: "2023-12-12T15:38:20.980Z",
-    },
-    {
-      id: "65787e6cae1051c06b2e44e4",
-      contactId: "655f159d9f242bca14e45e75",
-      typeOfActivity: "UNSUBSCRIBE",
-      activityDescription: "User 'naumetdmytro1604@gmail.com' has unsubscribed",
-      createdAt: "2023-12-12T15:38:20.980Z",
-    },
-    {
-      id: "65787e6cae1051c06b2e44e4",
-      contactId: "655f159d9f242bca14e45e75",
-      typeOfActivity: "UNSUBSCRIBE",
-      activityDescription: "User 'naumetdmytro1604@gmail.com' has unsubscribed",
-      createdAt: "2023-12-12T15:38:20.980Z",
-    },
-    {
-      id: "65787e6cae1051c06b2e44e4",
-      contactId: "655f159d9f242bca14e45e75",
-      typeOfActivity: "UNSUBSCRIBE",
-      activityDescription: "User 'naumetdmytro1604@gmail.com' has unsubscribed",
-      createdAt: "2023-12-12T15:38:20.980Z",
-    },
-    {
-      id: "65787e6cae1051c06b2e44e4",
-      contactId: "655f159d9f242bca14e45e75",
-      typeOfActivity: "UNSUBSCRIBE",
-      activityDescription: "User 'naumetdmytro1604@gmail.com' has unsubscribed",
-      createdAt: "2023-12-12T15:38:20.980Z",
-    },
-  ]);
+  const [activities, setActivities] = useState([]);
+  const [activityType, setActivityType] = useState("");
 
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -140,11 +56,15 @@ function ContactDetails() {
     }
   };
 
-  const fetchContactActivities = async () => {
+  const fetchContactActivities = async (activityType = "") => {
     try {
+      let params = {};
+      if (activityType) {
+        params.typeOfActivity = activityType;
+      }
       const response = await axios.get(
-        `https://mail-service-412008.ey.r.appspot.com/actions/${contactid}`,
-        { headers: headers }
+        `https://mail-service-412008.ey.r.appspot.com/api/contacts/${contactid}/actions`,
+        { params: params, headers: headers }
       );
       // setActivities(response.data.userActions);
       console.log(response);
@@ -157,6 +77,10 @@ function ContactDetails() {
     fetchContactData();
     fetchContactActivities();
   }, [contactid]);
+
+  useEffect(() => {
+    fetchContactActivities(activityType);
+  }, [activityType]);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -222,7 +146,7 @@ function ContactDetails() {
                   </div>
                   <div className="form-item">
                     <label className="create-label" htmlFor="lastName">
-                      Second Name
+                      Last Name
                     </label>
                     <input
                       onChange={handleChange}
@@ -382,17 +306,21 @@ function ContactDetails() {
                 <h3 className="font-medium ml-12 text-lg text-compdark/80 dark:text-meta-2">
                   Recent Activities
                 </h3>
-                <select
-                  // onChange={}
-                  className="p-2 text-sm rounded bg-whiten dark:bg-compdark outline-none focus:outline-meta-5 block"
-                >
-                  <option value="all activities">All Activities</option>
-                  <option value="email">Email</option>
-                  <option value="unsubscribe">Unsubscribe</option>
-                  <option value="something">Something</option>
-                </select>
+                {activities.length !== 0 && (
+                  <select
+                    onChange={(e) => setActivityType(e.target.value)}
+                    className="p-2 text-sm rounded bg-whiten dark:bg-compdark outline-none focus:outline-meta-5 block"
+                  >
+                    <option value="SUBSCRIBE">SUBSCRIBE</option>
+                    <option value="UNSUBSCRIBE">UNSUBSCRIBE</option>
+                  </select>
+                )}
               </div>
-              <ContactActivityList activities={activities} />
+              {activities.length !== 0 ? (
+                <ContactActivityList activities={activities} />
+              ) : (
+                <div className=" text-center">No activities yet.</div>
+              )}
             </div>
           </div>
         ) : (

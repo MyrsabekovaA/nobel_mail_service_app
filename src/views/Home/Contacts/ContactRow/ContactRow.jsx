@@ -65,7 +65,7 @@ function ContactRow({ contact, onSelectContact, selectAll }) {
           {displayValueOrDash(contact.lastName)}
         </Link>
       </td>
-      <td className="px-6 py-4 font-medium text-graydark whitespace-nowrap dark:text-white">
+      <td className="px-6 py-4 font-medium text-graydark whitespace-nowrap dark:text-whiten">
         <Link
           to={`/Home/Contacts/${contact.id}`}
           className="transition-colors duration-200  hover:text-meta-5 dark:hover:text-green300 hover:underline"
@@ -76,11 +76,19 @@ function ContactRow({ contact, onSelectContact, selectAll }) {
       <td className="px-6 py-4 flex items-center gap-1 ">
         <div
           className={`${
-            contact.eduQuestDecision === "Selected"
+            contact.eduQuestDecision === "SELECTED"
               ? "bg-green300"
-              : contact.eduQuestDecision === "Pending"
+              : contact.eduQuestDecision === "TRY_AGAIN" ||
+                contact.eduQuestDecision === "ENGLISH_ISSUE" ||
+                contact.eduQuestDecision === "BEHAVIOR_ISSUE" ||
+                contact.eduQuestDecision === "AUDIO_ISSUE" ||
+                contact.eduQuestDecision === "PREFERRED_DEVICE" ||
+                contact.eduQuestDecision === "BACKGROUND_NOISES" ||
+                contact.eduQuestDecision === "POOR_INTERNET_CONNECTION"
               ? "bg-warning"
-              : "bg-meta-1"
+              : contact.eduQuestDecision === "WE_MISSED_YOU"
+              ? "bg-meta-1"
+              : ""
           } flex w-4 h-4 rounded-full`}
         ></div>
         {displayValueOrDash(contact.eduQuestDecision)}
@@ -99,7 +107,12 @@ function ContactRow({ contact, onSelectContact, selectAll }) {
       <td className="px-6 py-4">{displayValueOrDash(contact.occupation)}</td>
       <td className="px-6 py-4">{displayValueOrDash(contact.gender)}</td>
       <td className="px-6 py-4">
-        {displayValueOrDash(contact.intershipMotivation)}
+        <p
+          className="whitespace-nowrap text-ellipsis overflow-hidden max-w-[200px] hover:text-meta-5 cursor-pointer"
+          title={`${contact.intershipMotivation}`}
+        >
+          {displayValueOrDash(contact.intershipMotivation)}
+        </p>
       </td>
       <td className="px-6 py-4">
         {displayValueOrDash(contact.sourceOfReferral)}
