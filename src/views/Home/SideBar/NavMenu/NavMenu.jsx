@@ -16,11 +16,19 @@ const NavMenu = () => {
 
                 <ul  className="mb-6 flex flex-col gap-1 list">
                     <li>
+                        <NavLink to="/home"
+                                 className='group relative flex items-center gap-2 rounded-sm py-2 px-3
+                                 font-medium
+                                 text-black-2 duration-300 ease-in-out hover:bg-secondary dark:hover:bg-meta-4
+                                 dark:text-white bg-lightgreen'>
+                            <Icon icon="material-symbols:home-outline" />
+                            <span className="ml-2">Home</span>
+                        </NavLink>
                         <NavLink to="/home/contacts"
                                  className='group relative flex items-center gap-2 rounded-sm py-2 px-3
                                  font-medium
                                  text-black-2 duration-300 ease-in-out hover:bg-secondary dark:hover:bg-meta-4
-                                 dark:text-white'>
+                                 dark:text-white bg-lightgreen'>
                             <Icon icon="uil:users-alt" className="text-xl" />
                             <span className="ml-2">Contacts</span>
                         </NavLink>
@@ -28,7 +36,7 @@ const NavMenu = () => {
                     <li>
                         <NavLink to="/home/automatizations" className='group relative flex items-center gap-2 rounded-sm
                         py-2 px-3 font-medium text-black-2 duration-300 ease-in-out hover:bg-secondary
-                        dark:hover:bg-meta-4 dark:text-white'>
+                        dark:hover:bg-meta-4 dark:text-white bg-lightgreen'>
                             <Icon icon="material-symbols:schedule-outline" className="text-xl" />
                             <span className="ml-2">Automatizations</span>
                         </NavLink>
@@ -36,7 +44,7 @@ const NavMenu = () => {
                     <li>
                         <NavLink to={`/home/emailTemplates/${emailTemplatesPage}`} className='group relative flex items-center gap-2 rounded-sm
                         py-2 px-3 font-medium text-black-2 duration-300 ease-in-out hover:bg-secondary
-                        dark:hover:bg-meta-4 dark:text-white'>
+                        dark:hover:bg-meta-4 dark:text-white bg-lightgreen'>
                             <Icon icon="material-symbols:drafts-outline" className="text-xl" />
                             <span className="ml-2">Mail Templates</span>
                         </NavLink>
