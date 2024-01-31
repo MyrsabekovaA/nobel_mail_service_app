@@ -13,7 +13,7 @@ function ViewEmailTemplatePopUp() {
         const token = localStorage.getItem('token')
         const fetchTemplate = async () => {
             if (SelectedTemplates.length > 0) {
-                const response = await fetch(`/api/mail-templates/${currentId}`, 
+                const response = await fetch(`https://mail-service-412008.ey.r.appspot.com/api/mail-templates/${currentId}`, 
                 {
                     method: "GET",
                     headers: {
