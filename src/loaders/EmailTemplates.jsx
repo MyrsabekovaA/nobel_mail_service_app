@@ -12,7 +12,7 @@ export async function emailTemplatesLoader({ params }) {
   let templates = await fetch(
     `${domain}/api/mail-templates?${new URLSearchParams({
       page,
-      pageSize: 2,
+      pageSize: 5,
     })}
     `,
     {

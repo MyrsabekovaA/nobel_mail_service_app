@@ -14,6 +14,7 @@ import EmailTemplates from "/@views/Home/EmailTemplates/EmailTemplates";
 import ContactDetails from "/@views/Home/Contacts/ContactDetails/ContactDetails";
 import CreateEmailTemplateForm from "/@views/Home/EmailTemplates/CreateEmailTemplatesForm/CreateEmailTemplatesForm";
 import EmailTemplatesDeletePopup from "/@views/Home/EmailTemplates/EmailTemplatesDeletePopup/EmailTemplatesDeletePopup";
+import ViewEmailTemplatePopUp from "/@views/Home/EmailTemplates/ViewEmailTemplatePopUp/ViewEmailTemplatePopUp";
 
 //importing loaders
 import { emailTemplatesLoader } from "/@/loaders/EmailTemplates";
@@ -99,6 +100,7 @@ export const router = createBrowserRouter(
             },
             {
               path: "read",
+              element: <ViewEmailTemplatePopUp/>,
               children: [{ path: ":id" }],
             },
           ],
