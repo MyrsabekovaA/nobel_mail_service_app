@@ -9,6 +9,7 @@ import taskReducer from "/@/GlobalStates/tasksSlice"
 import automationsSlice from "/@/GlobalStates/Automation"
 import listsSlice from "/@/GlobalStates/Lists"
 import templatesSlice from "/@/GlobalStates/Templates"
+import intakesSlice from "/@/GlobalStates/Intakes"
 
 const store = configureStore({
     reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
         automations: automationsSlice,
         lists: listsSlice,
         templates: templatesSlice,
+        intakes: intakesSlice,
     },
 })
 

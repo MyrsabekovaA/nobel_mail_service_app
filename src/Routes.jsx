@@ -25,6 +25,7 @@ import { deleteTemplate } from "/@/actions/EmailTemplates";
 import AutomationPage from "./views/Home/AutomationPage/AutomationPage";
 import ListsPage from "./views/Home/ListsPage/ListsPage";
 import UnsubscribePage from "./views/UnsubscribePage/UnsubscribePage";
+import IntakesPage from "./views/Home/IntakesPage/IntakesPage";
 
 export const router = createBrowserRouter(
   [
@@ -71,6 +72,10 @@ export const router = createBrowserRouter(
           element: <ListsPage />,
         },
         {
+          path: "intakes",
+          element: <IntakesPage />,
+        },
+        {
           path: "emailTemplates/:pageNumber",
           element: <EmailTemplates />,
           loader: emailTemplatesLoader,
@@ -100,7 +105,7 @@ export const router = createBrowserRouter(
             },
             {
               path: "read",
-              element: <ViewEmailTemplatePopUp/>,
+              element: <ViewEmailTemplatePopUp />,
               children: [{ path: ":id" }],
             },
           ],

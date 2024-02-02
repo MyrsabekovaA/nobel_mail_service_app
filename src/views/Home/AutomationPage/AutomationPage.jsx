@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import AutomationList from "./AutomationsList/AutomationList";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 
 import { fetchAutomations, createAutomation } from "/@/GlobalStates/Automation";
