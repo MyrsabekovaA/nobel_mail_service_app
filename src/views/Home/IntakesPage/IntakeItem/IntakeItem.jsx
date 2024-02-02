@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import moment from "moment";
-import { toggleModal, setSelectedListId } from "/@/GlobalStates/Lists";
+import {
+  setSelectedIntake,
+  toggleModal,
+} from "../../../../GlobalStates/Intakes";
 import { useDispatch } from "react-redux";
 
-function ListItem({ list }) {
+function IntakeItem({ intake }) {
   const dispatch = useDispatch();
 
   const formatDate = (dateString, withTime) => {
@@ -15,19 +18,13 @@ function ListItem({ list }) {
       return "—";
     }
   };
-
   return (
     <tr className="bg-whiten dark:bg-graydark/40 border-b ease-out duration-300 dark:hover:bg-graydark/80 hover:bg-gray/10">
       <td className="px-4 py-2.5 text-meta-5 font-medium text-center">
-        {list.name}
-      </td>
-      <td className="px-4 py-2.5">contacts: {list.contactsCount}</td>
-      <td className="px-4 py-2.5">{formatDate(list.createdAt, true)}</td>
-      <td className="px-4 py-2.5">
         <div>
           <button
             onClick={() => {
-              dispatch(setSelectedListId(list.id));
+              dispatch(setSelectedIntake(intake));
               dispatch(toggleModal());
             }}
           >
@@ -48,8 +45,17 @@ function ListItem({ list }) {
           </button>
         </div>
       </td>
+      <td className="px-4 py-2.5">{formatDate(intake.eventDate, true)}</td>
+      <td className="px-4 py-2.5">
+        {formatDate(intake.orientationEventDateTime, true)}
+      </td>
+      <td className="px-4 py-2.5">
+        {formatDate(intake.firstInternshipClassDateTime, true)}
+      </td>
+      <td className="px-4 py-2.5">{intake.programType}</td>
+      <td className="px-4 py-2.5">{intake.status}</td>
     </tr>
   );
 }
 
-export default ListItem;
+export default IntakeItem;
