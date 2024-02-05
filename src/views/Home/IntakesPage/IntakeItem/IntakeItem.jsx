@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import moment from "moment";
 import {
   setSelectedIntake,
-  toggleModal,
+  toggleModalEdit,
+  deleteIntake,
 } from "../../../../GlobalStates/Intakes";
 import { useDispatch } from "react-redux";
 
@@ -21,11 +22,11 @@ function IntakeItem({ intake }) {
   return (
     <tr className="bg-whiten dark:bg-graydark/40 border-b ease-out duration-300 dark:hover:bg-graydark/80 hover:bg-gray/10">
       <td className="px-4 py-2.5 text-meta-5 font-medium text-center">
-        <div>
+        <div className="flex gap-2 items-center justify-center">
           <button
             onClick={() => {
               dispatch(setSelectedIntake(intake));
-              dispatch(toggleModal());
+              dispatch(toggleModalEdit());
             }}
           >
             <svg
@@ -43,17 +44,39 @@ function IntakeItem({ intake }) {
               />
             </svg>
           </button>
+          {/* <button
+            onClick={() => {
+              dispatch(deleteIntake(intake.id));
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6 stroke-meta-1"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18 18 6M6 6l12 12"
+              />
+            </svg>
+          </button> */}
         </div>
       </td>
-      <td className="px-4 py-2.5">{formatDate(intake.eventDate, true)}</td>
-      <td className="px-4 py-2.5">
+      <td className="px-4 py-2.5 text-center">
+        {formatDate(intake.eventDate, true)}
+      </td>
+      <td className="px-4 py-2.5 text-center">
         {formatDate(intake.orientationEventDateTime, true)}
       </td>
-      <td className="px-4 py-2.5">
+      <td className="px-4 py-2.5 text-center">
         {formatDate(intake.firstInternshipClassDateTime, true)}
       </td>
-      <td className="px-4 py-2.5">{intake.programType}</td>
-      <td className="px-4 py-2.5">{intake.status}</td>
+      <td className="px-4 py-2.5 text-center">{intake.programType}</td>
+      <td className="px-4 py-2.5 text-center">{intake.status}</td>
     </tr>
   );
 }

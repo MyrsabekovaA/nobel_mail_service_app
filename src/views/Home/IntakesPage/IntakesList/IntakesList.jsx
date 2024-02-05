@@ -7,27 +7,23 @@ function IntakesList({ intakes }) {
       <table className="w-full text-sm border-gray/20 text-gray dark:text-gray-400">
         <thead className="text-xs uppercase whitespace-nowrap">
           <tr className="dark:bg-graydark">
-            <th scope="col" className="px-4 py-3">
-              Edit
+            <th scope="col" className="px-4 py-3 text-center">
+              Actions
             </th>
-            <th scope="col" className="px-6 py-3 ">
-              <div className="flex gap-1 items-center justify-center">
-                EduQuest Date
-              </div>
+            <th scope="col" className="px-6 py-3 text-center">
+              EduQuest Date
             </th>
-            <th scope="col" className="px-4 py-3">
-              <div className="flex gap-1 items-center">
-                Orientation Day Date
-              </div>
+            <th scope="col" className="px-4 py-3 text-center">
+              Orientation Day Date
             </th>
-            <th scope="col" className="px-4 py-3">
-              <div className="flex gap-1 items-center">First Class Date</div>
+            <th scope="col" className="px-4 py-3 text-center">
+              First Class Date
             </th>
-            <th scope="col" className="px-4 py-3">
-              <div className="flex gap-1 items-center">Program Type</div>
+            <th scope="col" className="px-4 py-3 text-center">
+              Program Type
             </th>
-            <th scope="col" className="px-4 py-3">
-              <div className="flex gap-1 items-center">Program Status</div>
+            <th scope="col" className="px-4 py-3 text-center">
+              Program Status
             </th>
           </tr>
         </thead>
