@@ -4,7 +4,7 @@ import axios from "axios";
 import "./Contacts.css";
 
 import ContactsTable from "./ContactsTable/ContactsTable";
-import Pagination from "./Pagination/Pagination";
+import Pagination from "../../../components/Pagination/Pagination";
 import DeleteModal from "./Modals/DeleteModal/DeleteModal";
 import CreateModal from "./Modals/CreateModal/CreateModal";
 import EditModal from "./Modals/EditModal/EditModal";
@@ -53,13 +53,15 @@ function Contacts() {
   ) => {
     try {
       let params = {};
-
+      console.log(checkedItems);
       if (search || (checkedItems.eqLists && checkedItems.eqLists.length > 0)) {
         if (search) {
           params.search = search;
         }
         if (checkedItems.eqLists && checkedItems.eqLists.length > 0) {
           params.listIds = checkedItems.eqLists;
+          // params.pageSize = Number(contactsPerPage);
+          // params.page = Number(page);
         }
       } else {
         params.pageSize = Number(contactsPerPage);
@@ -429,8 +431,8 @@ function Contacts() {
               currentPage={currentPage}
               totalPages={totalPages}
               onChange={handlePageChange}
-              contactsPerPage={contactsPerPage}
-              totalContacts={totalContacts}
+              itemsPerPage={contactsPerPage}
+              totalItems={totalContacts}
             />
           )}
           {!isElementsHidden && (

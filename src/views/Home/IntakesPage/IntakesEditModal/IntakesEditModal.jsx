@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { editIntake, toggleModal } from "../../../../GlobalStates/Intakes";
+import { editIntake, toggleModalEdit } from "../../../../GlobalStates/Intakes";
 import CustomDatepicker from "../../../../components/CustomDatepicker/CustomDatepicker";
 
 function IntakesEditModal() {
@@ -30,7 +30,7 @@ function IntakesEditModal() {
   }, [intakeData]);
   return (
     <div
-      onClick={() => dispatch(toggleModal())}
+      onClick={() => dispatch(toggleModalEdit())}
       className="fixed inset-0 z-50 bg-black bg-opacity-50 overflow-y-auto h-full w-full flex justify-center items-center"
     >
       <div
@@ -124,7 +124,7 @@ function IntakesEditModal() {
             Create
           </button>
           <button
-            onClick={() => dispatch(toggleModal())}
+            onClick={() => dispatch(toggleModalEdit())}
             className="bg-gray/50 text-whiten font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none ml-1 mb-1 ease-linear transition-all duration-150"
             type="button"
           >
