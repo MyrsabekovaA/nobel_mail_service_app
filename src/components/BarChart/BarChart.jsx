@@ -96,7 +96,7 @@ const BarChart = () => {
 
     return (
         <div className="bar-wrapper col-span-12 rounded-sm p-7 shadow-default dark:border-strokedark
-        dark:bg-compdark dark:text-white xl:col-span-4">
+        dark:bg-graydark/40 dark:text-white xl:col-span-4">
             <div className="mb-4 justify-between gap-4 sm:flex">
                 <div>
                     <h4 className="text-xl font-semibold dark:text-white">

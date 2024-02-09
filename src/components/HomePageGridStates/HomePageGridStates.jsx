@@ -4,7 +4,7 @@ import "./HomePageGridStates.css";
 
 const HomePageGridStates = () => {
 
-    const boxcolor = " rounded-sm dark:bg-compdark py-6 px-7 shadow-default wrapper";
+    const boxcolor = " rounded-sm en dark:bg-graydark/40 py-6 px-7 shadow-default wrapper";
 
     return (
         <div className="mt-4 w-full grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4">

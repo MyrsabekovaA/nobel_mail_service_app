@@ -170,7 +170,7 @@ const LineGraph = () => {
 
     return (
         <div className="linegraph col-span-12 rounded-sm px-5 py-7 shadow-default
-        dark:border-strokedark sm:px-7 xl:col-span-8 dark:bg-compdark dark:text-white">
+        dark:border-strokedark sm:px-7 xl:col-span-8 dark:bg-graydark/40 dark:text-white">
             <div className="flex flex-wrap items-start justify-between gap-3 sm:flex-nowrap">
                 <div className="flex  gap-3 sm:gap-5">
                     <div className="flex min-w-47">

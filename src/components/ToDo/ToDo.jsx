@@ -18,7 +18,7 @@ const ToDo = ({ title, list }) => {
     };
 
     return (
-        <div className="todowrapper col-span-12 rounded-sm py-6 px-7 shadow-default dark:bg-compdark xl:col-span-7 h-90">
+        <div className="todowrapper col-span-12 rounded-sm py-6 px-7 shadow-default dark:bg-graydark/40 xl:col-span-7 h-90">
             <h2 className="mb-3 flex justify-content-start text-xl font-semibold dark:text-white">{title}</h2>
             <div className="taskList h-80 overflow-y-auto overflow-hidden">
                 {list.map((task) => (

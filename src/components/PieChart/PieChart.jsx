@@ -59,7 +59,7 @@ const PieChart = () => {
     return (
         <div
             className="pie-wrapper col-span-12 rounded-sm px-5 pt-7 pb-5 shadow-default
-             dark:bg-compdark sm:px-7 xl:col-span-5">
+             dark:bg-graydark/40 sm:px-7 xl:col-span-5">
             <div className="mb-3 justify-between gap-4 sm:flex">
                 <div>
                     <h5 className="text-xl font-semibold dark:text-white">
