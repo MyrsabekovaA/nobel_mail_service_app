@@ -24,37 +24,30 @@ export const fetchLists = createAsyncThunk(
       }
 }) 
 
-export const addToAutomatization = createAsyncThunk(
-   'lists/addToAutomatization',
-   async (automatizationId, { getState, dispatch, rejectWithValue }) => {
+export const addToAutomation = createAsyncThunk(
+   'lists/addToAutomation',
+   async (automationId, { getState, dispatch, rejectWithValue }) => {
       try {
          const selectedListId = getState().lists.selectedListId;
          const token = getState().loggedIn.token;
          const headers = { Authorization: `Bearer ${token}` };
-         const contactParams = {
-            listIds: selectedListId
-         };
-         const contactsResponse = await axios.get(`https://mail-service-412008.ey.r.appspot.com/api/contacts`, 
-         { 
-            headers: headers, 
-            params: contactParams 
-         });
 
          const payload = { 
-            contactIds: contactsResponse.data.contacts.map((contact) => contact.id)
+            listId: selectedListId,
+            mailingAutomationId: automationId,
          };
 
-         const response = await axios.post(`https://mail-service-412008.ey.r.appspot.com/api/mailing-automations/${automatizationId}/add-contacts`, 
+         const response = await axios.post(`https://mail-service-412008.ey.r.appspot.com/api/contacts-lists/add-to-automation`, 
          payload, 
          { headers: headers });
 
          if(response.status === 200) {
-             dispatch(successToast("Successfully added to automatization")); 
+             dispatch(successToast("Successfully added to automation")); 
          }
 
          return response.data;
      } catch (error) {
-          dispatch(errorToast("Failed to add to automatization")); 
+          dispatch(errorToast("Failed to add to automation")); 
          return rejectWithValue(error.response.data);
      }
    }
@@ -85,14 +78,14 @@ const listsSlice = createSlice({
          state.error = action.payload;
          state.isLoading = false;
       })
-        // Handle loading state for addToAutomatization
-      .addCase(addToAutomatization.pending, (state) => {
+        // Handle loading state for addToAutomation
+      .addCase(addToAutomation.pending, (state) => {
          state.isLoadingForModal = true;
       })
-      .addCase(addToAutomatization.fulfilled, (state) => {
+      .addCase(addToAutomation.fulfilled, (state) => {
          state.isLoadingForModal = false;
       })
-      .addCase(addToAutomatization.rejected, (state) => {
+      .addCase(addToAutomation.rejected, (state) => {
          state.isLoadingForModal = false;
       });
    }

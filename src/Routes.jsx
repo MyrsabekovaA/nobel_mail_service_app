@@ -75,41 +75,6 @@ export const router = createBrowserRouter(
           path: "intakes",
           element: <IntakesPage />,
         },
-        {
-          path: "emailTemplates/:pageNumber",
-          element: <EmailTemplates />,
-          loader: emailTemplatesLoader,
-          children: [
-            {
-              path: "",
-              index: true,
-              element: <div></div>,
-            },
-            {
-              path: "create",
-              element: <CreateEmailTemplateForm />,
-            },
-            {
-              path: "update",
-              children: [{ path: ":id" }],
-            },
-            {
-              path: "delete",
-              element: <EmailTemplatesDeletePopup />,
-              children: [
-                {
-                  path: ":id",
-                  action: deleteTemplate,
-                },
-              ],
-            },
-            {
-              path: "read",
-              element: <ViewEmailTemplatePopUp />,
-              children: [{ path: ":id" }],
-            },
-          ],
-        },
       ],
     },
   ],

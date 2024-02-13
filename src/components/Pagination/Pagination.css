@@ -8,5 +8,5 @@
   @apply flex items-center justify-center px-3 h-8 leading-tight text-meta-4 bg-white hover:bg-gray-3 dark:bg-meta-4 dark:border-gray dark:text-meta-9 dark:hover:bg-graydark;
 }
 .active {
-  @apply bg-meta-5 text-white dark:bg-gray/50;
+  @apply bg-meta-5 text-whiten dark:text-whiten dark:bg-gray/50;
 }

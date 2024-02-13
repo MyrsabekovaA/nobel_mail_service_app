@@ -11,6 +11,7 @@ const initialState = {
    page: 1,
    pageSize: 10,
    totalIntakes: 0,
+   totalPages: 0,
 };
 
 export const fetchIntakes = createAsyncThunk(
@@ -129,7 +130,8 @@ const intakesSlice = createSlice({
       })
       .addCase(fetchIntakes.fulfilled, (state, action) => {
          state.intakes = action.payload.intakes;
-         state.totalIntakes = Math.ceil(action.payload.intakesCount / state.pageSize)
+         state.totalIntakes = action.payload.intakesCount
+         state.totalPages = Math.ceil(action.payload.intakesCount / state.pageSize)
          state.isLoading = false;
       })
       .addCase(fetchIntakes.rejected, (state, action) => {
