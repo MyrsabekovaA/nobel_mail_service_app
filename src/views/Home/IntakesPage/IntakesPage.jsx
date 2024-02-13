@@ -83,7 +83,7 @@ function IntakesPage() {
             <option value="OPENED">Opened</option>
           </select>
         </div>
-        <div>
+        <div className="flex flex-col">
           <IntakesList intakes={intakes} />
           {isLoading && <LoadingSpinner />}
           <Pagination
@@ -93,25 +93,27 @@ function IntakesPage() {
             itemsPerPage={intakesPerPage}
             totalItems={totalIntakes}
           />
-          <div className="flex justify-end mt-4 items-center gap-2">
-            <label
-              htmlFor="contacts-per-page"
-              className="text-slate-800 text-slate-200"
-            >
-              Contacts per page:
-            </label>
-            <select
-              id="contacts-per-page"
-              onChange={(e) =>
-                dispatch(setIntakesPerPage(Number(e.target.value)))
-              }
-              className="bg-whiten border border-gray/50 text-graydark text-sm rounded-lg focus:ring-meta-5 focus:border-meta-5 p-2.5 dark:bg-compdark dark:border-gray/50 dark:placeholder-gray/50 dark:text-whiten dark:focus:ring-meta-5 dark:focus:border-green300"
-            >
-              <option value="10">10</option>
-              <option value="15">15</option>
-              <option value="20">20</option>
-            </select>
-          </div>
+          {totalIntakes > 20 && (
+            <div className="flex justify-end mt-4 items-center gap-2">
+              <label
+                htmlFor="contacts-per-page"
+                className="text-slate-800 text-slate-200"
+              >
+                Intakes per page:
+              </label>
+              <select
+                id="contacts-per-page"
+                onChange={(e) =>
+                  dispatch(setIntakesPerPage(Number(e.target.value)))
+                }
+                className="bg-whiten border border-gray/50 text-graydark text-sm rounded-lg focus:ring-meta-5 focus:border-meta-5 p-2.5 dark:bg-compdark dark:border-gray/50 dark:placeholder-gray/50 dark:text-whiten dark:focus:ring-meta-5 dark:focus:border-green300"
+              >
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+              </select>
+            </div>
+          )}
         </div>
       </div>
       {isModalOpen && <IntakesCreateModal displayState={handleDisplayState} />}

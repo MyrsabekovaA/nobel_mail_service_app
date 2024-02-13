@@ -18,11 +18,11 @@ function Pagination({
     let startPage, endPage;
 
     if (totalPages <= 5) {
-      // less than 5 total pages= => show all
+      // If there are 5 or fewer total pages, show all
       startPage = 1;
       endPage = totalPages;
     } else {
-      // more than 5 total pages, calculate start and end pages
+      // If there are more than 5 total pages, calculate start and end pages
       if (currentPage <= 3) {
         startPage = 1;
         endPage = 5;
@@ -46,51 +46,55 @@ function Pagination({
   endIndex = endIndex > totalItems ? totalItems : endIndex;
 
   return (
-    <div className="flex flex-col gap-2 items-center justify-center flex-wrap pt-4">
-      <ul className="flex text-sm h-8">
-        {currentPage > 1 && (
-          <li>
-            <button
-              className="nav-button-prev"
-              onClick={() => handlePageChange(currentPage - 1)}
-            >
-              Previous
-            </button>
-          </li>
-        )}
-        {getPageNumbers().map((page) => (
-          <li key={page}>
-            <button
-              onClick={() => handlePageChange(page)}
-              className={`nav-link ${currentPage === page ? "active" : ""}`}
-            >
-              {page}
-            </button>
-          </li>
-        ))}
-        {currentPage < totalPages && (
-          <li>
-            <button
-              className="nav-button-next"
-              onClick={() => handlePageChange(currentPage + 1)}
-            >
-              Next
-            </button>
-          </li>
-        )}
-      </ul>
-      <div className="text-sm font-normal mb-4 md:mb-0 md:inline md:w-auto">
-        <span className="font-semibold text-darkgray dark:text-white">
-          {" "}
-          {startIndex}-{endIndex}
-        </span>{" "}
-        of
-        <span className="font-semibold text-graydark dark:text-white">
-          {" "}
-          {totalItems}
-        </span>
-      </div>
-    </div>
+    <>
+      {totalItems > 0 && totalPages > 1 && (
+        <div className="flex flex-col gap-2 items-center justify-center flex-wrap pt-4">
+          <ul className="flex text-sm h-8">
+            {currentPage > 1 && (
+              <li>
+                <button
+                  className="nav-button-prev"
+                  onClick={() => handlePageChange(currentPage - 1)}
+                >
+                  Previous
+                </button>
+              </li>
+            )}
+            {getPageNumbers().map((page) => (
+              <li key={page}>
+                <button
+                  onClick={() => handlePageChange(page)}
+                  className={`nav-link ${currentPage === page ? "active" : ""}`}
+                >
+                  {page}
+                </button>
+              </li>
+            ))}
+            {currentPage < totalPages && (
+              <li>
+                <button
+                  className="nav-button-next"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                >
+                  Next
+                </button>
+              </li>
+            )}
+          </ul>
+          <div className="text-sm font-normal mb-4 md:mb-0 md:inline md:w-auto">
+            <span className="font-semibold text-darkgray dark:text-whiten">
+              {" "}
+              {startIndex}-{endIndex}
+            </span>{" "}
+            of
+            <span className="font-semibold text-graydark dark:text-whiten">
+              {" "}
+              {totalItems}
+            </span>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 

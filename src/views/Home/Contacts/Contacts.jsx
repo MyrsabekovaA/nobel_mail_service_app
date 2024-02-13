@@ -40,6 +40,7 @@ function Contacts() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const [areFiltersApplied, setAreFiltersApplied] = useState(false);
+  const [selectedList, setSelectedList] = useState("");
   const [checkedItems, setCheckedItems] = useState({
     eqLists: [],
     statuses: [],
@@ -49,25 +50,26 @@ function Contacts() {
     page,
     search = "",
     contactsPerPage,
-    checkedItems = {}
+    selectedList
   ) => {
     try {
-      let params = {};
-      console.log(checkedItems);
-      if (search || (checkedItems.eqLists && checkedItems.eqLists.length > 0)) {
+      let params = {
+        sortBy: "createdAt",
+        sortOrder: "desc",
+      };
+      console.log(selectedList);
+      if (search || selectedList) {
         if (search) {
           params.search = search;
         }
-        if (checkedItems.eqLists && checkedItems.eqLists.length > 0) {
-          params.listIds = checkedItems.eqLists;
-          // params.pageSize = Number(contactsPerPage);
-          // params.page = Number(page);
+        if (selectedList) {
+          params.listIds = selectedList;
+          params.pageSize = Number(contactsPerPage);
+          params.page = Number(page);
         }
       } else {
         params.pageSize = Number(contactsPerPage);
         params.page = Number(page);
-        params.sortBy = "createdAt";
-        params.sortOrder = "desc";
       }
 
       setIsLoading(true);
@@ -117,14 +119,15 @@ function Contacts() {
   };
 
   useEffect(() => {
-    fetchData(currentPage, searchQuery, contactsPerPage);
+    fetchData(currentPage, searchQuery, contactsPerPage, selectedList);
     setSelectAll(false);
     setSelectedContacts([]);
-  }, [currentPage, searchQuery, contactsPerPage]);
+  }, [currentPage, searchQuery, contactsPerPage, selectedList]);
 
   useEffect(() => {
-    fetchData(currentPage, searchQuery, contactsPerPage, checkedItems);
-  }, [checkedItems]);
+    setCurrentPage(1);
+    fetchData(1, searchQuery, contactsPerPage, selectedList);
+  }, [selectedList]);
 
   useEffect(() => {
     fetchLists();
@@ -380,12 +383,19 @@ function Contacts() {
               )}
             </div>
             <div className="flex items-center gap-3 flex-wrap">
-              <div>
-                <DropdownFilter
-                  eqLists={lists}
-                  onCheckedItemsChange={handleCheckedItemsChange}
-                />
-              </div>
+              <select
+                onChange={(e) => setSelectedList(e.target.value)}
+                className=" w-52 cursor-pointer flex gap-2 items-center text-compdark dark:text-whiten bg-whiten dark:bg-meta-4 hover:bg-gray-3 dark:hover:bg-graydark shadow-lg border border-gray/50 font-medium py-2 px-4 rounded transition-all duration-200;"
+              >
+                <option disabled selected>
+                  Filter by List
+                </option>
+                {lists.map((list) => (
+                  <option key={list.id} value={list.id}>
+                    {list.name}
+                  </option>
+                ))}
+              </select>
               <form className="flex items-center">
                 <label htmlFor="simple-search" className="sr-only">
                   Search

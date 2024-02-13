@@ -7,7 +7,7 @@
 }
 
 .step-select {
-  @apply transition-all duration-150 2xsm:max-w-[100px]  xsm:max-w-full bg-whiten border border-gray/50 text-graydark text-sm rounded-lg dark:hover:border-meta-5 hover:border-meta-5
+  @apply w-52 transition-all duration-150 2xsm:max-w-[100px]  xsm:max-w-full bg-whiten border border-gray/50 text-graydark text-sm rounded-lg dark:hover:border-meta-5 hover:border-meta-5
   focus:ring-meta-5 focus:border-meta-5 block p-2 dark:bg-compdark dark:border-gray/50 dark:placeholder-gray/50 dark:text-whiten dark:focus:ring-meta-5 dark:focus:border-green300;
 }
 .automation-item {
