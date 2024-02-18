@@ -2,11 +2,21 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import "./NavMenu.css";
-import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { sidebarActions } from "/@/GlobalStates/Sidebar";
+import {useDispatch, useSelector} from "react-redux";
 
 const NavMenu = () => {
   //page pagination
   let emailTemplatesPage = useSelector((state) => state.emailTemplates.page);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleNavigation = (path) => {
+    dispatch(sidebarActions.setFalseSidebarOpened());
+    navigate(path);
+  };
+
   return (
     <nav className="mt-5 py-4 px-4 lg:mt-9 lg:px-6">
       <div>
@@ -15,9 +25,8 @@ const NavMenu = () => {
         </h3>
 
         <ul className="mb-6 flex flex-col gap-1 list">
-          <li>
-            <NavLink
-              to="/home/contacts"
+          <li onClick={() => handleNavigation("/home/contacts")}>
+            <div
               className="group relative flex items-center gap-2 rounded-sm py-2 px-3
                                  font-medium
                                  text-black-2 duration-300 ease-in-out hover:bg-secondary dark:hover:bg-meta-4
@@ -25,11 +34,10 @@ const NavMenu = () => {
             >
               <Icon icon="uil:users-alt" className="text-xl" />
               <span className="ml-2">Contacts</span>
-            </NavLink>
+            </div>
           </li>
-          <li>
-            <NavLink
-              to="/home/lists"
+          <li onClick={() => handleNavigation("/home/lists")}>
+            <div
               className="group relative flex items-center gap-2 rounded-sm py-2 px-3
                                  font-medium
                                  text-black-2 duration-300 ease-in-out hover:bg-secondary dark:hover:bg-meta-4
@@ -37,11 +45,10 @@ const NavMenu = () => {
             >
               <Icon icon="bi:list-task" className="text-xl" />
               <span className="ml-2">Lists</span>
-            </NavLink>
+            </div>
           </li>
-          <li>
-            <NavLink
-              to="/home/intakes"
+          <li onClick={() => handleNavigation("/home/intakes")}>
+            <div
               className="group relative flex items-center gap-2 rounded-sm py-2 px-3
                                  font-medium
                                  text-black-2 duration-300 ease-in-out hover:bg-secondary dark:hover:bg-meta-4
@@ -68,11 +75,10 @@ const NavMenu = () => {
               </svg>
 
               <span className="ml-2">Intakes</span>
-            </NavLink>
+            </div>
           </li>
-          <li>
-            <NavLink
-              to="/home/automations"
+          <li onClick={() => handleNavigation("/home/automations")}>
+            <div
               className="group relative flex items-center gap-2 rounded-sm
                         py-2 px-3 font-medium text-black-2 duration-300 ease-in-out hover:bg-secondary hover:text-whiten
                         dark:hover:bg-meta-4 dark:text-white"
@@ -82,11 +88,11 @@ const NavMenu = () => {
                 className="text-xl"
               />
               <span className="ml-2">Automations</span>
-            </NavLink>
+            </div>
           </li>
-          <li>
-            <NavLink
-              to={`/home/emailTemplates/${emailTemplatesPage}`}
+          <li onClick={() => handleNavigation("/home/emailTemplates/${emailTemplatesPage}")}>
+            <div
+              // to={`/home/emailTemplates/${emailTemplatesPage}`}
               className="group relative flex items-center gap-2 rounded-sm
                         py-2 px-3 font-medium text-black-2 duration-300 ease-in-out hover:bg-secondary hover:text-whiten
                         dark:hover:bg-meta-4 dark:text-white"
@@ -96,7 +102,7 @@ const NavMenu = () => {
                 className="text-xl"
               />
               <span className="ml-2">Mail Templates</span>
-            </NavLink>
+            </div>
           </li>
         </ul>
       </div>

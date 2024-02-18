@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Link, NavLink } from "react-router-dom";
+import {Link, NavLink, useNavigate} from "react-router-dom";
 import { Icon } from "@iconify/react";
 import Logo from "/logo.png";
 import NavMenu from "./NavMenu/NavMenu";
@@ -11,6 +11,7 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const isSidebarOpen = useSelector((state) => state.sidebar.opened);
   const sidebarRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     localStorage.setItem("sidebar-opened", isSidebarOpen.toString());
@@ -29,6 +30,11 @@ const Sidebar = () => {
     document.addEventListener("mousedown", clickHandler);
     return () => document.removeEventListener("mousedown", clickHandler);
   }, [isSidebarOpen, dispatch]);
+
+  const handleNavigation = (path) => {
+    dispatch(sidebarActions.setFalseSidebarOpened());
+    navigate(path);
+  };
 
   useEffect(() => {
     const keyHandler = ({ keyCode }) => {
@@ -49,11 +55,11 @@ const Sidebar = () => {
             }`}
     >
       <div className="flex items-center justify-between px-4 py-6">
-        <Link to="/home" className="logo">
+        <div onClick={() => handleNavigation("/home")} className="logo">
           <div>
             <img src={Logo} alt="Logo" className="h-10 w-10" />
           </div>
-        </Link>
+        </div>
         <button onClick={() => dispatch(sidebarActions.toggleSidebarOpened())}>
           <Icon icon="material-symbols:close" className="text-xl" />
         </button>
