@@ -10,6 +10,8 @@ import automationsSlice from "/@/GlobalStates/Automation"
 import listsSlice from "/@/GlobalStates/Lists"
 import templatesSlice from "/@/GlobalStates/Templates"
 import intakesSlice from "/@/GlobalStates/Intakes"
+import statisticsReducer from "/@/GlobalStates/Statistics"
+import selectedIntakeReducer from "/@/GlobalStates/selectedIntake"
 
 const store = configureStore({
     reducer: {
@@ -24,6 +26,8 @@ const store = configureStore({
         lists: listsSlice,
         templates: templatesSlice,
         intakes: intakesSlice,
+        statistics: statisticsReducer,
+        selectedIntake: selectedIntakeReducer,
     },
 })
 
