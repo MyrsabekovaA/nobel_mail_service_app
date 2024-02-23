@@ -6,12 +6,15 @@ import {useDispatch, useSelector} from "react-redux";
 
 const ReferalSources = () => {
     const dispatch = useDispatch();
+    const selectedIntakeId = useSelector(state => state.selectedIntake.intakeId);
     const { data: statistics, isLoading, error } = useSelector(state => state.statistics);
     const [chartOptions, setChartOptions] = useState({});
 
     useEffect(() => {
-        dispatch(fetchStatistics("65c35df4a6fadb446f249693"));
-    }, [dispatch]);
+        if (selectedIntakeId) {
+            dispatch(fetchStatistics(selectedIntakeId));
+        }
+    }, [dispatch, selectedIntakeId]);
 
     useEffect(() => {
         if (!isLoading && statistics && !error) {

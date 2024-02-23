@@ -10,6 +10,7 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
 import ReferalSources from "/@/components/ReferalSources/ReferalSources";
 import {fetchStatistics} from "/@/GlobalStates/Statistics";
+import PromoEmails from "/@/components/PromoEmails/PromoEmails";
 import moment from "moment/moment";
 
 const HomePage = () => {
@@ -56,6 +57,10 @@ const HomePage = () => {
             <h4 className="text-lg font-bold xl:text-2xl lg:text-base">
                 Hi, Welcome back 👋
             </h4>
+
+            <div>
+                <PromoEmails/>
+            </div>
 
             <div>
                 <select value={selectedIntakeId} onChange={handleSelectionChange}>
